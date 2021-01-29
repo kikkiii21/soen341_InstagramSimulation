@@ -1,11 +1,18 @@
 # soen341_InstagramSimulation
 
-Project Description
+## Project Description 
 
-Team Members
-GithubId: Kikkiii21 Name: Judith Lombardo ID:29737472
-GithubId: kilobeaw Name: Jason Li ID:40135468
+## Team Members 
+| **GithubId:** |   **Name:**    | **ID**  |
+|-------------- |--------------- |---------|
+|kikkiii21      |Judith Lombardo |29737472 |
+|kilobeaw       |Jason Li        |40135468 |
+|               |                |         |
+|               |                |         |
+|               |                |         |
+|               |                |         |
 
-Framework and Language
 
-Core Features
+## Framework and Language 
+
+## Core Features
