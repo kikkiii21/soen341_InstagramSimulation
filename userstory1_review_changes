@@ -1,0 +1,9 @@
+As a user, I want to be able to post a picture on my wall, either by selecting it from my picture gallery or by taking it from the app directly.
+
+Steps:
+-Click on the "Select" button on the "Post a picture" page
+-Select a picture or multiple pictures from gallery
+-Click on the "post" icon
+-Picture will appear on your profile page
+
+Priority: High
