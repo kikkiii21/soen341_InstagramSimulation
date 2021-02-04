@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    
+      <div id="app"></div>
+      <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Join Today</legend>
+          {{ form.as_p }}
+        </fieldset>
+        <div>
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+      <div>
+        Already have an account? <a href="#">Sign In</a>
+      </div>
+
+  
+  </body>
+</html>
