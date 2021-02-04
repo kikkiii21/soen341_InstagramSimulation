@@ -21,4 +21,26 @@ Social media applications allow their users the benefit and convenience of stayi
 |YiHengYan      |Yi Heng Yan     |40060587 |
 
 
-## Framework and Language 
+## Framework and Language
+This project will utilize two main technologies:
+-  **Frontend**: _React.JS_ <br>
+&nbsp; &nbsp; &nbsp; React.JS is a component-based JavaScript library for building user interfaces (UI)
+- **Backend**: _Django_ <br>
+&nbsp; &nbsp; &nbsp; Django is a robust python backend framework that efficiently handles all backend operations.
+
+
+## Getting Started
+ First, make sure you have Python3 and NodeJS installed on your local machine. You also need to install pipenv to <br>
+ manage Python packages throughout the project, and run the python virtual environment.<br>
+ in a terminal window, run the following command: ` pip install pipenv` then, use the following steps: <br>
+ 1. Clone the project to your local machine and in your terminal change directory to the project root.
+ 2. Inside the project root, where you can find the file _pipfile_, run the command `pipenv shell` to start the Python virtual environment.
+ 3. Run the command `pipenv install` to install all python packages and dependencies needed for the project.
+ 4. Change the directory and go inside the _instagram_ folder in the project root. You should see the file _manage.py_ here.
+ 5. If there are any changes to the database models, you need to run `python manage.py makemigrations` 
+    and then `python manage.py migrate`.
+ 6. Run the command `python manage.py runserver` which will run the server.
+ 7. Open a different terminal window and navigate to the directory of the frontend app at `soen341_InstagramSimulation/instagram/frontend`.
+ 8. Run `npm install` command to install all packages required for React and the front end app.
+ 9. Finally, run the command `npm run dev` to start the react development server.
+ 10. Check the page rendered by the project in your browser at `http://127.0.0.1:8000/`.
