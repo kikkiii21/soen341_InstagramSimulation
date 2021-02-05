@@ -24,6 +24,13 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "react-router-dom": "^5.2.0"
+    "css-loader": "^5.0.1",
+    "date-and-time": "^0.14.2",
+    "email-validator": "^2.0.4",
+    "is-valid-birthdate": "^0.1.0",
+    "react-hook-form": "^6.15.1",
+    "react-router-dom": "^5.2.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1"
   }
 }
