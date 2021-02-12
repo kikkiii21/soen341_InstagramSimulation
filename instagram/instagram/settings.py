@@ -25,24 +25,36 @@ SECRET_KEY = 'lw&p886_k8w21c7p867eajw01ru^y7m8e$vuvec8crb-s0b$5q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    '127.0.0.1',
+    'www.007guard.com',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # my apps
+    'api',
+    'rest_framework',
+    'frontend',
+    'knox',
+    'accounts',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
-    'rest_framework',
-    'frontend',
-    'users'
-
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
+        )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
