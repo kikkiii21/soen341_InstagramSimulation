@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import HomePage from "./HomePage";
 
+
 function App() {
-    return <HomePage />;
+    return(
+        <div className="center-contents">
+            <HomePage />
+            
+        </div>
+    );
 };
 
 
