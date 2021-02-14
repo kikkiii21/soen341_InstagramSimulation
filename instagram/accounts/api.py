@@ -21,6 +21,7 @@ class RegisterAPI(generics.GenericAPIView):
 # Login API
 class LoginAPI(generics.GenericAPIView):
 	serializer_class = LoginSerializer
+	permission_classes = ()
 
 	def post(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
@@ -35,9 +36,7 @@ class LoginAPI(generics.GenericAPIView):
 
 # Get User API
 class UserAPI(generics.RetrieveAPIView):
-	permission_classes = [
-		permissions.IsAuthenticated,
-	]
+	permission_classes = (permissions.IsAuthenticated,)
 	serializer_class = UserSerializer
 
 	def get_object(self):

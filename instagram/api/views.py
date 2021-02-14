@@ -1,21 +1,58 @@
 from django.shortcuts import render
-from rest_framework import generics, status
+from rest_framework import generics, status, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from .models import Post
+from rest_framework.decorators import api_view
 
 # Create your views here.
-class PostList(generics.ListCreateAPIView):
-	queryset = Post.objects.all()
-	serializer_class = serializer_class.PostSerializer
+@api_view(['GET', 'POST'])
+def posts_list(request):
+	if request.method == 'GET':
+		data = Post.objects.all()
 
-	def perform_create(self, serializer):
-		serializer.save(uploaded_by=self.request.user)
+		serializer = PostSerializer(data, context={'request': request}, many=True)
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Post.objects.all()
-	serializer_class = serializers.PostSerializer
+		return Response(serializer.data)
+
+	elif request.method == 'POST':
+		serializer = PostSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(status=status.HTTP_201_CREATED)
+
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def post_details(request, pk):
+	try:
+		post = Post.objects.get(pk=pk)
+	except Post.DoesNotExist:
+		return Response(status=status.HTTP_404_NOT_FOUND)
+
+	if request.method == 'PUT':
+		serializer = PostSerializer(post, data=request.data,context={'request': request})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(status=status.HTTP_204_NO_CONTENT)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	elif request.method == 'DELETE':
+		post.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# class PostList(generics.ListCreateAPIView):
+# 	queryset = Post.objects.all()
+# 	serializer_class = serializer_class.PostSerializer
+
+# 	def perform_create(self, serializer):
+# 		serializer.save(uploaded_by=self.request.user)
+
+# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+# 	queryset = Post.objects.all()
+# 	serializer_class = serializers.PostSerializer
 	
 # class UserView(generics.CreateAPIView):
 #     queryset = UserProfile.objects.all()
