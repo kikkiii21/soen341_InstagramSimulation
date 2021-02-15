@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Signup from "./SignUp";
 import Login from "./Login";
+import LandingPage from "./LandingPage";
 import {
+  
 BrowserRouter as Router,
 Switch,
 Route,
@@ -17,7 +19,7 @@ const HomePage = () => {
       <Switch> 
         <Route path='/signup' component={Signup}></Route>
         <Route path='/login' component={Login}></Route>
-        <Route exact path='/'><p>Home page to be implemented!!!!</p></Route>
+        <Route exact path='/' component={LandingPage}></Route>
       </Switch>
     </Router> 
   );    
