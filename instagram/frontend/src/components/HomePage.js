@@ -1,28 +1,61 @@
 import React, { Component } from "react";
-import Signup from "./SignUp";
-import Login from "./Login";
-import LandingPage from "./LandingPage";
-import {
-  
-BrowserRouter as Router,
-Switch,
-Route,
-Link,
-Redirect
-} from 'react-router-dom';
+// import Socialmedia from "./socialmedia.png";
+
+
+// class HomePage extends Component {
+//     constructor(props) {
+//         super(props);
+
+//         this.state = {
+//             message: "Click here to login",
+//             sub: "Login"
+//         };
+//     }
+//     styles = {
+//         fontStyle: "normal",
+//         color: "Black"
+//     };
+//     Buttonchange = () => {
+//         this.setState({
+//             message: "",
+//             sub: "Logged in"
+//         });
+//     };
+// render = () => {
+//     return(
+//     <div className="LandingPage"> 
+//           <ul className="header">
+//             <li><a href="/">Homepage</a></li>
+//             <li><a href="/Login">Login</a></li>
+//             <li><a href="/Signup">Signup</a></li>
+//           </ul>
+//           <div className="content">
+             
+//           </div>
+    
+//     <style>{'body { background-color: #f8d1c2; }'}</style>
+    
+//         <h1 style={this.styles}>
+//             Instagram
+//             </h1>
+//            <img src={Socialmedia} width="400"/>
+//            <p/>
+
+//            <h3 style={this.style}>
+//                {this.state.message}
+//            </h3>
+
+//            <button onClick={this.Buttonchange}>{this.state.sub}</button>
+//            <p/>
+//         </div>);
+//     };
+
+// }
+
 
 const HomePage = () => {
-  // Adding react Router in order to align the URL with the intended page/component
-  // Make sure to start from most specific to least specific paths! 
-  return(
-    <Router>
-      <Switch> 
-        <Route path='/signup' component={Signup}></Route>
-        <Route path='/login' component={Login}></Route>
-        <Route exact path='/' component={LandingPage}></Route>
-      </Switch>
-    </Router> 
-  );    
-};
+    
+}
 
-  export default HomePage;
+
+export default HomePage;
