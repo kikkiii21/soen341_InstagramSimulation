@@ -20,6 +20,7 @@ const RouterPage = () => {
       <Switch> 
         <Route path='/signup' component={Signup}></Route>
         <Route path='/login' component={Login}></Route>
+        <Route  path='/HomePage' component={HomePage}></Route>
         <Route exact path='/' component={HomePage}></Route>
       </Switch>
     </Router> 

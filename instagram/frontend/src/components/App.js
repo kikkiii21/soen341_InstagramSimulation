@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import HomePage from "./HomePage";
+import RouterPage from "./RouterPage";
+
 
 
 function App() {
     return(
-        <div className="center-contents">
-            <HomePage />
+        <div >
+            <RouterPage />
             
         </div>
     );

@@ -1,61 +1,81 @@
-import React, { Component } from "react";
-// import Socialmedia from "./socialmedia.png";
+import React,{ useState } from "react";
+import Grid from '@material-ui/core/Grid';
+import { Container, FormHelperText } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import Header from "./Header";
+import CreatePost from "./CreatePost";
+import Paper from "@material-ui/core/Paper";
+import UserInfo from "./UserInfo";
+import data from "./data";
+import PostList from "./PostList";
 
 
-// class HomePage extends Component {
-//     constructor(props) {
-//         super(props);
-
-//         this.state = {
-//             message: "Click here to login",
-//             sub: "Login"
-//         };
-//     }
-//     styles = {
-//         fontStyle: "normal",
-//         color: "Black"
-//     };
-//     Buttonchange = () => {
-//         this.setState({
-//             message: "",
-//             sub: "Logged in"
-//         });
-//     };
-// render = () => {
-//     return(
-//     <div className="LandingPage"> 
-//           <ul className="header">
-//             <li><a href="/">Homepage</a></li>
-//             <li><a href="/Login">Login</a></li>
-//             <li><a href="/Signup">Signup</a></li>
-//           </ul>
-//           <div className="content">
-             
-//           </div>
-    
-//     <style>{'body { background-color: #f8d1c2; }'}</style>
-    
-//         <h1 style={this.styles}>
-//             Instagram
-//             </h1>
-//            <img src={Socialmedia} width="400"/>
-//            <p/>
-
-//            <h3 style={this.style}>
-//                {this.state.message}
-//            </h3>
-
-//            <button onClick={this.Buttonchange}>{this.state.sub}</button>
-//            <p/>
-//         </div>);
-//     };
-
-// }
+const homeStyles = makeStyles((theme) => ({
+    contain: {
+        position: 'fixed',
+    },
+ 
+}));
 
 
 const HomePage = () => {
+
+    //state 
+    const [posts,setPosts] = useState(data());
+
     
-}
+    const style = homeStyles();
+    return(
+         
+        <Grid container spacing={3}>
+        <Grid item xs={12} >
+          <Paper ><Header /></Paper>
+        </Grid>
+        <Grid item xs={12} >
+        </Grid>
+        <Grid item xs={12} >
+        </Grid>
+        <Grid item xs={12} >
+        </Grid>
+        <Grid item xs={12} >
+        </Grid>
+        <Grid item xs={8}>
+        {/* REQUIRED FURTHER CHECK BEFORE USE */}
+            {/* <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <CreatePost />
+                </Grid>
+            </Grid> */}
+            <Grid  container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                >
+                
+                <PostList posts={posts} setPosts={setPosts} />
+                
+            </Grid>
+        </Grid>
+        <Grid item xs={4} >
+          <Grid   container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                
+                >
+                
+                <Grid  item xs={12}>
+                <UserInfo />
+                </Grid>
+            
+                
+            </Grid>
+        </Grid>
+        
+      </Grid>
+    );
+   
+};
 
 
 export default HomePage;
