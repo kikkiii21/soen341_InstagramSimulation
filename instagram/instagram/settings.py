@@ -36,11 +36,11 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     # my apps
-    'api',
     'rest_framework',
     'frontend',
     'knox',
     'accounts',
+    'posts',
 
     # django apps
     'django.contrib.admin',
@@ -54,6 +54,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'knox.auth.TokenAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.sessiontAuthentication',
         )
 }
 
