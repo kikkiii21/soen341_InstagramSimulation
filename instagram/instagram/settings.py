@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     # my apps
-    'api',
+    'posts',
     'rest_framework',
     'frontend',
     'knox',

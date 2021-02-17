@@ -1,16 +1,14 @@
 from django.urls import path, re_path, include
 # from .views import PostView, CreatePostView, JoinView, LogoutView
 from rest_framework import routers
-from .api import PostViewSet
-from . import views
+from .views import PostViewSet
 
 router = routers.DefaultRouter()
-router.register('post', PostViewSet, 'posts')
+router.register('posts', PostViewSet, 'posts')
 
 urlpatterns = [
 	# router.urls,
-	re_path(r'^post/$', views.posts_list),
-	re_path(r'^post/detail/([0-9])$', views.post_details),
+	path('', include(router.urls)),
 ]
 	
 

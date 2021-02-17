@@ -7,11 +7,11 @@ from .models import Post
 #         fields = ('id', 'name', 'email', 'created_at')
 
 class PostSerializer(serializers.ModelSerializer):
-	uploaded_by = serializers.ReadOnlyField(source = 'uploaded_by.username')
-
+	# uploaded_by = serializers.ReadOnlyField(source = 'uploaded_by.username')
+	photo = serializers.ImageField(required=False)
 	class Meta: 
 		model = Post
-		fields = ('id', 'title', 'photo', 'uploaded_by', 'created_at', 'likes')
+		fields = ('id', 'title', 'photo', 'created_at')
 
 
 # class CreatePostSerializer(serializers.ModelSerializer):
