@@ -8,6 +8,7 @@
     -webkit-transition: height 0.2s ease-in-out;
     transition: height 0.2s ease-in-out;
     height: 77px;
+    box-shadow: 2px 2px 50px rgb(204, 204, 204);
     
     
   }

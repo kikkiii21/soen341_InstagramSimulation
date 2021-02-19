@@ -41,11 +41,11 @@ const HomePage = () => {
         </Grid>
         <Grid item xs={8}>
         {/* REQUIRED FURTHER CHECK BEFORE USE */}
-            {/* <Grid container spacing={3}>
+            <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <CreatePost />
                 </Grid>
-            </Grid> */}
+            </Grid>
             <Grid  container
                 direction="column"
                 justify="center"
