@@ -7,7 +7,9 @@ const UserInfoStyles = makeStyles((theme) => ({
         border: '1px solid #e6e6e6',
         backgroundColor: '#fff',
         padding: '30px',
-        boxShadow: '2px 2px 50px rgb(204, 204, 204)',        
+        boxShadow: '2px 2px 50px rgb(204, 204, 204)',
+        width: "-webkit-fill-available",
+        marginRight: '5%',        
     },
     paper: {
         padding: theme.spacing(1),

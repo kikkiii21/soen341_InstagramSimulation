@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 const Posts = ({name, avatar, postImage, postComment, key}) => {
     return (
-        <Grid  item xs={12}>
+        <Grid  item xs={10}>
         <article className="Post" >
     <header>
       <div className="Post-user">

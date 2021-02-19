@@ -3,8 +3,6 @@
     border: 1px solid #e6e6e6;
     background-color: #fff;
     margin-bottom: 60px;
-    margin-left : 20%;
-    /* margin-right: 20%; */
     box-shadow: 2px 2px 50px rgb(204, 204, 204);
    
   }
@@ -48,7 +46,7 @@
     padding: 16px 16px;
   }
   .Post-caption strong {
-    font-family: 'PT Sans', sans-serif;
+    /* font-family: 'PT Sans', sans-serif; */
     font-weight: bold;
   }
   .vjs-fade-out {

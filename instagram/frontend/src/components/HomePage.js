@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import UserInfo from "./UserInfo";
 import data from "./data";
 import PostList from "./PostList";
+import Hidden from '@material-ui/core/Hidden';
 
 
 const homeStyles = makeStyles((theme) => ({
@@ -39,24 +40,22 @@ const HomePage = () => {
         </Grid>
         <Grid item xs={12} >
         </Grid>
-        <Grid item xs={8}>
-        {/* REQUIRED FURTHER CHECK BEFORE USE */}
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <CreatePost />
-                </Grid>
-            </Grid>
+        <Grid item sm={12} md={8} >
             <Grid  container
-                direction="column"
+                direction="row"
                 justify="center"
                 alignItems="center"
                 >
+                <Grid item xs={10}>
+                    <CreatePost />
+                </Grid>
                 
                 <PostList posts={posts} setPosts={setPosts} />
                 
             </Grid>
         </Grid>
-        <Grid item xs={4} >
+        <Hidden only={['sm','xs']}>
+        <Grid item md={4}>
           <Grid   container
                 direction="column"
                 justify="center"
@@ -71,6 +70,8 @@ const HomePage = () => {
                 
             </Grid>
         </Grid>
+        
+        </Hidden>
         
       </Grid>
     );
