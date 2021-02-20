@@ -23,10 +23,22 @@
                 {% if user.is_authenticated %}
                     <a  href="{% url 'profile' %}">Profile</a>
                     <a href="{% url 'logout' %}">Logout</a>
-                {% else %}login
+                    <a href = "{% url 'newpost' %}">Create Post</a>
+                {% else %}
                     <a  href="{% url 'login' %}">Login</a>
                     <a  href="{% url 'register' %}">Register</a>
                 {% endif %}
+            </div>
+            <div>
+              <h1>All Posts</h1>
+              {% for post in posts %}
+                <h3>{{post.title}}</h3><br>
+                <img src="/media/{{post.picture}}" width="auto" height="200px"/>
+                <p>Description: {{post.description}}</p>
+                <p>Date: {{post.date}}</p>
+                <p>User: {{post.user}}</p>
+              <hr class="my-2">
+              {% endfor %}
             </div>
           </div>
         </div>
