@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        top: '50%',
+        left: '50%',
+        position: 'absolute',
+        transform: 'translate(-50%,-50%)',
     },
 
     paper: {
@@ -123,7 +127,7 @@ const Login = () => {
           color="primary"
           className={classes.submit}
         >
-          Sign Up
+          Login
         </Button>
         <Grid container justify="flex-end">
             <Grid item>

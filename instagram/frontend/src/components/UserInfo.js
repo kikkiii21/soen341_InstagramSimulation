@@ -47,17 +47,22 @@ const UserInfoStyles = makeStyles((theme) => ({
    
 }));
 
-const UserInfo = () => {
+const UserInfo = ({isLoggedIn,
+                  setIsLoggedIn,
+                  LoggedInUserInfo,
+                  setLoggedInUserInfo}) => {
+
     const user = UserInfoStyles();
+
     return(
         <div className={user.card}>
           
             <div className={user.PostUser}>
                 <div className={user.PostUserAvatar}>
-                    <img className={user.image} src="https://fakeface.rest/face/view" alt="Username" />
+                    <img className={user.image} src={LoggedInUserInfo.avatar} alt="Username" />
                 </div>
                 <div className={user.PosUserNickname}>
-                    <span>Arthur Morgan</span>
+                    <span>{LoggedInUserInfo.name}</span>
                 </div>
             </div>
             

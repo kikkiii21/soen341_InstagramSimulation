@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import "../../static/css/post.css";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderNone, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
+import { useForm } from 'react-hook-form';
+import { getName } from './data';
+import { v4 as uid } from "uuid";
 
 
 const CreatePostStyles = makeStyles((theme) => ({
@@ -48,7 +49,8 @@ const CreatePostStyles = makeStyles((theme) => ({
 			color: '#fff',
 			fontSize: '18px',
 			transition: 'background 0.5s ease',
-			borderRadius: '15px',
+			// borderRadius: '15px',
+      outline: 'none',
 
 			'&:hover': {
 				backgroundColor: "#000",
@@ -63,7 +65,7 @@ const CreatePostStyles = makeStyles((theme) => ({
 			padding: '8px',
 			width: '80px',
 			height: '20px',
-			borderRadius: '15px',
+			// borderRadius: '15px',
 			'&:hover':{
 				backgroundColor: '#000',
 			},
@@ -121,49 +123,69 @@ const CreatePostStyles = makeStyles((theme) => ({
 
 
 
-const CreatePost = () => {
+const CreatePost = ({posts,
+                    setPosts,
+                    isLoggedIn,
+                    setIsLoggedIn,
+                    LoggedInUserInfo,
+                    setLoggedInUserInfo}) => {
     //state
     const style = CreatePostStyles();
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState({url : "" , raw: ""});
+    const [caption, setCaption] = useState("");
+    const {register, handleSubmit} = useForm();
 
 
-    //event handlers
+    // Event Handlers 
 
-    //handle image submission to be completed
+    // handle image change
     const imageSelectedHandler = (e) => {
-         setSelectedImage(e.target.files[0]);
-        
+         setSelectedImage({
+           url: URL.createObjectURL(e.target.files[0]),
+           raw: e.target.files[0]
+         });
+    };
+    const captionHandler = (e) => {
+      let cap = e.target.value;
+      setCaption(cap);
     };
 
+    //react hook form submit
+    const onSubmit = (obj) => {
+		let newPost = {
+			name: LoggedInUserInfo.name,
+			avatar: LoggedInUserInfo.avatar,
+			postImage: selectedImage.url,
+			postComment: caption,
+			id: uid(),
+		};
+    setPosts([newPost, ...posts]);
+    setCaption("");
+    
+    };
+    
     return (
-    <div className={style.card}>
-			<div className={style.topGroup}>
-				<div className={style.PostUser}>
-					<div className={style.PostUserAvatar}>
-						<img className={style.image} src="https://fakeface.rest/face/view" alt="Username" />
-					</div>
-				</div>
-				<div className={style.TextFieldWrapper}>
-					<input type="textfield"  className={style.TextField} />
-				</div>
-			</div>
-			{/* <hr className={style.separatingLine}/> */}
-			<div className={style.bottomGroup}>
-				
-				<label for="img-upload">
-					<FontAwesomeIcon className={style.imgBtn} icon={faImages} size="2x" />
-				</label>
-				<input id="img-upload" className={style.hideImageInput} type="file"></input>
-				<button className={style.postBtn} >Post</button>
-			</div>
-
-
-		
-			
-			
-   		
-        
-    </div>
+  <div className={style.card}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={style.topGroup}>
+        <div className={style.PostUser}>
+          <div className={style.PostUserAvatar}>
+            <img className={style.image} src={LoggedInUserInfo.avatar} alt="Username" />
+          </div>
+        </div>
+        <div className={style.TextFieldWrapper}>
+          <input value={caption} type="text" required ref={register} name="postCaption" className={style.TextField} onChange={captionHandler} />
+        </div>
+      </div>
+      <div className={style.bottomGroup}>
+        <label for="img-upload">
+          <FontAwesomeIcon className={style.imgBtn} icon={faImages} size="2x" />
+        </label>
+        <input required value={null} onChange={imageSelectedHandler} ref={register} name="picture" id="img-upload" className={style.hideImageInput} type="file" />
+        <button className={style.postBtn} >Post</button>
+      </div>
+    </form> 
+  </div>
   );
 }
 export default CreatePost;

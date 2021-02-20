@@ -19,6 +19,10 @@ const isValidBd = require('is-valid-birthdate')
 
 const useStyles = makeStyles((theme) => ({
     layout: {
+        top: '50%',
+        left: '50%',
+        position: 'absolute',
+        transform: 'translate(-50%,-50%)',
         backgroundColor: '#EDECF4',
         width: 'auto',
         marginLeft: theme.spacing(1),
@@ -60,6 +64,13 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         width: 200,
     },
+
+    centerContents : {
+        top: '50%',
+        left: '50%',
+        position: 'absolute',
+        transform: 'translate(-50%,-50%)',
+      },
 
 }));
 
@@ -124,7 +135,7 @@ const SignUp = () => {
     
 
     return(
-        <Container className={classes.layout} >
+        <Container className={classes.layout}>
     <CssBaseline />
     <div className={classes.paper}>
     <Grid container spacing={1}>

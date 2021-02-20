@@ -4,7 +4,7 @@ import { uniqueNamesGenerator, colors, names } from 'unique-names-generator';
 
 
 
-const getName = () =>{
+export const getName = () =>{
     const randomName = uniqueNamesGenerator({ dictionaries: [names, colors] });
    
   const shortName = uniqueNamesGenerator({
