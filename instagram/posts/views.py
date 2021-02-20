@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from .forms import PostForm
 from .models import Post
@@ -14,3 +15,7 @@ def new_post(request):
             form.save()
         return redirect('home')
     return render(request, 'newpost.html', {'form': form})
+
+
+def home(request):
+    return render(request,'frontend/index.html')
