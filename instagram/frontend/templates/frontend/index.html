@@ -5,17 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Instagram</title>
     {% load static %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    />
-    <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}"
-    />
+
   </head>
   <body>
     
       <div id="app"></div>
+            <header>
+        <div>
+          <a href="{% url 'home' %}">Main</a>
+          <div>
+            <div >
+              <a  href="#">Home</a>
+              <a  href="#">About</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div>
+                {% if user.is_authenticated %}
+                    <a  href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                    <a href = "{% url 'newpost' %}">Create Post</a>
+                {% else %}
+                    <a  href="{% url 'login' %}">Login</a>
+                    <a  href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+            <div>
+              <h1>All Posts</h1>
+              {% for post in posts %}
+                <h3>{{post.title}}</h3><br>
+                <img src="/media/{{post.picture}}" width="auto" height="200px"/>
+                <p>Description: {{post.description}}</p>
+                <p>Date: {{post.date}}</p>
+                <p>User: {{post.user}}</p>
+              <hr class="my-2">
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+    </header>
+
+      <div id="app">
+      <h1>This is the main page</h1>
+          {% if messages %}
+              {%  for message in messages %}
+                  <div>
+                  {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      </div>
    
 
     <script src="{% static "frontend/main.js" %}"></script>
