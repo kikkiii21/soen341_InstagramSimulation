@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+<html>
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+
+<h1>{{ user.username }}</h1>
+ <img src="{{ user.profile.image.url }}" alt="image">
+        <div>
+          <h2>{{ user.username }}</h2>
+          <p>{{ user.email }}</p>
+        </div>
+
+<div>
+    <p>upload image</p>
+
+</div>
+</body>
+</html>
