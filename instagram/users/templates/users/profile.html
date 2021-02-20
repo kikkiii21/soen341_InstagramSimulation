@@ -5,16 +5,22 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
-
-<h1>{{ user.username }}</h1>
- <img src="{{ user.profile.image.url }}" alt="image">
-        <div>
-          <h2>{{ user.username }}</h2>
+<a href="{% url 'home' %}">Main</a>
+<div>
+    <h1>{{ user.username }}</h1>
+    <img src="{{ user.profile.image.url }}" alt="profile_Image">
           <p>{{ user.email }}</p>
-        </div>
+</div>
+<div>
+    <h1>Posts</h1>
+    {% for post in posts %}
+            <h3>{{user.post.title}}</h3><br>
+                <img src="/media/{{user.post.picture}}" width="auto" height="200px" alt="post_Image"/>
+    {% endfor %}
+</div>
 
 <div>
-    <p>upload image</p>
+    <p>upload image</p> <!-- if ever we were to decide to implement a function that allows a user to change its profile pic  -->
 
 </div>
 </body>

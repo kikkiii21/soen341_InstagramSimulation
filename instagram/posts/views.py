@@ -1,8 +1,10 @@
 
 from django.shortcuts import render, redirect
 from .forms import PostForm
-from .models import Post
 from django.contrib.auth.decorators import login_required
+
+
+
 
 # Create your views here.
 @login_required
@@ -14,7 +16,7 @@ def new_post(request):
         if form.is_valid():
             form.save()
         return redirect('home')
-    return render(request, 'newpost.html', {'form': form})
+    return render(request, 'posts/newpost.html', {'form': form})
 
 
 def home(request):

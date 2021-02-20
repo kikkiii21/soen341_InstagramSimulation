@@ -14,11 +14,8 @@
         <div>
           <a href="{% url 'home' %}">Main</a>
           <div>
-            <div >
-              <a  href="#">Home</a>
-              <a  href="#">About</a>
-            </div>
-            <!-- Navbar Right Side -->
+
+
             <div>
                 {% if user.is_authenticated %}
                     <a  href="{% url 'profile' %}">Profile</a>
