@@ -4,6 +4,9 @@ from .forms import PostForm
 from .models import Post
 from django.contrib.auth.decorators import login_required
 
+from rest_framework import generics
+from .serializers import PostSerializer
+
 # Create your views here.
 @login_required
 def new_post(request):
@@ -19,3 +22,8 @@ def new_post(request):
 
 def home(request):
     return render(request,'frontend/index.html')
+
+
+class PostView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
