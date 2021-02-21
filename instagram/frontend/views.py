@@ -3,6 +3,11 @@ from posts.models import Post
 # Create your views here.
 
 
+def react(request, *args, **kwargs):
+    return render(request, 'frontend/react.html')
+
+
+
 def index(request, *args, **kwargs):
     posts = Post.objects.all()
     context = {
