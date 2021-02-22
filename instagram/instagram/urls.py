@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
+    path('', include('rest_framework.urls')),
 ]

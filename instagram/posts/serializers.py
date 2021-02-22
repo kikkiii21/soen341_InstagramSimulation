@@ -7,7 +7,7 @@ from .models import Post
 #         fields = ('id', 'name', 'email', 'created_at')
 
 class PostSerializer(serializers.ModelSerializer):
-	# uploaded_by = serializers.ReadOnlyField(source = 'uploaded_by.username')
+	owner = serializers.ReadOnlyField(source='owner.username')
 	# photo = serializers.ImageField(required=False)
 	class Meta: 
 		model = Post

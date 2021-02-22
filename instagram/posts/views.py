@@ -5,19 +5,22 @@ from rest_framework.response import Response
 from .serializers import PostSerializer
 from .models import Post
 from rest_framework.decorators import api_view
-
-
-from posts.models import Post
 from rest_framework import viewsets, permissions
-from .serializers import PostSerializer
+from .permissions import IsOwnerOrReadOnly
 
 # PostViewAPI
 class PostAPI(generics.ListCreateAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
+
+class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Post.objects.all()
+	serializer_class = PostSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 # UserProfile Viewset
 # class PostViewSet(viewsets.ModelViewSet):

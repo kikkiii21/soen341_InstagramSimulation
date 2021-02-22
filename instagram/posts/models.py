@@ -15,11 +15,11 @@ class Post(models.Model):
 	title = models.CharField(max_length = 150)
 	photo = models.ImageField(upload_to = photocollection)
 	owner = models.ForeignKey(User, related_name="posts", on_delete=models.CASCADE, null=True)
-	created_at = models.DateField(auto_now = True)
+	created_at = models.DateTimeField(auto_now_add = True)
 	# likes = models.IntegerField(null = False, default = 0)
 
-	# class Meta:
-	# 	ordering = ['created_at']
+	class Meta:
+		ordering = ['created_at']
 
-	def __str__(self):
-		return self.title
+	# def __str__(self):
+	# 	return self.title
