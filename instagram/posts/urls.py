@@ -1,14 +1,15 @@
 from django.urls import path, re_path, include
 # from .views import PostView, CreatePostView, JoinView, LogoutView
-from rest_framework import routers
-from .views import PostViewSet
+# from rest_framework import routers
+from .views import PostAPI
 
-router = routers.DefaultRouter()
-router.register('posts', PostViewSet, 'posts')
+# router = routers.DefaultRouter()
+# router.register('posts', PostViewSet, 'posts')
 
 urlpatterns = [
 	# router.urls,
-	path('', include(router.urls)),
+	# path('', include(router.urls)),
+	path('posts/', PostAPI.as_view())
 ]
 	
 

@@ -11,19 +11,27 @@ from posts.models import Post
 from rest_framework import viewsets, permissions
 from .serializers import PostSerializer
 
-# UserProfile Viewset
-class PostViewSet(viewsets.ModelViewSet):
+# PostViewAPI
+class PostAPI(generics.ListCreateAPIView):
 	queryset = Post.objects.all()
-
-	permission_classes = [permissions.AllowAny]
-	
 	serializer_class = PostSerializer
-	
-	# def get_queryset(self):
-	# 	return self.user.request.posts.all()
 
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
+
+# UserProfile Viewset
+# class PostViewSet(viewsets.ModelViewSet):
+# 	queryset = Post.objects.all()
+
+# 	permission_classes = [permissions.AllowAny]
+	
+# 	serializer_class = PostSerializer
+	
+# 	# def get_queryset(self):
+# 	# 	return self.user.request.posts.all()
+
+# 	def perform_create(self, serializer):
+# 		serializer.save(owner=self.request.user)
 	
 
 
