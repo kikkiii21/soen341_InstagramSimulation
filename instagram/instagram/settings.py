@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'frontend',
     'knox',
     'accounts',
+    'comments',
 
     # django apps
     'django.contrib.admin',

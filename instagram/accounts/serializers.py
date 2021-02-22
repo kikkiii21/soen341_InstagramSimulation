@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
 	posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts')
+		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments')
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
