@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b0656830c8dd041f9a907a959813857746467ae95ff5c008811e1ee0e7fde88e"
+            "sha256": "41e3462628b75ce54fc78a0f0dd4fdfa9772f983b57e89b2398c51bcaf30dbdb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -68,6 +68,18 @@
         },
         "cryptography": {
             "hashes": [
+<<<<<<< HEAD
+                "sha256:0bf49d5b38e4f3745a0eab0597fa97720dd49b30d65f534b49a82e303f149deb",
+                "sha256:18d6f3ac1da14a01c95f4590ee58e96aa6628d231ce738e9eca330b9997127b6",
+                "sha256:4f6761a82b51fe02cda8f45af1c2f698a10f50003dc9c2572d8a49eda2e6d35b",
+                "sha256:8b3b79af57e12aabbc3db81e563eaa07870293a1ffdcc891d107035ce9a0dbff",
+                "sha256:9c6f7552d4f2130542d488b9d9e5b1546204b5d1aa90c823d50cce8eed421363",
+                "sha256:b0873ac0c0e6bc6882cd285930cc382ec4e78786be71bdc113c06246eea61294",
+                "sha256:c8dc9859c5a046e1ca22da360dfd609c09064a4f974881cb5cba977c581088ec"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==3.4.5"
+=======
                 "sha256:2d32223e5b0ee02943f32b19245b61a62db83a882f0e76cc564e1cec60d48f87",
                 "sha256:57ad77d32917bc55299b16d3b996ffa42a1c73c6cfa829b14043c561288d2799",
                 "sha256:5ecf2bcb34d17415e89b546dbb44e73080f747e504273e4d4987630493cded1b",
@@ -78,6 +90,7 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.4.6"
+>>>>>>> main
         },
         "django": {
             "hashes": [
@@ -87,6 +100,8 @@
             "index": "pypi",
             "version": "==3.1.6"
         },
+<<<<<<< HEAD
+=======
         "django-crispy-forms": {
             "hashes": [
                 "sha256:21cf717b621f93cdf01bac0a419b520fe3b17bffd67e140b6c16558d9b75ab80",
@@ -95,6 +110,7 @@
             "index": "pypi",
             "version": "==1.11.0"
         },
+>>>>>>> main
         "django-rest-knox": {
             "hashes": [
                 "sha256:4a57b05b04fcccc41fcc969ad0e3f180467d7045b45003b58f5a437d6d3370d4",

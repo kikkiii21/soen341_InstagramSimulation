@@ -25,18 +25,33 @@ SECRET_KEY = 'lw&p886_k8w21c7p867eajw01ru^y7m8e$vuvec8crb-s0b$5q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    '127.0.0.1',
+    'www.007guard.com',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # my apps
+    'posts',
+    'rest_framework',
+    'frontend',
+    'knox',
+    'accounts',
+    'comments',
+
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+=======
     'api.apps.ApiConfig',
     'rest_framework',
     'frontend.apps.FrontendConfig',
@@ -44,7 +59,15 @@ INSTALLED_APPS = [
     'crispy_forms',
     'posts.apps.PostsConfig',
 
+>>>>>>> main
 ]
+    
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,14 +149,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = '/posts/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
 MEDIA_URL ='/media/'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
-
