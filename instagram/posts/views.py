@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render
 from rest_framework import generics, status, viewsets, permissions
 from rest_framework.views import APIView
@@ -123,4 +124,4 @@ class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 # 			queryset = UserProfile.objects.filter(username=username)
 
 # 		return Response({'Bad Request':"Invalid Data..."}, status=status.HTTP_200_OK)
-	
+
