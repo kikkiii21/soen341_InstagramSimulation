@@ -50,16 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
-    'api.apps.ApiConfig',
-    'rest_framework',
-    'frontend.apps.FrontendConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
-    'posts.apps.PostsConfig',
-
->>>>>>> main
 ]
     
 REST_FRAMEWORK = {
