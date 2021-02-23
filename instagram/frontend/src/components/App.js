@@ -5,12 +5,11 @@ import RouterPage from "./RouterPage";
 
 
 function App() {
-    return(
-        <div >
-            <RouterPage />
-            
-        </div>
-    );
+  return(
+    <div >
+      <RouterPage />  
+    </div>
+  );
 };
 
 

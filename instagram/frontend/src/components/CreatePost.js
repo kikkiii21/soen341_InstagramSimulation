@@ -8,6 +8,11 @@ import { useForm } from 'react-hook-form';
 import { getName } from './data';
 import { v4 as uid } from "uuid";
 
+// to account for cross site request forgery vulnerability
+// required by django backend 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
 
 const CreatePostStyles = makeStyles((theme) => ({
     card: {
@@ -152,16 +157,30 @@ const CreatePost = ({posts,
 
     //react hook form submit
     const onSubmit = (obj) => {
-		let newPost = {
-			name: LoggedInUserInfo.name,
-			avatar: LoggedInUserInfo.avatar,
-			postImage: selectedImage.url,
-			postComment: caption,
-			id: uid(),
-		};
-    setPosts([newPost, ...posts]);
-    setCaption("");
-    
+      //setting the post to show in frontend
+      let newPost = {
+        name: LoggedInUserInfo.name,
+        avatar: LoggedInUserInfo.avatar,
+        postImage: selectedImage.url,
+        postComment: caption,
+        id: uid(),
+      };
+      setPosts([newPost, ...posts]);
+
+      //submitting post details to backend
+      let form_data = new FormData();
+      form_data.append('photo', selectedImage.raw);
+      form_data.append('title',  selectedImage.raw.name);
+      let url = 'posts/posts/';
+      axios.post(url, form_data, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err))
     };
     
     return (

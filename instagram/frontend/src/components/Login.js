@@ -68,18 +68,16 @@ const Login = () => {
      const {register, handleSubmit} = useForm();
     
 
-     //event handlers
-     //none needed for now
-
-    //Submit to api endpoint
     const submitHandler = (dataObject) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify(dataObject),
-        }; // bad endpoint!! change it after configuring the backend!
-        fetch('api/user', requestOptions).then((response) => 
-        response.json).then((data) => console.log(data));
+      const requestOptions = {
+        body: JSON.stringify(dataObject),  
+      };
+      axios.post('/login', requestOptions.body, {headers: {'Content-Type' : 'application/json'}})
+      .then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });
     };
 
     return(
