@@ -19,7 +19,5 @@ matrix:
         - cd instagram/frontend
       install: 
         - npm install
-      before_script:
-        - cd frontend
       script: 
         - npm test
