@@ -57,7 +57,9 @@ const HomePage = () => {
                     setLoggedInUserInfo={setLoggedInUserInfo}
                     />
                 </Grid>
+                <Grid item xs={10}>
                 <PostList posts={posts} setPosts={setPosts} />
+                </Grid>
             </Grid>
         </Grid>
         <Hidden only={['sm','xs']}>

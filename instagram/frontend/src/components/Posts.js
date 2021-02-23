@@ -26,7 +26,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
       <strong>{name}</strong> {postComment}
     <div className="CommentBar">
     <textarea class="text-area"></textarea>
-    <p/>
+    <b/>
       <button class="button">Comment</button>
       </div>
     </div>  
