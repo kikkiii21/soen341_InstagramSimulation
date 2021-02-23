@@ -1,4 +1,19 @@
-language: python
-python:
-- "3.6"
+matrix: 
+  include:
+    - language: python
+      python:
+      - "3.6"
+      - "3.8"
+      - "3.9"
 
+      install:
+        - pip install -r requirements.txt
+
+    - language: node_js
+      node_js:
+      - "14"
+      - "15"
+      before_install:
+        - cd instagram/frontend
+      install: 
+        - npm install
