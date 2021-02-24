@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import "../../static/css/post.css";
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderNone, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { useForm } from 'react-hook-form';
-import { getName } from './data';
 import { v4 as uid } from "uuid";
+import {UserContext, UserStatusContext} from './AppContext'
+import {PostsContext} from './PostsContext'
 
 // to account for cross site request forgery vulnerability
 // required by django backend 
@@ -128,17 +129,16 @@ const CreatePostStyles = makeStyles((theme) => ({
 
 
 
-const CreatePost = ({posts,
-                    setPosts,
-                    isLoggedIn,
-                    setIsLoggedIn,
-                    LoggedInUserInfo,
-                    setLoggedInUserInfo}) => {
+const CreatePost = () => {
     //state
     const style = CreatePostStyles();
     const [selectedImage, setSelectedImage] = useState({url : "" , raw: ""});
     const [caption, setCaption] = useState("");
     const {register, handleSubmit} = useForm();
+    const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
+    const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
+    const {posts , setPosts} = useContext(PostsContext);
+
 
 
     // Event Handlers 
@@ -161,7 +161,7 @@ const CreatePost = ({posts,
       let newPost = {
         name: LoggedInUserInfo.name,
         avatar: LoggedInUserInfo.avatar,
-        postImage: selectedImage.url,
+        photo: selectedImage.url,
         postComment: caption,
         id: uid(),
       };

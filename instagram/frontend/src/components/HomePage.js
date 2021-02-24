@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React,{ useState, useContext,useEffect } from "react";
 import Grid from '@material-ui/core/Grid';
 import { Container, FormHelperText } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,10 +6,13 @@ import Header from "./Header";
 import CreatePost from "./CreatePost";
 import Paper from "@material-ui/core/Paper";
 import UserInfo from "./UserInfo";
-import data from "./data";
 import PostList from "./PostList";
 import Hidden from '@material-ui/core/Hidden';
 import { v4 as uid } from "uuid";
+import { UserContext, UserStatusContext } from "./AppContext";
+import {PostsContext} from './PostsContext'
+import axios from 'axios';
+
 
 
 
@@ -24,9 +27,32 @@ const homeStyles = makeStyles((theme) => ({
 const HomePage = () => {
 
     //state 
-    const [posts,setPosts] = useState(data());
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // temporarily a static logged in user
-    const [LoggedInUserInfo, setLoggedInUserInfo] = useState({name: "Arthur Morgan", avatar: "../../static/images/arthur.jpg", id: uid()});
+    // const {posts,setPosts} = useContext(PostsContext);
+    // const [isLoggedIn, setIsLoggedIn] = useState(true); // temporarily a static logged in user
+    // const [LoggedInUserInfo, setLoggedInUserInfo] = useState({name: "Arthur Morgan", avatar: "../../static/images/arthur.jpg", id: uid()});
+    const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
+
+    
+
+    // const fetchData  = async () => {
+    //   await axios.get('posts/posts/')
+    //   .then((response) => {
+    //     // let parsedJSON = JSON.parse(response.data);
+    //     // console.log(parsedJSON);
+    //     console.log(response.data);
+    //     let fetchedPosts = response.data;
+    //     return fetchedPosts;
+    //   });
+    // };
+    
+    
+
+    // useEffect(() => {
+    //   setPosts(...posts,fetchData());
+    // }, []);
+
+    
 
     
     const style = homeStyles();
@@ -49,15 +75,10 @@ const HomePage = () => {
             <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item xs={10}>
                     <CreatePost 
-                    posts={posts} 
-                    setPosts={setPosts}
-                    isLoggedIn={isLoggedIn}
-                    setIsLoggedIn={setIsLoggedIn}
-                    LoggedInUserInfo={LoggedInUserInfo}
-                    setLoggedInUserInfo={setLoggedInUserInfo}
+        
                     />
                 </Grid>
-                <PostList posts={posts} setPosts={setPosts} />
+                <PostList/>
             </Grid>
         </Grid>
         <Hidden only={['sm','xs']}>
