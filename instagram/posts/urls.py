@@ -9,9 +9,9 @@ from .views import PostDetailAPI
 urlpatterns = [
 	# router.urls,
 	# path('', include(router.urls)),
-	# path('posts/', PostAPI.as_view()),
+	path('posts/', PostView.as_view()),
 	path('posts/<int:pk>/', PostDetailAPI.as_view()),
-	path('posts/', PostView.as_view(), name= 'posts_list'),
+	# path('posts/', PostAPI.as_view(), name= 'posts_list'),
 
 ]
 	

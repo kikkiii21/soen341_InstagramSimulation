@@ -9,11 +9,9 @@ from django.contrib.auth.models import User
 #     uploaded_by = models.ForeignKey(UserProfile, on_delete = models.CASCADE)
 #     created_at = models.DateTimeField(auto_add_now = True)
 
-photocollection = 'frontend/static/images/'
-
 class Post(models.Model):
 	title = models.CharField(max_length = 150)
-	photo = models.ImageField(upload_to = photocollection)
+	photo = models.ImageField(upload_to = 'images')
 	owner = models.ForeignKey(User, related_name="posts", on_delete=models.CASCADE, null=True)
 	created_at = models.DateTimeField(auto_now_add = True)
 	# likes = models.IntegerField(null = False, default = 0)
