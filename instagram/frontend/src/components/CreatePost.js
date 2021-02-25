@@ -175,14 +175,12 @@ const CreatePost = () => {
       };
       setPosts([newPost, ...posts]);
 
-      console.log(caption);
-
       //submitting post details to backend
       let form_data = new FormData();
       form_data.append('photo', selectedImage.raw);
       form_data.append('title',  newPost.title);
       form_data.append('owner',  newPost.name);
-      let url = 'posts/posts/';
+      let url = 'posts/';
       axios.post(url, form_data, {
         headers: {
           'content-type': 'multipart/form-data',
@@ -190,7 +188,7 @@ const CreatePost = () => {
         }
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(err => console.log(err))
 

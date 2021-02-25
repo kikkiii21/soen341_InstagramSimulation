@@ -41,7 +41,7 @@ const HomePage = () => {
   return(
     <>
       <Route >
-        {(!isLoggedIn && !JSON.parse(status)) ? <Redirect to="/signup" /> : ""}
+        {(!isLoggedIn && !JSON.parse(status)) ? <Redirect to="/signin" /> : ""}
       </Route>
     <Grid container spacing={3}>
       <Grid item xs={12} >
