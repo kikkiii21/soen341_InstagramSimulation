@@ -54,3 +54,29 @@
     visibility: hidden;
     opacity: 0;
   }
+  .CommentBar{
+    background-color: rgb(210, 233, 255);
+  color: white;
+  font-size: 20px;
+  padding: 10px 60px;
+  border-radius: 3px;
+  margin: 10px 0px;
+  }
+  .button{
+    background-color: rgb(53, 158, 255);
+  color: white;
+  font-size: 15px;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition-duration: 0.4s;
+  border: 0px;
+  border-radius: 5px;
+  }
+  .button:hover {
+    background-color: #000000;
+    color: white;
+  }
+.text-area{
+  width: 100%;
+}

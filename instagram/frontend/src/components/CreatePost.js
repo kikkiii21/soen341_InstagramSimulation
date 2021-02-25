@@ -1,12 +1,18 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import "../../static/css/post.css";
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderNone, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { useForm } from 'react-hook-form';
-import { getName } from './data';
 import { v4 as uid } from "uuid";
+import {UserContext} from './AppContext';
+import {PostsContext} from './PostsContext';
+import {UserStatusContext} from './UserStatusContext'
+// to account for cross site request forgery vulnerability
+// required by django backend 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 
 const CreatePostStyles = makeStyles((theme) => ({
@@ -123,17 +129,18 @@ const CreatePostStyles = makeStyles((theme) => ({
 
 
 
-const CreatePost = ({posts,
-                    setPosts,
-                    isLoggedIn,
-                    setIsLoggedIn,
-                    LoggedInUserInfo,
-                    setLoggedInUserInfo}) => {
+const CreatePost = () => {
     //state
     const style = CreatePostStyles();
     const [selectedImage, setSelectedImage] = useState({url : "" , raw: ""});
     const [caption, setCaption] = useState("");
     const {register, handleSubmit} = useForm();
+    const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
+    const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
+    const {posts , setPosts} = useContext(PostsContext);
+    const local = localStorage.getItem("userInfo");
+  
+
 
 
     // Event Handlers 
@@ -152,16 +159,36 @@ const CreatePost = ({posts,
 
     //react hook form submit
     const onSubmit = (obj) => {
-		let newPost = {
-			name: LoggedInUserInfo.name,
-			avatar: LoggedInUserInfo.avatar,
-			postImage: selectedImage.url,
-			postComment: caption,
-			id: uid(),
-		};
-    setPosts([newPost, ...posts]);
-    setCaption("");
-    
+      //setting the post to show in frontend
+      let newPost = {
+        owner: JSON.parse(local).name,
+        avatar: LoggedInUserInfo.avatar,
+        photo: selectedImage.url,
+        title: caption,
+        id: uid(),
+      };
+      setPosts([newPost, ...posts]);
+
+      console.log(caption);
+
+      //submitting post details to backend
+      let form_data = new FormData();
+      form_data.append('photo', selectedImage.raw);
+      form_data.append('title',  newPost.postComment);
+      form_data.append('owner',  newPost.name);
+      let url = 'posts/posts/';
+      axios.post(url, form_data, {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'Authorization' : `token ${(LoggedInUserInfo.token || JSON.parse(local).token)}`
+        }
+      })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err))
+
+      setCaption("");
     };
     
     return (
@@ -170,7 +197,7 @@ const CreatePost = ({posts,
       <div className={style.topGroup}>
         <div className={style.PostUser}>
           <div className={style.PostUserAvatar}>
-            <img className={style.image} src={LoggedInUserInfo.avatar} alt="Username" />
+            <img className={style.image} src={LoggedInUserInfo.avatar || JSON.parse(local).avatar} alt="Username" />
           </div>
         </div>
         <div className={style.TextFieldWrapper}>
@@ -189,3 +216,4 @@ const CreatePost = ({posts,
   );
 }
 export default CreatePost;
+

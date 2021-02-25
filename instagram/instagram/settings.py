@@ -25,28 +25,46 @@ SECRET_KEY = 'lw&p886_k8w21c7p867eajw01ru^y7m8e$vuvec8crb-s0b$5q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    '127.0.0.1',
+    'www.007guard.com',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # my apps
+    'posts',
+    'rest_framework',
+    'frontend',
+    'knox',
+    'accounts',
+    'comments',
+    'corsheaders',
+
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
-    'rest_framework',
-    'frontend.apps.FrontendConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
-    'posts.apps.PostsConfig',
-
 ]
+    
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        )
+}
+
+
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +72,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+]
+CORS_ORIGIN_ALLOW_ALL = True
+
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-CSRFTOKEN',
 ]
 
 ROOT_URLCONF = 'instagram.urls'
@@ -126,14 +152,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+LOGIN_REDIRECT_URL = '/posts/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'instagram')
+
 MEDIA_URL ='/media/'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
-

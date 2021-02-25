@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Link as lin } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import logo from '../../static/images/logo.svg';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import {useForm} from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from "axios";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link as Lin,
+  Redirect
+  } from 'react-router-dom';
+import Login from "./Login";
+
 
 //declaring some package instances
 const validator = require("email-validator");
@@ -79,189 +86,140 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
 
-    //state
-     const classes = useStyles();
-     const {register, handleSubmit} = useForm();
-     const [email, setEmail] = useState(1);
-     const [date, setDate] = useState(1);
-     const [isValidEmail, setIsValidEmail] = useState();
-     const [isValidBirthday, setIsValidBirthday] = useState();
+  //state
+    const classes = useStyles();
+    const {register, handleSubmit} = useForm();
+    const [email, setEmail] = useState(1);
+    const [isValidEmail, setIsValidEmail] = useState();
 
-     //event handlers
-     const emailChangeHandler = (e) => {
-         const newEmail = e.target.value;
-         setEmail(newEmail);
-     }
-
-     const dateChangeHandler = (e) => {
-         const newDate = e.target.value;
-        setDate(newDate);
+    
+    
+    //event handlers
+    const emailChangeHandler = (e) => {
+      const newEmail = e.target.value;
+      setEmail(newEmail);
     }
 
-    const emailValidationHandler = () => {
-        const result = validator.validate(email);
-        if(result === true){
-            setIsValidEmail(!true);
-        }
-        else{
-            setIsValidEmail(!false);
-        }
+  const emailValidationHandler = () => {
+    const result = validator.validate(email);
+    if(result === true){
+      setIsValidEmail(!true);
     }
-
-    const birthdayValidationHandler = () => {
-        const result = isValidBd(date);
-        if(result === true){
-            setIsValidBirthday(!true);
-        }
-        else{
-            setIsValidBirthday(!false);
-        }
+    else{
+      setIsValidEmail(!false);
     }
+  }
 
-    //Submit to api endpoint
-    const submitHandler = (dataObject) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify(dataObject),
-        }; // bad endpoint!! change it after configuring the backend!
-        fetch('api/user', requestOptions).then((response) => 
-        response.json).then((data) => console.log(data));
+  //Submit to api endpoint
+  const submitHandler = (dataObject) => {
+    const requestOptions = {
+        body: JSON.stringify(dataObject),  
     };
-    
-    
-     
-   
-    
+      axios.post('/join', requestOptions.body, {headers: {'Content-Type' : 'application/json'}})
+      .then((response) => {
+        console.log(response);
+        window.location = "/signin";
+      }, (error) => {
+        console.log(error);
+      });
+  };
 
-    return(
-        <Container className={classes.layout}>
+  return(
+  <Container className={classes.layout}>
     <CssBaseline />
     <div className={classes.paper}>
     <Grid container spacing={1}>
         <Grid container justify="space-around" item  xs={12}><img className={classes.imag} src={logo}></img></Grid>
     </Grid>
-        <form className={classes.form} onSubmit={handleSubmit((data) => submitHandler(data))}>
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-            <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                inputRef={register}
-            />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                
-                autoComplete="lname"
-                inputRef={register}
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={emailChangeHandler}
-                onBlur={emailValidationHandler}
-                inputRef={register}
-                error={isValidEmail}
-                helperText={isValidEmail? "Please enter a valid email!": ""}
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="username"
-                name="username"
-                inputRef={register}
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                inputRef={register}
-                
-            />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <InputLabel id="gender-select">Gender</InputLabel>
-                <Select name="gender" className={classes.dropdown} labelId="gender-select" id="gender" inputRef={register} required>
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
-                </Select>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            <TextField
-                id="date"
-                name="birthday"
-                label="Birthday"
-                type="date"
-                required
-                className={classes.textField}
-                className={classes.dropdown}
-                onChange={dateChangeHandler}
-                onBlur={birthdayValidationHandler}
-                error={isValidBirthday}
-                helperText={isValidBirthday? "Please enter a valid birthday!": ""}
-                inputRef={register}
-                InputLabelProps={{
-                shrink: true,
-                }}
-            />
-            </Grid>
-        </Grid>
-        <Button
-            type="submit"
+      <form className={classes.form} onSubmit={handleSubmit((data) => submitHandler(data))}>
+      <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+          <TextField
+              autoComplete="fname"
+              name="first_name"
+              variant="outlined"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              autoFocus
+              inputRef={register}
+          />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="last_name"
+              
+              autoComplete="lname"
+              inputRef={register}
+          />
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              inputRef={register}
+          />
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={emailChangeHandler}
+              onBlur={emailValidationHandler}
+              inputRef={register}
+              error={isValidEmail}
+              helperText={isValidEmail? "Please enter a valid email!": ""}
+          />
+          </Grid>
+          <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-        >
-            Sign Up
-        </Button>
-        <Grid container justify="flex-end">
-            <Grid item>
-            <Link href="signin" variant="body2" color="textPrimary">
-                Already have an account? Sign in
-            </Link>
-            </Grid>
-        </Grid>
-        </form>
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            inputRef={register}
+          />
+          </Grid>
+      </Grid>
+      <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+      >
+          Sign Up
+      </Button>
+      <Grid container justify="flex-end">
+          <Grid item>
+          <Link href="signin" variant="body2" color="textPrimary">
+              Already have an account? Sign in
+          </Link>
+          </Grid>
+      </Grid>
+      </form>
     </div>
-   
     </Container>
-  
-    );
-   
-    
-  };
+  ); 
+};
 
-  export default SignUp;
+export default SignUp;
