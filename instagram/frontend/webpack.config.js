@@ -9,7 +9,7 @@ module.exports = {
     filename: "[name].js",
     sourceMapFilename: "[name].js.map"
   },
-  devtool: "source-map",
+  // devtool: "source-map",
   module: {
     rules: [
       {

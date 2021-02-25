@@ -1,4 +1,24 @@
-language: python
-python:
-- "3.6"
+matrix: 
+  include:
+    - language: python
+      python:
+      - "3.8-dev"
+      cache: pip
+      
+      install:
+        - pip install -r requirements.txt
+      before_script:
+        - cd instagram
+      script: 
+        - python manage.py test
 
+    - language: node_js
+      node_js:
+      - "14"
+      - "15"
+      before_install:
+        - cd instagram/frontend
+      install: 
+        - npm install
+      script: 
+        - npm test
