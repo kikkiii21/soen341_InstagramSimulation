@@ -1,24 +1,33 @@
-from django.shortcuts import render
 from rest_framework import generics, status, viewsets, permissions
 from rest_framework.views import APIView
+
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from .serializers import PostSerializer
 from .models import Post
-from rest_framework.decorators import api_view
-from rest_framework import viewsets, permissions
 from .permissions import IsOwnerOrReadOnly
-
-
-# from .serializers import PostSerializer
-# from .models import Post
-# from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
-# from rest_framework.response import Response
+# from django.shortcuts import render
+# from rest_framework.parsers import MultiPartParser, FormParser
 # from rest_framework import status
+
 # Create your views here.
 
+# PostViewAPI
+class PostAPI(generics.ListCreateAPIView):
+	queryset = Post.objects.all()
+	serializer_class = PostSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+	def perform_create(self, serializer):
+		serializer.save(owner=self.request.user)
+
+class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Post.objects.all()
+	serializer_class = PostSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
 # class PostView(APIView):
-	
 #     parser_classes = (MultiPartParser, FormParser)
 
 #     def get(self, request, *args, **kwargs):
@@ -36,22 +45,6 @@ from rest_framework.parsers import MultiPartParser, FormParser
 #             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-# PostViewAPI
-class PostAPI(generics.ListCreateAPIView):
-	queryset = Post.objects.all()
-	serializer_class = PostSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-	def perform_create(self, serializer):
-		serializer.save(owner=self.request.user)
-
-class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Post.objects.all()
-	serializer_class = PostSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-# UserProfile Viewset
 # class PostViewSet(viewsets.ModelViewSet):
 # 	queryset = Post.objects.all()
 # 	permission_classes = [permissions.AllowAny]
@@ -63,9 +56,6 @@ class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 # 	def perform_create(self, serializer):
 # 		serializer.save(owner=self.request.user)
 	
-
-
-# Create your views here.
 # @api_view(['GET', 'POST'])
 # def posts_list(request):
 # 	if request.method == 'GET':
@@ -82,6 +72,7 @@ class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 # 			return Response(status=status.HTTP_201_CREATED)
 
 # 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # @api_view(['PUT', 'DELETE'])
 # def post_details(request, pk):
@@ -109,13 +100,16 @@ class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 # 	def perform_create(self, serializer):
 # 		serializer.save(uploaded_by=self.request.user)
 
+
 # class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 # 	queryset = Post.objects.all()
 # 	serializer_class = serializers.PostSerializer
 	
+
 # class UserView(generics.CreateAPIView):
 #     queryset = UserProfile.objects.all()
 #     serializer_class = UserSerializer
+
 
 # class PostView(generics.ListAPIView):
 # 	queryset = Post.objects.all()

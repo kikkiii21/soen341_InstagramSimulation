@@ -17,7 +17,7 @@ const PostList = () => {
 
 
   useEffect( () => {
-    axios.get('posts/posts/')
+    axios.get('posts/')
       .then((response) => {
         setPosts(response.data);
         // console.log(response.data)
