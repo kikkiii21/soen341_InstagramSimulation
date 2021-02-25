@@ -48,15 +48,16 @@ const CreatePostStyles = makeStyles((theme) => ({
 			display: "none",
     },
 		postBtn: {
-			border: "none",
-			backgroundColor: "#0095F6",
-			width: '60px',
-			height: '35px',
-			color: '#fff',
-			fontSize: '18px',
-			transition: 'background 0.5s ease',
-			// borderRadius: '15px',
+      backgroundColor: "#0095F6",
+      fontSize: '15px',
+      padding: '5px 10px',
+      margin: '5px 0px',
+      transitionDuration: '0.4s',
+      border: 'none',
+      borderRadius: '5px',
+      margin: '0px 10px',
       outline: 'none',
+      color: '#fff',
 
 			'&:hover': {
 				backgroundColor: "#000",
@@ -65,13 +66,18 @@ const CreatePostStyles = makeStyles((theme) => ({
 			
 		},
     imgBtn: {
-			backgroundColor: "#0095F6",
-			margin: "0px 10px 0px 10px",
-			color: '#fff',
-			padding: '8px',
-			width: '80px',
-			height: '20px',
-			// borderRadius: '15px',
+			width: '90px',
+			height: '30px',
+      backgroundColor: "#0095F6",
+      fontSize: '25px',
+      padding: '5px 10px',
+      margin: '5px 0px',
+      transitionDuration: '0.4s',
+      border: 'none',
+      borderRadius: '5px',
+      margin: '0px 10px',
+      outline: 'none',
+      color: '#fff',
 			'&:hover':{
 				backgroundColor: '#000',
 			},
@@ -174,7 +180,7 @@ const CreatePost = () => {
       //submitting post details to backend
       let form_data = new FormData();
       form_data.append('photo', selectedImage.raw);
-      form_data.append('title',  newPost.postComment);
+      form_data.append('title',  newPost.title);
       form_data.append('owner',  newPost.name);
       let url = 'posts/posts/';
       axios.post(url, form_data, {

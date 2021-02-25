@@ -10,7 +10,7 @@ const UserInfoStyles = makeStyles((theme) => ({
         backgroundColor: '#fff',
         padding: '30px',
         boxShadow: '2px 2px 50px rgb(204, 204, 204)',
-        width: "-webkit-fill-available",
+        width: "60%",
         marginRight: '5%',        
     },
     paper: {

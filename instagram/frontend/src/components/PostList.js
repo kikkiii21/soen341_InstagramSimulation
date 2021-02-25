@@ -6,6 +6,9 @@ import { v4 as uid } from "uuid";
 import {UserContext} from './AppContext';
 import {UserStatusContext} from './UserStatusContext'
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
  
 
 const PostList = () => {
@@ -15,7 +18,18 @@ const PostList = () => {
   const [loading, setLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
 
-
+  const getProfileImage = axios.get('https://faceapi.herokuapp.com/faces?n=1')
+    .then((res) => {
+      return res.data;
+    }).catch(err => {
+      console.error(err);
+    })
+  
+ 
+console.log(getProfileImage);
+  
+  
+  
   useEffect( () => {
     axios.get('posts/')
       .then((response) => {
@@ -31,16 +45,12 @@ const PostList = () => {
     localStorage.setItem("posts", JSON.stringify(posts));
   },[posts])
 
- 
 
- 
 
     return(
       <>
-        
         {loading? <div>Loading ...</div> : posts.map((item) => (
           <Posts name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
-          
         ))}
       </>
     );

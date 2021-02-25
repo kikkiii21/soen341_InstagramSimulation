@@ -22,31 +22,20 @@ import {
   } from 'react-router-dom';
 
 
-
-
 const homeStyles = makeStyles((theme) => ({
-    contain: {
-        position: 'fixed',
-    },
- 
+  contain: {
+    position: 'fixed',
+  },
 }));
-
-
 
 
 const HomePage = () => {
 
     //state 
     const {posts,setPosts} = useContext(PostsContext);
-    // const [isLoggedIn, setIsLoggedIn] = useState(true); // temporarily a static logged in user
-    // const [LoggedInUserInfo, setLoggedInUserInfo] = useState({name: "Arthur Morgan", avatar: "../../static/images/arthur.jpg", id: uid()});
     const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
     const status = localStorage.getItem("userStatus")
-
-
-    console.log(isLoggedIn);
-
     
   const style = homeStyles();
   return(
@@ -70,21 +59,17 @@ const HomePage = () => {
       </Grid>
       <Grid item sm={12} md={8} >
           <Grid container direction="row" justify="center" alignItems="center">
-              <Grid item xs={10}>
-                  <CreatePost 
-      
-                  />
-              </Grid>
-              <PostList/>
+            <Grid item xs={10}>
+                <CreatePost/>
+            </Grid>
+            <Grid item xs={10}>
+                <PostList/>
+            </Grid>    
           </Grid>
       </Grid>
       <Hidden only={['sm','xs']}>
-        <Grid item md={4}>
-            <Grid container direction="column" justify="center" alignItems="center">
-                <Grid  item xs={12}>
-                  <UserInfo />
-                </Grid>
-            </Grid>
+        <Grid item  md={4}>
+          <UserInfo />
         </Grid>
       </Hidden>
     </Grid>

@@ -5,23 +5,29 @@ import { FaBars } from 'react-icons/fa'
 export const Nav = styled.nav `
  background: #fff;
  border-color:#000;
- border-width: 10px;
+ ${'' /* border-width: 10px; */}
  height:80px;
  display:flex;
- justify-content:space-between;
+ justify-content:space-around;
  padding:0.5rem calc((100vw-1000px)/2);
  z-index:10;
+ position: fixed;
+ width: 100%;
+ top: 0;
+ left:0;
+ box-shadow: 2px 2px 50px rgb(204, 204, 204);
  `
 
 export const NavLink = styled(Link)
 `
-    color:#000;
+    
     display: flex;
     align-items:center;
     text-decoration:none;
     padding:0 1rem;
     height:100%;
     cursor:pointer;
+    margin: 0% 1%;
 
 
     &.active{
@@ -30,30 +36,12 @@ export const NavLink = styled(Link)
     }
  `
 
-export const Bars = styled(FaBars)
-`
-    display:none;
-    color:#fff;
 
-    @media screen and (max-width:768px){
-        display:block;
-        position:absolute;
-        top:0;
-        right:0;
-        transform:translate(-100%,75%);
-        font-size:1.8rem;
-        cursor: pointer;
-    }
- `
 
 export const NavMenu = styled.div `
     display: flex;
-    align-items:center;
-    margin-right:--24px;
     
-    @media screen and (max-width: 760px){
-        display: none;
-    }
+    
  `
 
 export const NavBtn = styled.nav `
@@ -61,15 +49,13 @@ export const NavBtn = styled.nav `
  align-items:center;
  margin-right:24px;
 
- @media screen and (max-width:768px){
-     display:none;
- }`
+ `
 
 export const NavBtnLink = styled(Link)
 `
     border-radius:4px;
     display:flex;
-    background:#edebeb;
+    background-color: #abadb0;
     padding: 5px 5px;
     color:#fff;
     border:none;
@@ -77,10 +63,12 @@ export const NavBtnLink = styled(Link)
     cursor: pointer;
     transition:all 0.2s ease-in-out;
     text-decoration:none;
+    width:100%;
+    margin-left: 20px;
 
     &:hover{
         transition:all 0.2s ease-in-out;
-        background:#fff;
-        color:#edebeb;
+        color: #fff;
+        background:#e8415d;
     }
  `
