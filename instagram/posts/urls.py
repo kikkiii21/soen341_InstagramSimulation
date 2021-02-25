@@ -1,5 +1,5 @@
 from django.urls import path, re_path, include
-from .views import PostView
+from .views import PostAPI
 from rest_framework import routers
 from .views import PostDetailAPI
 
@@ -9,7 +9,7 @@ from .views import PostDetailAPI
 urlpatterns = [
 	# router.urls,
 	# path('', include(router.urls)),
-	path('posts/', PostView.as_view()),
+	path('posts/', PostAPI.as_view()),
 	path('posts/<int:pk>/', PostDetailAPI.as_view()),
 	# path('posts/', PostAPI.as_view(), name= 'posts_list'),
 

@@ -27,6 +27,6 @@ urlpatterns = [
     path('posts/', include('posts.urls')),
     path('', include('frontend.urls')),
     path('', include('accounts.urls')),
-    # path('', include('rest_framework.urls')),
+    # path('auth/', include('rest_framework.urls')),
     path('', include('comments.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
