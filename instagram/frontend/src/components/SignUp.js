@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { Link as lin } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import logo from '../../static/images/logo.svg';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import {useForm} from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link as Lin,
+  Redirect
+  } from 'react-router-dom';
+import Login from "./Login";
 
 
 //declaring some package instances
@@ -86,6 +91,7 @@ const SignUp = () => {
     const {register, handleSubmit} = useForm();
     const [email, setEmail] = useState(1);
     const [isValidEmail, setIsValidEmail] = useState();
+
     
     
     //event handlers
@@ -112,6 +118,7 @@ const SignUp = () => {
       axios.post('/join', requestOptions.body, {headers: {'Content-Type' : 'application/json'}})
       .then((response) => {
         console.log(response);
+        window.location = "/signin";
       }, (error) => {
         console.log(error);
       });
@@ -136,7 +143,7 @@ const SignUp = () => {
               id="firstName"
               label="First Name"
               autoFocus
-              // inputRef={register}
+              inputRef={register}
           />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -149,7 +156,7 @@ const SignUp = () => {
               name="last_name"
               
               autoComplete="lname"
-              // inputRef={register}
+              inputRef={register}
           />
           </Grid>
           <Grid item xs={12}>

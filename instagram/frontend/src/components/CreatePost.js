@@ -6,9 +6,9 @@ import { faBorderNone, faImage, faImages } from '@fortawesome/free-solid-svg-ico
 import axios from "axios";
 import { useForm } from 'react-hook-form';
 import { v4 as uid } from "uuid";
-import {UserContext, UserStatusContext} from './AppContext'
-import {PostsContext} from './PostsContext'
-
+import {UserContext} from './AppContext';
+import {PostsContext} from './PostsContext';
+import {UserStatusContext} from './UserStatusContext'
 // to account for cross site request forgery vulnerability
 // required by django backend 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -162,15 +162,18 @@ const CreatePost = () => {
         name: LoggedInUserInfo.name,
         avatar: LoggedInUserInfo.avatar,
         photo: selectedImage.url,
-        postComment: caption,
+        title: caption,
         id: uid(),
       };
       setPosts([newPost, ...posts]);
 
+      console.log(caption);
+
       //submitting post details to backend
       let form_data = new FormData();
       form_data.append('photo', selectedImage.raw);
-      form_data.append('title',  selectedImage.raw.name);
+      form_data.append('title',  newPost.postComment);
+      form_data.append('owner',  newPost.name);
       let url = 'posts/posts/';
       axios.post(url, form_data, {
         headers: {
@@ -181,6 +184,8 @@ const CreatePost = () => {
         console.log(res.data);
       })
       .catch(err => console.log(err))
+
+      setCaption("");
     };
     
     return (

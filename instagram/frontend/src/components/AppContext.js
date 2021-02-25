@@ -11,7 +11,9 @@ import React, {createContext} from 'react';
 export const UserContext = createContext(null);
 
 // login status context
-export const UserStatusContext = createContext(false);
+
+
+
 
 
 

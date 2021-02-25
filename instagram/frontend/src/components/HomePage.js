@@ -9,9 +9,10 @@ import UserInfo from "./UserInfo";
 import PostList from "./PostList";
 import Hidden from '@material-ui/core/Hidden';
 import { v4 as uid } from "uuid";
-import { UserContext, UserStatusContext } from "./AppContext";
+import { UserContext } from "./AppContext";
 import {PostsContext} from './PostsContext'
 import axios from 'axios';
+import {UserStatusContext} from './UserStatusContext';
 
 
 
@@ -24,35 +25,19 @@ const homeStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 const HomePage = () => {
 
     //state 
-    // const {posts,setPosts} = useContext(PostsContext);
+    const {posts,setPosts} = useContext(PostsContext);
     // const [isLoggedIn, setIsLoggedIn] = useState(true); // temporarily a static logged in user
     // const [LoggedInUserInfo, setLoggedInUserInfo] = useState({name: "Arthur Morgan", avatar: "../../static/images/arthur.jpg", id: uid()});
     const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
 
-    
 
-    // const fetchData  = async () => {
-    //   await axios.get('posts/posts/')
-    //   .then((response) => {
-    //     // let parsedJSON = JSON.parse(response.data);
-    //     // console.log(parsedJSON);
-    //     console.log(response.data);
-    //     let fetchedPosts = response.data;
-    //     return fetchedPosts;
-    //   });
-    // };
-    
-    
-
-    // useEffect(() => {
-    //   setPosts(...posts,fetchData());
-    // }, []);
-
-    
+    console.log(JSON.parse((localStorage.getItem("userStatus"))));
 
     
     const style = homeStyles();
@@ -85,12 +70,7 @@ const HomePage = () => {
           <Grid item md={4}>
               <Grid container direction="column" justify="center" alignItems="center">
                   <Grid  item xs={12}>
-                    <UserInfo
-                    isLoggedIn={isLoggedIn}
-                    setIsLoggedIn={setIsLoggedIn}
-                    LoggedInUserInfo={LoggedInUserInfo}
-                    setLoggedInUserInfo={setLoggedInUserInfo}
-                    />
+                    <UserInfo />
                   </Grid>
               </Grid>
           </Grid>
