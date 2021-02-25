@@ -33,3 +33,13 @@ class LoginSerializer(serializers.Serializer):
 		if user and user.is_active:
 			return user
 		raise serializers.ValidationError("Incorrect Credentials")
+
+# class UpdateProfileSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = UserProfile
+# 		fields = ('email')
+
+# class UserProfileSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = UserProfile
+# 		fields = ('name', 'email')

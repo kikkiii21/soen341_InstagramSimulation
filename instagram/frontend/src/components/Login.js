@@ -99,6 +99,7 @@ const Login = () => {
           id: userId,
           token:token
           };
+          console.log(newInfo.token);
           setLoggedInUserInfo(newInfo);
             setIsLoggedIn(true);
       }, (error) => {
