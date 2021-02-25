@@ -138,6 +138,8 @@ const CreatePost = () => {
     const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
     const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
     const {posts , setPosts} = useContext(PostsContext);
+    const local = localStorage.getItem("userInfo");
+  
 
 
 
@@ -159,7 +161,7 @@ const CreatePost = () => {
     const onSubmit = (obj) => {
       //setting the post to show in frontend
       let newPost = {
-        name: LoggedInUserInfo.name,
+        owner: JSON.parse(local).name,
         avatar: LoggedInUserInfo.avatar,
         photo: selectedImage.url,
         title: caption,
@@ -177,7 +179,8 @@ const CreatePost = () => {
       let url = 'posts/posts/';
       axios.post(url, form_data, {
         headers: {
-          'content-type': 'multipart/form-data'
+          'content-type': 'multipart/form-data',
+          'Authorization' : `token ${(LoggedInUserInfo.token || JSON.parse(local).token)}`
         }
       })
       .then(res => {
@@ -194,7 +197,7 @@ const CreatePost = () => {
       <div className={style.topGroup}>
         <div className={style.PostUser}>
           <div className={style.PostUserAvatar}>
-            <img className={style.image} src={LoggedInUserInfo.avatar} alt="Username" />
+            <img className={style.image} src={LoggedInUserInfo.avatar || JSON.parse(local).avatar} alt="Username" />
           </div>
         </div>
         <div className={style.TextFieldWrapper}>
@@ -213,3 +216,4 @@ const CreatePost = () => {
   );
 }
 export default CreatePost;
+

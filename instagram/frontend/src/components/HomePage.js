@@ -14,6 +14,13 @@ import {PostsContext} from './PostsContext'
 import axios from 'axios';
 import {UserStatusContext} from './UserStatusContext';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+  } from 'react-router-dom';
+
 
 
 
@@ -35,48 +42,54 @@ const HomePage = () => {
     // const [LoggedInUserInfo, setLoggedInUserInfo] = useState({name: "Arthur Morgan", avatar: "../../static/images/arthur.jpg", id: uid()});
     const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
+    const status = localStorage.getItem("userStatus")
 
 
-    console.log(JSON.parse((localStorage.getItem("userStatus"))));
+    console.log(isLoggedIn);
 
     
-    const style = homeStyles();
-    return(
-      <Grid container spacing={3}>
-        <Grid item xs={12} >
-            <Paper >
-              <Header />
-            </Paper>
-        </Grid>
-        <Grid item xs={12} >
-        </Grid>
-        <Grid item xs={12} >
-        </Grid>
-        <Grid item xs={12} >
-        </Grid>
-        <Grid item xs={12} >
-        </Grid>
-        <Grid item sm={12} md={8} >
-            <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={10}>
-                    <CreatePost 
-        
-                    />
+  const style = homeStyles();
+  return(
+    <>
+      <Route >
+        {(!isLoggedIn && !JSON.parse(status)) ? <Redirect to="/signup" /> : ""}
+      </Route>
+    <Grid container spacing={3}>
+      <Grid item xs={12} >
+          <Paper >
+            <Header />
+          </Paper>
+      </Grid>
+      <Grid item xs={12} >
+      </Grid>
+      <Grid item xs={12} >
+      </Grid>
+      <Grid item xs={12} >
+      </Grid>
+      <Grid item xs={12} >
+      </Grid>
+      <Grid item sm={12} md={8} >
+          <Grid container direction="row" justify="center" alignItems="center">
+              <Grid item xs={10}>
+                  <CreatePost 
+      
+                  />
+              </Grid>
+              <PostList/>
+          </Grid>
+      </Grid>
+      <Hidden only={['sm','xs']}>
+        <Grid item md={4}>
+            <Grid container direction="column" justify="center" alignItems="center">
+                <Grid  item xs={12}>
+                  <UserInfo />
                 </Grid>
-                <PostList/>
             </Grid>
         </Grid>
-        <Hidden only={['sm','xs']}>
-          <Grid item md={4}>
-              <Grid container direction="column" justify="center" alignItems="center">
-                  <Grid  item xs={12}>
-                    <UserInfo />
-                  </Grid>
-              </Grid>
-          </Grid>
-        </Hidden>
-      </Grid>
-    );
+      </Hidden>
+    </Grid>
+    </>
+  );
    
 };
 

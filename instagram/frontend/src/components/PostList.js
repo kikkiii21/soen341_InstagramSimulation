@@ -13,6 +13,8 @@ const PostList = () => {
   const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
   const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
   const [loading, setLoading] = useState(true);
+  const localPosts = localStorage.getItem("userInfo");
+
 
   useEffect( () => {
     axios.get('posts/posts/')
@@ -37,7 +39,7 @@ const PostList = () => {
       <>
         
         {loading? <div>Loading ...</div> : posts.map((item) => (
-          <Posts name={item.owner}  avatar={LoggedInUserInfo.avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
+          <Posts name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
           
         ))}
       </>

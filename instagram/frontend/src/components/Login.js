@@ -77,6 +77,7 @@ const Login = () => {
      const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
      const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
      const [allSet, setAllSet] = useState(false);
+    
      
      
     
@@ -106,10 +107,12 @@ const Login = () => {
     };
     
     useEffect(() => {
-      if (isLoggedIn === true && LoggedInUserInfo.name !== "Arthur Morgan") {
+      if (isLoggedIn === true && LoggedInUserInfo.name !== null) {
         setAllSet(true);
         localStorage.setItem("userInfo", JSON.stringify(LoggedInUserInfo))
         localStorage.setItem("userStatus", JSON.stringify(isLoggedIn))
+        
+
       }
     }, [LoggedInUserInfo,isLoggedIn]);
 

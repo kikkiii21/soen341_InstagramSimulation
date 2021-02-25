@@ -54,19 +54,17 @@ const UserInfo = () => {
   const user = UserInfoStyles();
   const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
   const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
+  const localInfo = localStorage.getItem("userInfo");
   const localStatus = localStorage.getItem("userStatus");
-  const localInfo = localStorage.getItem("userStatus");
 
-
-  
   return(
     <div className={user.card}>
       <div className={user.PostUser}>
         <div className={user.PostUserAvatar}>
-            <img className={user.image} src={LoggedInUserInfo.avatar || JSON.parse(localInfo).avatar} alt="Username" />
+            <img className={user.image} src={ JSON.parse(localInfo).avatar || LoggedInUserInfo.avatar} alt="Username" />
           </div>
           <div className={user.PosUserNickname}>
-            <span>{LoggedInUserInfo.name || JSON.parse(localInfo).name}</span>
+            <span>{JSON.parse(localInfo).name || LoggedInUserInfo.name}</span>
           </div>
       </div>
     </div>
