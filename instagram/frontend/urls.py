@@ -3,4 +3,8 @@ from .views import index
 
 urlpatterns = [
     path('', index),
+    path('signup', index),
+    path('signin', index),
+    path('homepage', index),
+
 ]
