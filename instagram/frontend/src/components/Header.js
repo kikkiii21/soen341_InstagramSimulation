@@ -1,19 +1,28 @@
 import React from "react";
 import "../../static/css/header.css"
-
+import Navbar from './Navbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages';
+import About from './pages/about';
+import Subscribed from './pages/subscribed';
+import Myprofile from './pages/myprofile';
+import Account from './pages/account';
 
 
 const Header = () => {
     return(
-        <nav className="Nav">
-                 <div className="Nav-menus">
-                   <div className="Nav-brand">
-                     <a className="Nav-brand-logo" href="/">
-                       Instagram
-                     </a>
-                   </div>
-                 </div>
-               </nav>     
+ 
+      <div>
+        
+        <Navbar / >
+        <switch>
+        <Route path = '/subscribed' component = { Subscribed } />
+        <Route path = '/myprofile' component = { Myprofile }/>
+        <Route path = '/account' component = { Account }/>
+        </switch>
+         </div >
+                
+                 
     );
 }
 
