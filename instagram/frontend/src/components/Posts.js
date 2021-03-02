@@ -1,6 +1,7 @@
 import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
+import Collapsible from "./Collapsible";
 
 
 const Posts = ({name, avatar, postImage, postComment, key}) => {
@@ -29,6 +30,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     <b/>
       <button class="button">Comment</button>
       </div>
+      <Collapsible />
     </div>  
   </article>
   </Grid>
