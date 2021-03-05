@@ -160,3 +160,4 @@ yarn-error.log*
 instagram/frontend/static/frontend/main.js
 instagram/frontend/static/frontend/main.js
 instagram/frontend/static/frontend/main.js.LICENSE.txt
+migrations/
