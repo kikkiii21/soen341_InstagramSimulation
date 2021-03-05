@@ -19,7 +19,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     </header>
     <div className="Post-image">
       <div className="Post-image-bg">
-        <img alt="Icon Living" src={postImage} />
+        <img alt="Image was not found" src={postImage} />
       </div>
     </div>
     <div className="Post-caption">

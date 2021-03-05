@@ -10,8 +10,7 @@ const UserInfoStyles = makeStyles((theme) => ({
         backgroundColor: '#fff',
         padding: '30px',
         boxShadow: '2px 2px 50px rgb(204, 204, 204)',
-        width: "60%",
-        marginRight: '5%',        
+        width: '70%',   
     },
     paper: {
         padding: theme.spacing(1),

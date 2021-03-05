@@ -8,7 +8,8 @@ import { useForm } from 'react-hook-form';
 import { v4 as uid } from "uuid";
 import {UserContext} from './AppContext';
 import {PostsContext} from './PostsContext';
-import {UserStatusContext} from './UserStatusContext'
+import {UserStatusContext} from './UserStatusContext';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 // to account for cross site request forgery vulnerability
 // required by django backend 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -58,6 +59,7 @@ const CreatePostStyles = makeStyles((theme) => ({
       margin: '0px 10px',
       outline: 'none',
       color: '#fff',
+      height: '40px',
 
 			'&:hover': {
 				backgroundColor: "#000",
@@ -66,11 +68,11 @@ const CreatePostStyles = makeStyles((theme) => ({
 			
 		},
     imgBtn: {
-			width: '90px',
+			width: '40px',
 			height: '30px',
       backgroundColor: "#0095F6",
       fontSize: '25px',
-      padding: '5px 10px',
+      padding: '5px 8px',
       margin: '5px 0px',
       transitionDuration: '0.4s',
       border: 'none',
@@ -210,7 +212,7 @@ const CreatePost = () => {
       </div>
       <div className={style.bottomGroup}>
         <label for="img-upload">
-          <FontAwesomeIcon className={style.imgBtn} icon={faImages} size="2x" />
+          <AddPhotoAlternateIcon className={style.imgBtn} fontSize="default" />
         </label>
         <input required value={null} onChange={imageSelectedHandler} ref={register} name="picture" id="img-upload" className={style.hideImageInput} type="file" />
         <button className={style.postBtn} >Post</button>

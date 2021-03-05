@@ -1,4 +1,4 @@
-/* .Nav {
+.Nav {
     background-color: #FFFFFF;
     border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
     position:fixed;
@@ -15,11 +15,12 @@
   .Nav-menus {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     height: 77px;
     width: 70%;
     margin: 0 auto;
     padding: 26px 40px;
-  } */
+  }
   .Nav-brand-logo {
     display: block;
     background-position: -176px 0px;
@@ -31,22 +32,14 @@
     text-indent: -1000%
   }
 
-  .top-bar{
+  .nav-actions {
+    width: 100%;
     display: flex;
-     justify-content: space-between;
-     
-    
+    flex-direction: row;
+    justify-content: space-around;
   }
 
-  .position-fix {
-    margin-left: 1%;
-  }
 
-  .nav-images{
-    width: 2rem;
-  }
-
-  .nav-image:hover{
-    color: #FFFFFF;
-    background-color: #000;
+  .spacer {
+    width: 35vw;
   }
