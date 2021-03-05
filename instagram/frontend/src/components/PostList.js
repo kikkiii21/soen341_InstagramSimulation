@@ -18,15 +18,6 @@ const PostList = () => {
   const [loading, setLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
 
-  const getProfileImage = axios.get('https://faceapi.herokuapp.com/faces?n=1')
-    .then((res) => {
-      return res.data;
-    }).catch(err => {
-      console.error(err);
-    })
-  
- 
-console.log(getProfileImage);
   
   
   

@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -79,6 +80,17 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translate(-50%,-50%)',
       },
 
+      error: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F8D7DA',
+        border: 'solid 0.5px #F5C6CB',
+        borderRadius: '2px',
+        color: '#722D36',
+        padding: '10px',
+      }
+
 }));
 
 
@@ -91,6 +103,7 @@ const SignUp = () => {
     const {register, handleSubmit} = useForm();
     const [email, setEmail] = useState(1);
     const [isValidEmail, setIsValidEmail] = useState();
+    const [isExistingUser, setIsExistingUser] = useState(false);
 
     
     
@@ -117,10 +130,12 @@ const SignUp = () => {
     };
       axios.post('/join', requestOptions.body, {headers: {'Content-Type' : 'application/json'}})
       .then((response) => {
-        console.log(response);
+        localStorage.setItem("registrationSuccess", JSON.stringify(true));
+        setIsExistingUser(false);
         window.location = "/signin";
       }, (error) => {
-        console.log(error);
+        console.log(error.response.status);
+        setIsExistingUser(true);
       });
   };
 
@@ -133,6 +148,12 @@ const SignUp = () => {
     </Grid>
       <form className={classes.form} onSubmit={handleSubmit((data) => submitHandler(data))}>
       <Grid container spacing={2}>
+          {isExistingUser && 
+          <Grid item xs={12}>
+            <div className={classes.error}>
+              username is already taken! please try a different one! 
+            </div>
+          </Grid>}
           <Grid item xs={12} sm={6}>
           <TextField
               autoComplete="fname"
