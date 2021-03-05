@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import UserProfile,Connection
+from .models import Profile, Follow
+
+
+# class ProfileSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = UserProfile
+# 		fields = ('username', 'image')
+
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -15,16 +22,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
-	class Meta: 
+	class Meta:
 		model = User
 		fields = ('id', 'username', 'email', 'password')
 		extra_kwargs = {'password': {'write_only': True}}
 
-	def create(self, validated_data):
-		user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
 
-		return user
-
+def create(self, validated_data):
+	user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+	return user
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
@@ -44,21 +50,21 @@ class UserListSerializer(serializers.ModelSerializer):
 	follows_requesting_user = serializers.SerializerMethodField()
 
 	class Meta:
-		model = UserProfile
-		fields = ('following', 'follows_requesting_user', 'follow_link',)
+		model = Profile
+		fields = ('following', 'follows_requesting_user', 'follow_link',) #do we need follow_link
 
 
 def get_following(self, obj):
 	creator = self.context['request'].user
 	following = obj.user
-	connected = Connection.objects.filter(creator=creator, following=following)
+	connected = Follow.objects.filter(creator=creator, following=following)
 	return len(connected)
 
 
 def get_follows_requesting_user(self, obj):
 	creator = self.context['request'].user
 	following = obj.user
-	connected = Connection.objects.filter(creator=following, following=creator)
+	connected = Follow.objects.filter(creator=following, following=creator)
 	return len(connected)
 
 

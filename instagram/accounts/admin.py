@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Connection,UserProfile
+from .models import Follow, Profile
 
 # Register your models here.
-admin.site.register(Connection)
-admin.site.register(UserProfile)
+admin.site.register(Follow)
+admin.site.register(Profile)
