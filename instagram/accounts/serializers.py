@@ -14,10 +14,11 @@ from .models import Profile, Follow
 class UserSerializer(serializers.ModelSerializer):
 	posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	follows = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments')
+		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'follows')
 
 
 # Register Serializer
@@ -28,9 +29,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 		extra_kwargs = {'password': {'write_only': True}}
 
 
-def create(self, validated_data):
-	user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-	return user
+	def create(self, validated_data):
+		user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+		return user
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
@@ -45,13 +46,12 @@ class LoginSerializer(serializers.Serializer):
 
 
 # followers
-class UserListSerializer(serializers.ModelSerializer):
-	following = serializers.SerializerMethodField()
-	follows_requesting_user = serializers.SerializerMethodField()
+class FollowSerializer(serializers.ModelSerializer):
+	user = serializers.ReadOnlyField(source='user.username')
 
 	class Meta:
-		model = Profile
-		fields = ('following', 'follows_requesting_user', 'follow_link',) #do we need follow_link
+		model = Follow
+		fields = ('user', 'following')
 
 
 def get_following(self, obj):
@@ -61,11 +61,11 @@ def get_following(self, obj):
 	return len(connected)
 
 
-def get_follows_requesting_user(self, obj):
-	creator = self.context['request'].user
-	following = obj.user
-	connected = Follow.objects.filter(creator=following, following=creator)
-	return len(connected)
+# def get_follows_requesting_user(self, obj):
+# 	creator = self.context['request'].user
+# 	following = obj.user
+# 	connected = Follow.objects.filter(creator=following, following=creator)
+# 	return len(connected)
 
 
 

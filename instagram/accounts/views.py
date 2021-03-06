@@ -1,9 +1,11 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import RegisterSerializer, LoginSerializer, UserListSerializer, UserSerializer
+from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer
 from django.contrib.auth.models import User
-
+from .models import Profile, Follow
+from posts.serializers import PostSerializer
+from posts.models import Post
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -44,12 +46,29 @@ class UserAPI(generics.RetrieveAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
 
+class FollowAPI(generics.ListCreateAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+
 # def get_object(self):
 # 	return self.request.user
-
 
 # Get User List API
 class UserListAPI(generics.ListAPIView):
     queryset = User.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = UserListSerializer
+    serializer_class = UserSerializer
+
+
+class FollowedPostsAPI(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        followed_people = Follow.objects.filter(user=self.request.user).values('following')
+        return Post.objects.filter(owner__in=followed_people)
