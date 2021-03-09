@@ -24,11 +24,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     </div>
     <div className="Post-caption">
       <strong>{name}</strong> {postComment}
-    <div className="CommentBar">
-    <input class="text-field" type="text" />
-    <b/>
-      <button class="button">Comment</button>
-      </div>
+    <CommentList/>
     </div>  
   </article>
   </Grid>
