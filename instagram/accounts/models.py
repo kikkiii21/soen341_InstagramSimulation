@@ -32,6 +32,9 @@ def get_follows(self):
     follows = Follow.objects.filter(creator=self.user, on_delete=models.CASCADE)
     return follows
 
+def number_of_follows(self):
+    follows = Follow.objects.filter(creator=self.user, on_delete=models.CASCADE)
+    return len(follows)
 
 # def get_followers(self):
 #     followers = Follow.objects.filter(following=self.user, on_delete=models.CASCADE)
