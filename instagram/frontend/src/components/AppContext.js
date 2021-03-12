@@ -1,14 +1,4 @@
-import React, {createContext} from 'react';
+import React, { createContext } from "react";
 
-
-// user info context 
+// user info context
 export const UserContext = createContext(null);
-
-
-
-
-
-
-
-
-
