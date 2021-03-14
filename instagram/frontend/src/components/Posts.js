@@ -29,7 +29,6 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     <input class="text-field" type="text" />
     <b/>
       <button class="button">Comment</button>
-      <Follow />
       </div>
     </div>  
   </article>
