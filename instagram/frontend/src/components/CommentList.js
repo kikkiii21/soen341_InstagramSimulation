@@ -51,7 +51,8 @@ console.log(getProfileImage);
       <>
         {loading? <div>Loading ...</div> : comments.map((item) => (
           <Comments username={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  
-          comment={item.body} key={item.id} />
+          comment={item.body} post={item.post} key={item.id} />
+        
         ))}
       </>
     );

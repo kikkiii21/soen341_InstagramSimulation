@@ -2,7 +2,7 @@ import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
 
-const Comments = ({username, avatar, comment, key}) => {
+const Comments = ({username, avatar, post, comment, key}) => {
     return(
         <Grid item xs={12}>
             <article className="Comment">

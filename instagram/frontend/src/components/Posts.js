@@ -1,7 +1,7 @@
 import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
-
+import CommentList from "./CommentList";
 
 const Posts = ({name, avatar, postImage, postComment, key}) => {
     return (
