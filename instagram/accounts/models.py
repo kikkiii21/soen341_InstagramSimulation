@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+#
+# class Follow(models.Model):
+#     created = models.DateTimeField(auto_now_add=True, editable=False)
+#     #followee = the one that clicks the follow button
+#     followee = models.ForeignKey(User, related_name="followee", on_delete=models.CASCADE)
+#     #following = the set of the people you follow
+#     following = models.ForeignKey(User, related_name="followers", on_delete=models.CASCADE)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -11,14 +19,14 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
-# creates a profile when a user registers
-@receiver(post_save, sender=User)
+
+@receiver(post_save,sender =User)
 def create_profile(sender, instance,created,**kwargs):
     if created:
         Profile.objects.create(user =instance)
 
-# saves profile when changes are made to user
-@receiver(post_save, sender=User)
+
+@receiver(post_save,sender =User)
 def save_profile(sender, instance,**kwargs):
     instance.profile.save()
 
@@ -28,9 +36,12 @@ class Follow(models.Model):
     # the user you follow
     following = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+
 def get_follows(self):
     follows = Follow.objects.filter(creator=self.user, on_delete=models.CASCADE)
     return follows
+
 
 def number_of_follows(self):
     follows = Follow.objects.filter(creator=self.user, on_delete=models.CASCADE)

@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Profile, Follow
+from .models import Profile,Follow
+
 
 
 # class ProfileSerializer(serializers.ModelSerializer):
@@ -33,6 +34,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 		user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
 		return user
 
+
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
 	username = serializers.CharField()
@@ -61,11 +63,11 @@ def get_following(self, obj):
 	return len(connected)
 
 
-# def get_follows_requesting_user(self, obj):
-# 	creator = self.context['request'].user
-# 	following = obj.user
-# 	connected = Follow.objects.filter(creator=following, following=creator)
-# 	return len(connected)
+def get_follows_requesting_user(self, obj):
+	creator = self.context['request'].user
+	following = obj.user
+	connected = Follow.objects.filter(creator=following, following=creator)
+	return len(connected)
 
 
 
