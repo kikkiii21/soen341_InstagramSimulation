@@ -1,6 +1,7 @@
 import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
+import Follow from './Follow';
 
 
 const Posts = ({name, avatar, postImage, postComment, key}) => {
@@ -28,6 +29,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     <input class="text-field" type="text" />
     <b/>
       <button class="button">Comment</button>
+      <Follow />
       </div>
     </div>  
   </article>
