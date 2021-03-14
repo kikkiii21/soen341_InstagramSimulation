@@ -41,7 +41,8 @@ const CommentList = () => {
       <>
         {isLoading? <div>Loading ...</div> : comment.map((item) => (
           <Comments username={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  
-          comment={item.body} key={item.id} />
+          comment={item.body} post={item.post} key={item.id} />
+        
         ))}
       </>
     );
