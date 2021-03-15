@@ -3,14 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-#
-# class Follow(models.Model):
-#     created = models.DateTimeField(auto_now_add=True, editable=False)
-#     #followee = the one that clicks the follow button
-#     followee = models.ForeignKey(User, related_name="followee", on_delete=models.CASCADE)
-#     #following = the set of the people you follow
-#     following = models.ForeignKey(User, related_name="followers", on_delete=models.CASCADE)
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,7 +27,6 @@ class Follow(models.Model):
     user = models.ForeignKey(User, related_name='follows', on_delete=models.CASCADE)
     # the user you follow
     following = models.ForeignKey(User, on_delete=models.CASCADE)
-
 
 
 def get_follows(self):
