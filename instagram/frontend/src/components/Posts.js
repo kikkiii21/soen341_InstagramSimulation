@@ -5,6 +5,7 @@ import Collapsible from './Collapsible'
 import CreateComment from './CreateComment';
 
 const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
+
   return (
     <Grid item xs={12}>
       <article className="Post">
