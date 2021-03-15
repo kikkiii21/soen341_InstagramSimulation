@@ -2,6 +2,7 @@ import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
 import CommentList from './CommentList'
+import CreateComment from './CreateComment';
 
 
 const Posts = ({name, avatar, postImage, postComment, key, pid}) => {
@@ -24,7 +25,9 @@ const Posts = ({name, avatar, postImage, postComment, key, pid}) => {
       </div>
     </div>
     <div className="Post-caption">
+    <CreateComment pid={pid}/>
       <strong>{name}</strong> {postComment}
+      
     <CommentList pid={pid}/>
     </div>  
   </article>
