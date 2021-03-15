@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Comment
+from posts.models import Post
 from rest_framework.views import APIView
 from rest_framework import generics, permissions
 from .serializers import CommentSerializer
@@ -13,8 +14,3 @@ class CommentListAPI(generics.ListCreateAPIView):
 
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
-
-class CommentDetailAPI(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Comment.objects.all()
-	serializer_class = CommentSerializer
-	permissions_classes = ['permissions.IsAuthenticatedOrReadOnly', IsOwnerOrReadOnly]

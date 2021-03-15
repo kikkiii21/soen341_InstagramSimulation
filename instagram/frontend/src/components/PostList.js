@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 import Posts from "./Posts";
 import { PostsContext } from "./PostsContext";
+import { v4 as uid } from "uuid";
 import { UserContext } from "./AppContext";
 import { UserStatusContext } from "./UserStatusContext";
 
@@ -35,7 +36,7 @@ const PostList = () => {
     <>
       {loading ? (
         <div>Loading ...</div>
-      ) : (
+      ) : ( 
         posts.map((item) => (
           <Posts
             name={item.owner}
@@ -43,6 +44,8 @@ const PostList = () => {
             postImage={item.photo}
             postComment={item.title}
             key={item.id}
+            pid={item.id}
+
           />
         ))
       )}

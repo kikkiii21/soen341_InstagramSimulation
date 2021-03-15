@@ -1,8 +1,11 @@
 import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
+import Collapsible from './Collapsible'
+import CreateComment from './CreateComment';
 
-const Posts = ({ name, avatar, postImage, postComment, key }) => {
+const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
+
   return (
     <Grid item xs={12}>
       <article className="Post">
@@ -18,15 +21,16 @@ const Posts = ({ name, avatar, postImage, postComment, key }) => {
         </header>
         <div className="Post-image">
           <div className="Post-image-bg">
-            <img alt="Image was not found" src={postImage} />
+            <img alt="Icon Living" src={postImage} />
           </div>
         </div>
         <div className="Post-caption">
-          <strong>{name}</strong> {postComment}
-          <div className="CommentBar">
-            <input class="text-field" type="text" />
-            <b />
-            <button class="button">Comment</button>
+          <div>
+            <CreateComment pid={pid} />
+            <strong>{name}</strong> {postComment}
+          </div>
+          <div className="comment-list">
+            <Collapsible pid={pid} />
           </div>
         </div>
       </article>

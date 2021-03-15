@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'comments',
     'corsheaders',
 
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 from corsheaders.defaults import default_headers
