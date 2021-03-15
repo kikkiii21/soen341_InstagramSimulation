@@ -1,0 +1,29 @@
+.toggle{
+  background-color: #e7e7e7; 
+  color: black;
+  font-size: 12px;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition-duration: 0.4s;
+  border: 0px;
+  border-radius: 5px;
+}
+
+.toggle:hover {
+    background-color: #000000;
+    color: white;
+  }
+
+  .collapsible .toggle{
+border: unset;
+cursor: pointer;
+border-radius: 5px;
+margin-bottom: 0.5rem;
+  }
+
+  .collapsible .content{
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+  }

@@ -63,9 +63,6 @@ const FollowHomePage = () => {
       <Grid item sm={12} md={8} >
           <Grid container direction="row" justify="center" alignItems="center">
             <Grid item xs={10}>
-                <CreatePost/>
-            </Grid>
-            <Grid item xs={10}>
                 <FollowList/>
             </Grid>
           </Grid>

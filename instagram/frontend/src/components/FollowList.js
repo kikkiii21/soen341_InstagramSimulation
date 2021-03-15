@@ -27,13 +27,17 @@ const FollowList = () => {
       console.error(err);
     })
 
+let config = {
+    headers: {
+      'content-type': 'application/json',
+      'Authorization' : `token ${(LoggedInUserInfo.token || JSON.parse(localPosts).token)}`
+    }
+  }
 
 console.log(getProfileImage);
 
-
-
   useEffect( () => {
-    axios.get('posts/')
+    axios.get('../followed/', config)
       .then((response) => {
         setPosts(response.data);
         // console.log(response.data)
@@ -52,7 +56,7 @@ console.log(getProfileImage);
     return(
       <>
         {loading? <div>Loading ...</div> : posts.map((item) => (
-          <Posts name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
+          <Follow uid={item.id} name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
         ))}
       </>
     );
