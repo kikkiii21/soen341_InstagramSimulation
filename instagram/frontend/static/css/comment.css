@@ -28,12 +28,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 10px;
+    margin-top: 5px;
     }
   .text-field{
     width: 100%;
-    height: 30px;
-    border-radius: 20px;
+    height: 20px;
+    border-radius: 15px;
     outline: none;
     border: none;
     background-color: #E4E6E9;
@@ -43,14 +43,14 @@
     .button{
       background-color: rgb(53, 158, 255);
     color: white;
-    font-size: 15px;
+    font-size: 12px;
     padding: 5px 10px;
     margin: 5px 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition-duration: 0.4s;
     border: 0px;
     border-radius: 5px;
-    margin: 0px 10px;
+    margin: 5px 0px;
     outline: none;
     }
     .button:hover {

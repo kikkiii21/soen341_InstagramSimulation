@@ -1,8 +1,8 @@
 import React from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
-import CommentList from "./CommentList";
-import CreateComment from "./CreateComment";
+import Collapsible from './Collapsible'
+import CreateComment from './CreateComment';
 
 const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
   return (
@@ -29,7 +29,7 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
             <strong>{name}</strong> {postComment}
           </div>
           <div className="comment-list">
-            <CommentList pid={pid} />
+            <Collapsible pid={pid} />
           </div>
         </div>
       </article>

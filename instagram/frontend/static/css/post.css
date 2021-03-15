@@ -60,17 +60,3 @@
   width: 100%;
 }
 
-.Post-caption{
-  margin-bottom: 20px;
-}
-
-.Post-caption strong{
-  background-color: rgb(102, 161, 238);
-    border-radius: 15px;
-    padding: 4px;
-} 
-
-.comment-list{
-  margin-top: 10px;
-}
-
