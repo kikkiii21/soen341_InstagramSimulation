@@ -1,51 +1,54 @@
 import axios from "axios";
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Comments from "./Comments";
-import {CommentsContext} from './CommentsContext';
+import { CommentsContext } from "./CommentsContext";
 import { v4 as uid } from "uuid";
-import {UserContext} from './AppContext';
-import {UserStatusContext} from './UserStatusContext'
+import { UserContext } from "./AppContext";
+import { UserStatusContext } from "./UserStatusContext";
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
- 
-
-const CommentList = () => {
-  const {comment , setComment} = useContext(CommentsContext);
-  const {LoggedInUserInfo, setLoggedInUserInfo} = useContext(UserContext);
-  const {isLoggedIn, setIsLoggedIn} = useContext(UserStatusContext);
+const CommentList = ({ pid }) => {
+  const { comment, setComment } = useContext(CommentsContext);
+  const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [isLoading, setIsLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
 
-  
-  useEffect( () => {
-    axios.get('comments/')
+  useEffect(() => {
+    axios
+      .get(`posts/${pid}/comments`)
       .then((response) => {
         setComment(response.data);
-        // console.log(response.data)
-      }).catch(err => {
-        console.error(err);
       })
-    
-  },[])
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(comment));
     setIsLoading(false);
-  },[comment])
+  }, [comment]);
 
-
-
-    return(
-      <>
-        {isLoading? <div>Loading ...</div> : comment.map((item) => (
-          <Comments username={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  
-          comment={item.body} post={item.post} key={item.id} />
-        
-        ))}
-      </>
-    );
-
+  return (
+    <>
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : (
+        comment.map(
+          (item) =>
+            
+              <Comments
+                username={item.owner}
+                comment={item.body}
+                key={item.id}
+              />
+            
+        )
+      )}
+    </>
+  );
 };
 export default CommentList;

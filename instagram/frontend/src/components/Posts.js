@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import CommentList from './CommentList'
 
 
-const Posts = ({name, avatar, postImage, postComment, key}) => {
+const Posts = ({name, avatar, postImage, postComment, key, pid}) => {
     return (
         <Grid  item xs={12}>
         <article className="Post" >
@@ -25,7 +25,7 @@ const Posts = ({name, avatar, postImage, postComment, key}) => {
     </div>
     <div className="Post-caption">
       <strong>{name}</strong> {postComment}
-    <CommentList/>
+    <CommentList pid={pid}/>
     </div>  
   </article>
   </Grid>
