@@ -10,7 +10,6 @@ import FollowList from "./FollowList";
 import Hidden from '@material-ui/core/Hidden';
 import { v4 as uid } from "uuid";
 import { UserContext } from "./AppContext";
-import {FollowContext} from "./FollowContext";
 import {PostsContext} from './PostsContext'
 import axios from 'axios';
 import {UserStatusContext} from './UserStatusContext';
