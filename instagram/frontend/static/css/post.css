@@ -58,36 +58,6 @@
   
 .text-area{
   width: 100%;
-<<<<<<< HEAD
 }
 
-=======
-  height: 20px;
-  border-radius: 20px;
-  outline: none;
-  border: none;
-  background-color: #E4E6E9;
-  padding: 5px 5px 5px 10px;
-}
 
-  .button{
-  background-color: rgb(53, 158, 255);
-  color: white;
-  font-size: 12px;
-  padding: 5px 10px;
-  margin: 5px 0px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition-duration: 0.4s;
-  border: 0px;
-  border-radius: 5px;
-  margin: 0px 10px;
-  outline: none;
-  }
-  .button:hover {
-    background-color: #000000;
-    color: white;
-  }
-.text-area{
-  width: 100%;
-}
->>>>>>> 92b2ab3df8ee1abc83fc5ca9c51e0ab5951a2166
