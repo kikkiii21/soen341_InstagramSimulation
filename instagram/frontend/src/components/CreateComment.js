@@ -18,7 +18,6 @@ const CreateComment = ({ pid }) => {
   //event handlers
   const commentChangeHandler = (e) => {
     let commentChange = e.target.value;
-    console.log(e.target.value);
     setNewComment(commentChange);
   };
 
@@ -30,7 +29,7 @@ const CreateComment = ({ pid }) => {
       post: pid,
     };
     setComment([newCommentObject, ...comment]);
-    console.log(newCommentObject);
+   
 
     //submitting post details to backend
     axios
