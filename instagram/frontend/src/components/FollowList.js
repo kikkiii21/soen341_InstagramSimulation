@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, {useState, useContext, useEffect} from "react";
-import Follow from "./Follow";
 import {FollowContext} from './FollowContext';
 import Posts from "./Posts";
 import {PostsContext} from './PostsContext';
@@ -37,7 +36,7 @@ let config = {
 console.log(getProfileImage);
 
   useEffect( () => {
-    axios.get('../followed/', config)
+    axios.get('../followingEndpoint/', config)
       .then((response) => {
         setPosts(response.data);
         // console.log(response.data)
@@ -56,7 +55,7 @@ console.log(getProfileImage);
     return(
       <>
         {loading? <div>Loading ...</div> : posts.map((item) => (
-          <Follow uid={item.id} name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
+          <Posts uid={item.id} name={item.owner}  avatar={ LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar }  postImage={item.photo} postComment={item.title} key={item.id} />
         ))}
       </>
     );

@@ -35,7 +35,7 @@ const RouterPage = () => {
             <Route path='/signin' component={Login}></Route>
             <Route  path='/homepage' component={HomePage}></Route>
             <Route exact path='/' component={HomePage}></Route>
-            <Route path='/followhomepage' component={FollowHomePage}></Route>
+            <Route path='/following' component={FollowHomePage}></Route>
           </PostsContext.Provider>
         </UserContext.Provider>
       </UserStatusContext.Provider>

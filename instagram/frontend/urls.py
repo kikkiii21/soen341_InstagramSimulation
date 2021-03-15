@@ -7,6 +7,6 @@ urlpatterns = [
     path('signup', index),
     path('signin', index),
     path('homepage', index),
-    path('followhomepage/', index),
+    path('following', index),
 
 ]

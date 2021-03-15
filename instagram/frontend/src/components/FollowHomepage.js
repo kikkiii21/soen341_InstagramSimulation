@@ -35,7 +35,6 @@ const FollowHomePage = () => {
 
     //state
     const {posts,setPosts} = useContext(PostsContext);
-    // const {posts,setPosts} = useContext(FollowContext);
     const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
     const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
     const status = localStorage.getItem("userStatus")
@@ -63,7 +62,7 @@ const FollowHomePage = () => {
       <Grid item sm={12} md={8} >
           <Grid container direction="row" justify="center" alignItems="center">
             <Grid item xs={10}>
-                <FollowList/>
+                <FollowList />
             </Grid>
           </Grid>
       </Grid>
