@@ -8,7 +8,7 @@ const Comments = ({ username, comment, key }) => {
       <article className="Comment">
         <div className="comment-segments">
           <div className="Comment-user">
-            <strong>{username}</strong>
+            <div className="username">{username}</div>
           </div>
           <div className="Comment-body">
             <span>{comment}</span>

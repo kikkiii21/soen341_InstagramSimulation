@@ -7,8 +7,20 @@
     margin: 0px 10px;
   }
   
-  .Comment-user{
-    /* display: inline; */
+  .Comment-user {
+    /* background-color: rgb(169, 170, 172); */
+    padding: 4px;
+    /* border-radius: 15px; */
+    margin: 4px;
+    /* min-width: 30px; */
+    font-weight: bolder;
+    font-size: 20px;
+
+
+  }
+
+  .Comment-body {
+    margin: 8px;
   }
 
   .CommentBar{
@@ -49,4 +61,8 @@
     .comment-segments{
         display: flex;
         flex-direction: row;
+    }
+
+    .spacer {
+      margin-bottom: 20px;
     }

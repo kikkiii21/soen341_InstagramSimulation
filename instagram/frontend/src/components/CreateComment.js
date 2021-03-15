@@ -42,25 +42,27 @@ const CreateComment = ({ pid }) => {
           }`,
         },
       })
-      
+
       .catch((err) => console.log(err));
 
     setNewComment("");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="CommentBar">
-        <input
-          class="text-field"
-          type="text"
-          ref={register}
-          onChange={commentChangeHandler}
-        />
-        <b />
-        <button class="button">Comment</button>
-      </div>
-    </form>
+    <div className="spacer">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="CommentBar">
+          <input
+            class="text-field"
+            type="text"
+            ref={register}
+            onChange={commentChangeHandler}
+          />
+          <b />
+          <button class="button">Comment</button>
+        </div>
+      </form>
+    </div>
   );
 };
 
