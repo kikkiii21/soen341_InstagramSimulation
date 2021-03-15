@@ -1,27 +1,39 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from .models import Profile,Follow
+
+
+
+# class ProfileSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = UserProfile
+# 		fields = ('username', 'image')
+
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
 	posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	follows = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments')
+		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'follows')
+
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
-	class Meta: 
+	class Meta:
 		model = User
 		fields = ('id', 'username', 'email', 'password')
 		extra_kwargs = {'password': {'write_only': True}}
 
+
 	def create(self, validated_data):
 		user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-
 		return user
+
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
@@ -33,6 +45,31 @@ class LoginSerializer(serializers.Serializer):
 		if user and user.is_active:
 			return user
 		raise serializers.ValidationError("Incorrect Credentials")
+
+
+# followers
+class FollowSerializer(serializers.ModelSerializer):
+	user = serializers.ReadOnlyField(source='user.username')
+
+	class Meta:
+		model = Follow
+		fields = ('user', 'following')
+
+
+def get_following(self, obj):
+	creator = self.context['request'].user
+	following = obj.user
+	connected = Follow.objects.filter(creator=creator, following=following)
+	return len(connected)
+
+
+def get_follows_requesting_user(self, obj):
+	creator = self.context['request'].user
+	following = obj.user
+	connected = Follow.objects.filter(creator=following, following=creator)
+	return len(connected)
+
+
 
 # class UpdateProfileSerializer(serializers.ModelSerializer):
 # 	class Meta:
