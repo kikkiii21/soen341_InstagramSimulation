@@ -3,8 +3,10 @@ import React, { useState, useContext, useEffect } from "react";
 import Comments from "./Comments";
 import { CommentsContext } from "./CommentsContext";
 import { v4 as uid } from "uuid";
-import { UserContext } from "./AppContext";
-import { UserStatusContext } from "./UserStatusContext";
+import {UserContext} from './AppContext';
+import {UserStatusContext} from './UserStatusContext'
+import Posts from "./Posts";
+
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -15,7 +17,7 @@ const CommentList = ({ pid }) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [isLoading, setIsLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
-  console.log(pid)
+
   useEffect(() => {
     axios
 
@@ -46,11 +48,13 @@ const CommentList = ({ pid }) => {
                 username={item.owner}
                 comment={item.body}
                 key={item.id}
+                pid={item.pid}
               />
             )
         )
       )}
     </>
   );
+
 };
 export default CommentList;

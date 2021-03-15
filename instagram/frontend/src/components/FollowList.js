@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, {useState, useContext, useEffect} from "react";
-import {FollowContext} from './FollowContext';
 import Posts from "./Posts";
 import {PostsContext} from './PostsContext';
 import { v4 as uid } from "uuid";
