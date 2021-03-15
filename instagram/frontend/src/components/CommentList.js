@@ -7,6 +7,7 @@ import {UserContext} from './AppContext';
 import {UserStatusContext} from './UserStatusContext'
 import Posts from "./Posts";
 
+
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
@@ -16,6 +17,7 @@ const CommentList = ({ pid }) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [isLoading, setIsLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
+
   useEffect(() => {
     axios
 

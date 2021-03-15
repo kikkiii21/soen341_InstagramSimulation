@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'comments',
     'corsheaders',
 
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
