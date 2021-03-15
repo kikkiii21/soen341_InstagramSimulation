@@ -1,14 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Profile,Follow
-
-
-
-# class ProfileSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = UserProfile
-# 		fields = ('username', 'image')
+from .models import Profile, Follow
 
 
 # User Serializer
@@ -29,7 +22,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 		fields = ('id', 'username', 'email', 'password')
 		extra_kwargs = {'password': {'write_only': True}}
 
-
 	def create(self, validated_data):
 		user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
 		return user
@@ -47,7 +39,7 @@ class LoginSerializer(serializers.Serializer):
 		raise serializers.ValidationError("Incorrect Credentials")
 
 
-# followers
+# Followers Serializer
 class FollowSerializer(serializers.ModelSerializer):
 	user = serializers.ReadOnlyField(source='user.username')
 
@@ -68,7 +60,6 @@ def get_follows_requesting_user(self, obj):
 	following = obj.user
 	connected = Follow.objects.filter(creator=following, following=creator)
 	return len(connected)
-
 
 
 # class UpdateProfileSerializer(serializers.ModelSerializer):
