@@ -15,10 +15,10 @@ const CommentList = ({ pid }) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [isLoading, setIsLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
-
+  console.log(pid)
   useEffect(() => {
     axios
-      .get(`posts/${pid}/comments`)
+      .get("comments/")
       .then((response) => {
         setComment(response.data);
       })
@@ -45,6 +45,7 @@ const CommentList = ({ pid }) => {
                 comment={item.body}
                 key={item.id}
               />
+              
             
         )
       )}
