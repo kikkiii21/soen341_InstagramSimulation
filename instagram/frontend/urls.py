@@ -8,5 +8,6 @@ urlpatterns = [
     path('signin', index),
     path('homepage', index),
     path('following', index),
+    path('Profile', index),
 
 ]
