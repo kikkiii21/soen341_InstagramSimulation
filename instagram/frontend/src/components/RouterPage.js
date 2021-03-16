@@ -15,7 +15,8 @@ import { v4 as uid } from "uuid";
 import { PostsContext } from "./PostsContext";
 import PostList from "./PostList";
 import {UserStatusContext} from './UserStatusContext';
-import {CommentsContext} from './CommentsContext'
+import {CommentsContext} from './CommentsContext';
+import Profile from './Profile';
 
 
 const RouterPage = () => {
@@ -40,6 +41,7 @@ const RouterPage = () => {
             <Route  path='/homepage' component={HomePage}></Route>
             <Route exact path='/' component={HomePage}></Route>
             <Route path='/following' component={FollowHomePage}></Route>
+            <Route path='/Profile' component={Profile}></Route>
           </CommentsContext.Provider>
           </PostsContext.Provider>
         </UserContext.Provider>

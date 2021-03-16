@@ -93,7 +93,7 @@ const Header = () => {
             <a href="#">
               <WebIcon className={classes.navIcons} />
             </a>
-            <a href="#">
+            <a href="Profile">
               <PersonOutlineIcon className={classes.navIcons} />
             </a>
           </div>
