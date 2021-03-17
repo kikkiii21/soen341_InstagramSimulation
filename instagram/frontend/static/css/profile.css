@@ -55,10 +55,20 @@
   margin-top: 10px;
 }
 
-.profile-pic {
+.profile-wrap {
+  width: 200px;
+  height: 200px;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+}
+
+.profile-wrap img {
+  display: inline;
+  margin: 0 auto;
+  margin-left: -10%;
+  height: 100%;
+  width: auto;
 }
 
 .info-card {

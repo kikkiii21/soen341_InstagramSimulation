@@ -77,3 +77,8 @@
   color: rgb(212, 51, 51);
   border-radius: 50%;
 }
+
+.link-styling {
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -29,19 +29,18 @@ const CreateComment = ({ pid }) => {
     setComment([newCommentObject, ...comment]);
 
     //submitting post details to backend
-    axios
-      .post("comments/", newCommentObject, {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `token ${
-            LoggedInUserInfo.token || JSON.parse(localUser).token
-          }`,
-        },
-      })
+    newCommentObject != "" &&
+      axios
+        .post("comments/", newCommentObject, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `token ${
+              LoggedInUserInfo.token || JSON.parse(localUser).token
+            }`,
+          },
+        })
 
-      .catch((err) => console.log(err));
-
-    setNewComment(" ");
+        .catch((err) => console.log(err));
   };
 
   return (

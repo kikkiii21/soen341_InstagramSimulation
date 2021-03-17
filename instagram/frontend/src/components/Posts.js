@@ -6,6 +6,9 @@ import CreateComment from "./CreateComment";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CommentIcon from "@material-ui/icons/Comment";
 import ShareIcon from "@material-ui/icons/Share";
+import { Link } from "@material-ui/core";
+import Profile from "./Profile";
+import "../../static/css/collapsible.css";
 
 const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
   //state
@@ -19,6 +22,11 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
   const handleLikes = () => {
     setLiked(!liked);
   };
+
+  const profileLinkHandler = () => {
+    localStorage.setItem("profileRedirect", JSON.stringify(name));
+    window.location = "/Profile";
+  };
   return (
     <Grid item xs={12}>
       <article className="Post">
@@ -28,7 +36,11 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
               <img src={avatar} alt="Chris" />
             </div>
             <div className="Post-user-nickname">
-              <span>{name}</span>
+              <span>
+                <a className="link-styling" onClick={profileLinkHandler}>
+                  {name}
+                </a>
+              </span>
             </div>
           </div>
         </header>

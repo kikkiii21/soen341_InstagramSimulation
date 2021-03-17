@@ -52,6 +52,16 @@ const Header = () => {
   const localUserInfo = localStorage.getItem("userInfo");
   const localUserStatus = localStorage.getItem("userStatus");
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const redirectProfile = JSON.parse(localUserInfo);
+
+  const profileLinkHandler = () => {
+    localStorage.setItem(
+      "profileRedirect",
+      JSON.stringify(redirectProfile.name)
+    );
+
+    window.location = "/Profile";
+  };
 
   const Logout = () => {
     axios
@@ -93,7 +103,11 @@ const Header = () => {
             <a href="#">
               <WebIcon className={classes.navIcons} />
             </a>
-            <a href="Profile">
+            <a
+              href="Profile"
+              className="link-styling"
+              onClick={profileLinkHandler}
+            >
               <PersonOutlineIcon className={classes.navIcons} />
             </a>
           </div>
