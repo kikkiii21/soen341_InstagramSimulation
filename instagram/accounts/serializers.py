@@ -4,13 +4,6 @@ from django.contrib.auth import authenticate
 from .models import Profile,Follow
 
 
-
-# class ProfileSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = UserProfile
-# 		fields = ('username', 'image')
-
-
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
 	posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
@@ -21,6 +14,19 @@ class UserSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'follows')
 
+# Profile Serializer
+class ProfileSerializer(serializers.ModelSerializer):
+	# username = serializers.CharField(source='user.username', read_only=True)
+	# first_name = serializers.CharField(source='user.first_name', read_only=True)
+	# last_name = serializers.CharField(source='user.last_name', read_only=True)
+	# email = serializers.CharField(source='user.email', read_only=True)
+	# posts = serializers.CharField(source='user.posts', read_only=True)
+	# comments = serializers.CharField(source='user.comments', read_only=True)
+	# follows = serializers.CharField(source='user.follows', read_only=True)
+
+	class Meta:
+		model = Profile
+		fields = ('id', 'user')
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):

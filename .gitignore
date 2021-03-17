@@ -6,7 +6,6 @@ node_modules
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
 
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -160,4 +159,4 @@ yarn-error.log*
 instagram/frontend/static/frontend/main.js
 instagram/frontend/static/frontend/main.js
 instagram/frontend/static/frontend/main.js.LICENSE.txt
-migrations/
+
