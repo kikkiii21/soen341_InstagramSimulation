@@ -55,6 +55,7 @@ const FollowList = () => {
             postImage={item.photo}
             postComment={item.title}
             key={item.id}
+            pid={item.id}
           />
         ))
       )}
