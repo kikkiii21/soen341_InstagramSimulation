@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer
+from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, ProfileSerializer
 from django.contrib.auth.models import User
 from .models import Profile, Follow
 from posts.serializers import PostSerializer
@@ -65,6 +65,11 @@ class UserListAPI(generics.ListAPIView):
     queryset = User.objects.all()
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
+
+# Get Profile List API
+class ProfileListAPI(generics.ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class FollowedPostsAPI(generics.ListAPIView):

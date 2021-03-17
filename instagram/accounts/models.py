@@ -11,6 +11,9 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def get_email(self):
+        return self.user.email + ' is ' + self.user.first_name + "'s email address."
+
 
 @receiver(post_save,sender =User)
 def create_profile(sender, instance,created,**kwargs):
