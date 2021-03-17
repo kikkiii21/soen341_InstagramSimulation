@@ -35,6 +35,55 @@
   cursor: hand;
 }
 
-.Profile-nav{
-margin-bottom: 125px;
+.Profile-nav {
+  margin-bottom: 125px;
+}
+
+.user-info-card {
+  display: flex;
+  justify-content: center;
+  margin: 10vh 0px;
+}
+
+.user-stats {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-stats div {
+  margin-top: 10px;
+}
+
+.profile-pic {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.info-card {
+  width: 50vw;
+  margin: 2vh 30% 2vh 25%;
+}
+
+.placeholder {
+  width: 4vw;
+}
+
+.follow-button {
+  background-color: rgb(53, 158, 255);
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  margin-right: 20px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  transition-duration: 0.4s;
+  border: 0px;
+  border-radius: 5px;
+  outline: none;
+}
+.follow-button:hover {
+  background-color: #000000;
+  color: white;
 }
