@@ -8,7 +8,7 @@ import TuneIcon from "@material-ui/icons/Tune";
 import { UserStatusContext } from "./UserStatusContext";
 import { UserContext } from "./AppContext";
 import axios from "axios";
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 
 const useStyles = makeStyles(() => ({
   navIcons: {
@@ -111,10 +111,7 @@ const Header = () => {
             >
               <PersonOutlineIcon className={classes.navIcons} />
             </a>
-            <a
-              href="following"
-              className="link-styling"
-            >
+            <a href="following" className="link-styling">
               <PeopleAltOutlinedIcon className={classes.navIcons} />
             </a>
           </div>

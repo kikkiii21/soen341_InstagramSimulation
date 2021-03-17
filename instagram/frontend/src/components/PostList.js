@@ -36,7 +36,7 @@ const PostList = () => {
     <>
       {loading ? (
         <div>Loading ...</div>
-      ) : ( 
+      ) : (
         posts.map((item) => (
           <Posts
             name={item.owner}
@@ -45,7 +45,6 @@ const PostList = () => {
             postComment={item.title}
             key={item.id}
             pid={item.id}
-
           />
         ))
       )}

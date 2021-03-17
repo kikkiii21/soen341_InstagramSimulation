@@ -25,7 +25,6 @@ const FollowList = () => {
     },
   };
 
-
   useEffect(() => {
     axios
       .get("../followingEndpoint/", config)
