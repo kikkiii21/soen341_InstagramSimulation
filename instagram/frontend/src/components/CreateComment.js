@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { v4 as uid } from "uuid";
 import "../../static/css/comment.css";
 import { UserContext } from "./AppContext";
 import { CommentsContext } from "./CommentsContext";
@@ -17,11 +15,11 @@ const CreateComment = ({ pid }) => {
 
   //event handlers
   const commentChangeHandler = (e) => {
-    let commentChange = e.target.value;
+    const commentChange = e.target.value;
     setNewComment(commentChange);
   };
 
-  const onSubmit = (obj) => {
+  const onSubmit = () => {
     //setting the comment to show in frontend
     let newCommentObject = {
       body: newComment,
@@ -29,22 +27,20 @@ const CreateComment = ({ pid }) => {
       post: pid,
     };
     setComment([newCommentObject, ...comment]);
-   
 
     //submitting post details to backend
-    axios
-      .post("comments/", newCommentObject, {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `token ${
-            LoggedInUserInfo.token || JSON.parse(localUser).token
-          }`,
-        },
-      })
+    newCommentObject != "" &&
+      axios
+        .post("comments/", newCommentObject, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `token ${
+              LoggedInUserInfo.token || JSON.parse(localUser).token
+            }`,
+          },
+        })
 
-      .catch((err) => console.log(err));
-
-    setNewComment("");
+        .catch((err) => console.log(err));
   };
 
   return (
@@ -57,7 +53,7 @@ const CreateComment = ({ pid }) => {
             ref={register}
             onChange={commentChangeHandler}
           />
-          <b />
+
           <button class="button">Comment</button>
         </div>
       </form>

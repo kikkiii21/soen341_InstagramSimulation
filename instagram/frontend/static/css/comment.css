@@ -1,68 +1,65 @@
-.Comment-body{
-    font-size: 20px;
-    margin: 0px 8px;
-  }
-  
-  .Comment{
-    margin: 0px 10px;
-  }
-  
-  .Comment-user {
-    /* background-color: rgb(169, 170, 172); */
-    padding: 4px;
-    /* border-radius: 15px; */
-    margin: 4px;
-    /* min-width: 30px; */
-    font-weight: bolder;
-    font-size: 20px;
+.Comment-body {
+  font-size: 20px;
+  margin: 0px 8px;
+}
 
+.Comment {
+  margin: 0px 10px;
+}
 
-  }
+.Comment-user {
+  padding: 4px;
+  margin: 4px;
+  font-weight: bolder;
+  font-size: 18px;
+}
 
-  .Comment-body {
-    margin: 8px;
-  }
+.Comment-body {
+  margin: 8px;
+}
 
-  .CommentBar{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 5px;
-    }
-  .text-field{
-    width: 100%;
-    height: 20px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    background-color: #E4E6E9;
-    padding: 5px 5px 5px 10px;
-  }
-  
-    .button{
-      background-color: rgb(53, 158, 255);
-    color: white;
-    font-size: 12px;
-    padding: 5px 10px;
-    margin: 5px 0px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition-duration: 0.4s;
-    border: 0px;
-    border-radius: 5px;
-    margin: 5px 0px;
-    outline: none;
-    }
-    .button:hover {
-      background-color: #000000;
-      color: white;
-    }
+.CommentBar {
+  display: inline-flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.text-field {
+  width: 100%;
+  height: 20px;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  background-color: #e4e6e9;
+  padding: 5px 5px 5px 10px;
+  margin-left: 8px;
+}
 
-    .comment-segments{
-        display: flex;
-        flex-direction: row;
-    }
+.button {
+  background-color: rgb(53, 158, 255);
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition-duration: 0.4s;
+  border: 0px;
+  border-radius: 5px;
+  margin: 5px 8px;
+  outline: none;
+}
+.button:hover {
+  background-color: #000000;
+  color: white;
+}
 
-    .spacer {
-      margin-bottom: 20px;
-    }
+.comment-segments {
+  display: flex;
+  flex-direction: row;
+}
+
+.spacer {
+  margin-bottom: 20px;
+  width: 100%;
+}

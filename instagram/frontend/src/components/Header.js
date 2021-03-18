@@ -8,6 +8,7 @@ import TuneIcon from "@material-ui/icons/Tune";
 import { UserStatusContext } from "./UserStatusContext";
 import { UserContext } from "./AppContext";
 import axios from "axios";
+import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 
 const useStyles = makeStyles(() => ({
   navIcons: {
@@ -52,6 +53,16 @@ const Header = () => {
   const localUserInfo = localStorage.getItem("userInfo");
   const localUserStatus = localStorage.getItem("userStatus");
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const redirectProfile = JSON.parse(localUserInfo);
+
+  const profileLinkHandler = () => {
+    localStorage.setItem(
+      "profileRedirect",
+      JSON.stringify(redirectProfile.name)
+    );
+
+    window.location = "/Profile";
+  };
 
   const Logout = () => {
     axios
@@ -90,11 +101,18 @@ const Header = () => {
             <a href="#">
               <TuneIcon className={classes.navIcons} />
             </a>
-            <a href="#">
+            <a href="homepage">
               <WebIcon className={classes.navIcons} />
             </a>
-            <a href="Profile">
+            <a
+              href="Profile"
+              className="link-styling"
+              onClick={profileLinkHandler}
+            >
               <PersonOutlineIcon className={classes.navIcons} />
+            </a>
+            <a href="following" className="link-styling">
+              <PeopleAltOutlinedIcon className={classes.navIcons} />
             </a>
           </div>
           <div className="nav-logout-btn">

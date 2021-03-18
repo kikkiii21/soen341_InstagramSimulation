@@ -1,52 +1,122 @@
-import React from 'react'
-import "../../static/css/profile.css"
-import Header from './Header'
+import React, { useState, useEffect } from "react";
+import "../../static/css/profile.css";
+import Header from "./Header";
+import axios from "axios";
+import ProfilePostList from "./ProfilePostList";
 const Myprofile = () => {
-    return ( 
+  //state
+  const [userVisitedName, setUserVisitedName] = useState("");
+  const [contentsLoading, setContentLoading] = useState(true);
+  const [redirectedName, setRedirectedName] = useState(
+    JSON.parse(localStorage.getItem("profileRedirect"))
+  );
+  const [numberOfFollowing, setNumberOfFollowing] = useState(0);
+  const [numberOfPosts, setNumberOfPosts] = useState(0);
+  const [numberOfFollowers, setNumberOfFollowers] = useState(0);
+  const [userId, setUserId] = useState(0);
+  const localUserInfo = localStorage.getItem("userInfo");
+  const isProfileOwner = JSON.parse(localUserInfo).name == redirectedName;
+  const [alreadyFollowing, setAlreadyFollowing] = useState(true);
+
+  //Event Handlers
+  const followUserHandler = () => {
+    setAlreadyFollowing(true);
+    const payload = {
+      following: userId,
+    };
+
+    axios
+      .post("follow/", payload, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${JSON.parse(localUserInfo).token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    axios
+      .get("users/")
+      .then((response) => {
+        const parseUser = response.data.filter(
+          (user) => user.username == redirectedName
+        );
+        setUserVisitedName(parseUser[0].username);
+        setNumberOfFollowing(parseUser[0].follows.length);
+        setNumberOfPosts(parseUser[0].posts.length);
+        setUserId(parseUser[0].id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("follow/")
+      .then((response) => {
+        const parseFollowers = response.data;
+        const num = parseFollowers.filter((item) => item.following == userId);
+        const followCheck = parseFollowers.filter(
+          (item) => item.user == JSON.parse(localUserInfo).name
+        );
+        const checked = followCheck.filter((item) => item.following == userId);
+
+        setNumberOfFollowers(num.length);
+        setAlreadyFollowing(checked.length != 0);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [userId, alreadyFollowing]);
+
+  useEffect(() => {
+    setContentLoading(false);
+    localStorage.setItem("profileName", JSON.stringify(userVisitedName));
+  }, [
+    userVisitedName,
+    numberOfPosts,
+    numberOfFollowing,
+    userId,
+    numberOfFollowers,
+  ]);
+
+  return (
     <div>
-    <div className="Profile-nav"><Header/></div>
-    
-        <div style={{
-            display:"flex",
-            justifyContent:"center",
-            margin:"18px 3px",
-            fontFamily:"fantasy",
-            borderBottom:"1px solid grey"
-        }}>
-            <div className="propic">
-                <img style={{width:"160px",height:"160px",borderRadius:"80px"}}
-                src="https://st3.depositphotos.com/3581215/18899/v/600/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg"></img>
-            </div>
+      <div className="Profile-nav">
+        <Header />
+      </div>
+      <div class="info-card">
+        <div className="user-info-card">
+          <div className="profile-wrap">
+            <img src={JSON.parse(localUserInfo).avatar} />
+          </div>
+          <div className="placeholder"></div>
+          <div className="user-stats">
             <div>
-            
-                <div>UserName</div>
-                <button className="follow">follow</button>
-                <div style={{display:"relative",justifyContent:"space-evenly",fontFamily:"monospace",columnGap:10 }}>
-                
-                <div>7 Posts</div>
-                <div>10 followers</div>
-                <div>5100 following</div>
-                </div>
+              {contentsLoading ? <div>Loading ...</div> : userVisitedName}
             </div>
+            {isProfileOwner || alreadyFollowing ? (
+              ""
+            ) : (
+              <button className="follow-button" onClick={followUserHandler}>
+                follow
+              </button>
+            )}
+
+            <div>{numberOfPosts} Posts</div>
+            <div>{numberOfFollowers} followers</div>
+            <div>{numberOfFollowing} following</div>
+          </div>
         </div>
-        <div className="gallery">
-            <div className="img-wrap">
-            <img className="item" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/lionel-animals-to-follow-on-instagram-1568319926.jpg?crop=0.922xw:0.738xh;0.0555xw,0.142xh&resize=640:*"/>
-            </div>
-            <div className="img-wrap"><img className="item" src="https://images.wsj.net/im-140539?width=1280&size=1"/></div>
-            
-            <div className="img-wrap"><img className="item" src="https://static.boredpanda.com/blog/wp-content/uuuploads/cute-baby-animals/cute-baby-animals-2.jpg"/></div>
-            
-            <div className="img-wrap"><img className="item" src="https://nypost.com/wp-content/uploads/sites/2/2020/09/quokkas-1.jpg?quality=80&strip=all"/></div>
-            
-            <div className="img-wrap"><img className="item" src="https://compote.slate.com/images/73f0857e-2a1a-4fea-b97a-bd4c241c01f5.jpg"/></div>
-            
+      </div>
+      <div className="gallery">
+        {contentsLoading ? <div>loading ...</div> : <ProfilePostList />}
+      </div>
+    </div>
+  );
+};
 
-
-        </div>
- </div>
-        
-    )
-}
-
-export default Myprofile
+export default Myprofile;

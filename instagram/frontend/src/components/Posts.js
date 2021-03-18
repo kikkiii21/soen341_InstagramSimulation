@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
-import Collapsible from './Collapsible'
-import CreateComment from './CreateComment';
+import Collapsible from "./Collapsible";
+import CreateComment from "./CreateComment";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import CommentIcon from "@material-ui/icons/Comment";
+import ShareIcon from "@material-ui/icons/Share";
+import { Link } from "@material-ui/core";
+import Profile from "./Profile";
+import "../../static/css/collapsible.css";
 
 const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
+  //state
+  const [event, setEvent] = useState(false);
+  const [liked, setLiked] = useState(false);
 
+  //event handlers
+  const handleCommentsCollapsable = () => {
+    setEvent(!event);
+  };
+  const handleLikes = () => {
+    setLiked(!liked);
+  };
+
+  const profileLinkHandler = () => {
+    localStorage.setItem("profileRedirect", JSON.stringify(name));
+    window.location = "/Profile";
+  };
   return (
     <Grid item xs={12}>
       <article className="Post">
@@ -15,7 +36,11 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
               <img src={avatar} alt="Chris" />
             </div>
             <div className="Post-user-nickname">
-              <span>{name}</span>
+              <span>
+                <a className="link-styling" onClick={profileLinkHandler}>
+                  {name}
+                </a>
+              </span>
             </div>
           </div>
         </header>
@@ -24,13 +49,24 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
             <img alt="Icon Living" src={postImage} />
           </div>
         </div>
+        <div className="action-btn-group">
+          <div onClick={handleLikes}>
+            <FavoriteIcon className={liked ? "liked" : "action-icons"} />
+          </div>
+          <div onClick={handleCommentsCollapsable}>
+            <CommentIcon className="action-icons" />
+          </div>
+          <div>
+            <ShareIcon className="action-icons" />
+          </div>
+        </div>
         <div className="Post-caption">
           <div>
             <CreateComment pid={pid} />
             <strong>{name}</strong> {postComment}
           </div>
           <div className="comment-list">
-            <Collapsible pid={pid} />
+            <Collapsible pid={pid} event={event} />
           </div>
         </div>
       </article>

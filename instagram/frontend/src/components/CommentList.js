@@ -3,10 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import Comments from "./Comments";
 import { CommentsContext } from "./CommentsContext";
 import { v4 as uid } from "uuid";
-import {UserContext} from './AppContext';
-import {UserStatusContext} from './UserStatusContext'
+import { UserContext } from "./AppContext";
+import { UserStatusContext } from "./UserStatusContext";
 import Posts from "./Posts";
-
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -22,7 +21,6 @@ const CommentList = ({ pid }) => {
     axios
 
       .get("comments/")
-      // .get(`posts/${pid}/comments`)
       .then((response) => {
         setComment(response.data);
       })
@@ -41,13 +39,14 @@ const CommentList = ({ pid }) => {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
+        comment &&
         comment.map(
           (item) =>
             item.post == pid && (
               <Comments
                 username={item.owner}
                 comment={item.body}
-                key={item.id}
+                key={uid()}
                 pid={item.pid}
               />
             )
@@ -55,6 +54,5 @@ const CommentList = ({ pid }) => {
       )}
     </>
   );
-
 };
 export default CommentList;

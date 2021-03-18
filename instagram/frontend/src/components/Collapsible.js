@@ -1,18 +1,17 @@
-import React, {useState} from "react";
-import "../../static/css/Collapsible.css";
+import React, { useState } from "react";
 import CommentList from "./CommentList";
+import "../../static/css/collapsible.css";
 
-function Collapsible({pid}) {
-
-    const [isOpen, setIsOpen] = useState(false);
-    return <div className="collapsible">
-        <button className="toggle" onClick={() => setIsOpen(!isOpen)}>
-            Comments
-            </button>
-           {isOpen &&  <div className="content">
-            <CommentList pid={pid}/>
-            </div>}
+function Collapsible({ pid, event }) {
+  return (
+    <div className="collapsible">
+      {event && (
+        <div className="content">
+          <CommentList pid={pid} />
+        </div>
+      )}
     </div>
+  );
 }
 
 export default Collapsible;
