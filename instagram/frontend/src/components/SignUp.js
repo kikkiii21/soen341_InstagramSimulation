@@ -120,14 +120,14 @@ const SignUp = () => {
       body: JSON.stringify(dataObject),
     };
     axios
-      .post("/join", requestOptions.body, {
+      .post("/registerEndpoint", requestOptions.body, {
         headers: { "Content-Type": "application/json" },
       })
       .then(
         (response) => {
           localStorage.setItem("registrationSuccess", JSON.stringify(true));
           setIsExistingUser(false);
-          window.location = "/signin";
+          window.location = "/login";
         },
         (error) => {
           console.log(error.response.status);

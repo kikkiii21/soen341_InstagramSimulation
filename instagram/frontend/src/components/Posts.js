@@ -10,7 +10,7 @@ import { Link } from "@material-ui/core";
 import Profile from "./Profile";
 import "../../static/css/collapsible.css";
 
-const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
+const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
   //state
   const [event, setEvent] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -24,8 +24,8 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
   };
 
   const profileLinkHandler = () => {
-    localStorage.setItem("profileRedirect", JSON.stringify(name));
-    window.location = "/Profile";
+    localStorage.setItem("profileRedirect", JSON.stringify(author));
+    window.location = "/profile";
   };
   return (
     <Grid item xs={12}>
@@ -38,7 +38,7 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
             <div className="Post-user-nickname">
               <span>
                 <a className="link-styling" onClick={profileLinkHandler}>
-                  {name}
+                  {author}
                 </a>
               </span>
             </div>
@@ -63,7 +63,7 @@ const Posts = ({ name, avatar, postImage, postComment, key, pid }) => {
         <div className="Post-caption">
           <div>
             <CreateComment pid={pid} />
-            <strong>{name}</strong> {postComment}
+            <strong>{author}</strong> {postCaption}
           </div>
           <div className="comment-list">
             <Collapsible pid={pid} event={event} />

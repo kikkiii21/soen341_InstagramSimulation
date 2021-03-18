@@ -15,7 +15,7 @@ const Myprofile = () => {
   const [numberOfFollowers, setNumberOfFollowers] = useState(0);
   const [userId, setUserId] = useState(0);
   const localUserInfo = localStorage.getItem("userInfo");
-  const isProfileOwner = JSON.parse(localUserInfo).name == redirectedName;
+  const isProfileOwner = JSON.parse(localUserInfo).author == redirectedName;
   const [alreadyFollowing, setAlreadyFollowing] = useState(true);
 
   //Event Handlers
@@ -26,7 +26,7 @@ const Myprofile = () => {
     };
 
     axios
-      .post("follow/", payload, {
+      .post("followEndpoint/", payload, {
         headers: {
           "content-type": "application/json",
           Authorization: `token ${JSON.parse(localUserInfo).token}`,
@@ -38,7 +38,7 @@ const Myprofile = () => {
 
   useEffect(() => {
     axios
-      .get("users/")
+      .get("userlistEndpoint/")
       .then((response) => {
         const parseUser = response.data.filter(
           (user) => user.username == redirectedName
@@ -55,7 +55,7 @@ const Myprofile = () => {
 
   useEffect(() => {
     axios
-      .get("follow/")
+      .get("followEndpoint/")
       .then((response) => {
         const parseFollowers = response.data;
         const num = parseFollowers.filter((item) => item.following == userId);

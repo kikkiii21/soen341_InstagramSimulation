@@ -22,8 +22,8 @@ const CreateComment = ({ pid }) => {
   const onSubmit = () => {
     //setting the comment to show in frontend
     let newCommentObject = {
-      body: newComment,
-      owner: JSON.parse(localUser).name || LoggedInUserInfo.name,
+      comment: newComment,
+      author: JSON.parse(localUser).author || LoggedInUserInfo.author,
       post: pid,
     };
     setComment([newCommentObject, ...comment]);
@@ -31,7 +31,7 @@ const CreateComment = ({ pid }) => {
     //submitting post details to backend
     newCommentObject != "" &&
       axios
-        .post("comments/", newCommentObject, {
+        .post("commentsEndpoint/", newCommentObject, {
           headers: {
             "content-type": "application/json",
             Authorization: `token ${

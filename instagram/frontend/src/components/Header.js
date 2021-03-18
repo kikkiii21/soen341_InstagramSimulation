@@ -58,15 +58,15 @@ const Header = () => {
   const profileLinkHandler = () => {
     localStorage.setItem(
       "profileRedirect",
-      JSON.stringify(redirectProfile.name)
+      JSON.stringify(redirectProfile.author)
     );
 
-    window.location = "/Profile";
+    window.location = "/profile";
   };
 
   const Logout = () => {
     axios
-      .post("/logout", "", {
+      .post("/logoutEndpoint", "", {
         headers: {
           Authorization: `token ${
             LoggedInUserInfo.token || JSON.parse(localUserInfo).token
@@ -78,7 +78,7 @@ const Header = () => {
         setIsLoggedOut(true);
         localStorage.clear();
         localStorage.setItem("userStatus", "false");
-        window.location = "./signin";
+        window.location = "./login";
       })
       .catch((err) =>
         err.response.status == 204
@@ -105,7 +105,7 @@ const Header = () => {
               <WebIcon className={classes.navIcons} />
             </a>
             <a
-              href="Profile"
+              href="profile"
               className="link-styling"
               onClick={profileLinkHandler}
             >

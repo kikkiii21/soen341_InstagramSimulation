@@ -2,8 +2,8 @@ from django.test import TestCase
 from ..models import Profile, Follow
 from django.contrib.auth.models import User
 
-
-class UserTest(TestCase):
+# test to see if app returns specific users' email addresses
+class GetEmailTest(TestCase):
 
     def setUp(self):
         User.objects.create(first_name='Casper', last_name='Patel', username='BullDog', email='casper@gmail.com', password='123')

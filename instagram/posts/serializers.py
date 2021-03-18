@@ -3,10 +3,10 @@ from .models import Post
 
 
 class PostSerializer(serializers.ModelSerializer):
-	owner = serializers.ReadOnlyField(source='owner.username')
+	author = serializers.ReadOnlyField(source='author.username')
 	comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 	class Meta: 
 		model = Post
-		fields = ('id', 'title', 'photo', 'created_at', 'owner', 'comments')
+		fields = ('id', 'caption', 'photo', 'created_at', 'author', 'comments')
 

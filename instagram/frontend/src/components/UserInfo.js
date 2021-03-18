@@ -65,7 +65,7 @@ const UserInfo = () => {
           />
         </div>
         <div className={user.PosUserNickname}>
-          <span>{JSON.parse(localInfo).name || LoggedInUserInfo.name}</span>
+          <span>{JSON.parse(localInfo).author || LoggedInUserInfo.author}</span>
         </div>
       </div>
     </div>

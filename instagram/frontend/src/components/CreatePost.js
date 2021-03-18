@@ -157,10 +157,10 @@ const CreatePost = () => {
   const onSubmit = (obj) => {
     //setting the post to show in frontend
     let newPost = {
-      owner: JSON.parse(local).name,
+      author: JSON.parse(local).author,
       avatar: LoggedInUserInfo.avatar,
       photo: selectedImage.url,
-      title: caption,
+      caption: caption,
       id: uid(),
     };
     setPosts([newPost, ...posts]);
@@ -168,9 +168,9 @@ const CreatePost = () => {
     //submitting post details to backend
     let form_data = new FormData();
     form_data.append("photo", selectedImage.raw);
-    form_data.append("title", newPost.title);
-    form_data.append("owner", newPost.name);
-    let url = "posts/";
+    form_data.append("caption", newPost.caption);
+    form_data.append("author", newPost.author);
+    let url = "postsEndpoint/";
     axios
       .post(url, form_data, {
         headers: {

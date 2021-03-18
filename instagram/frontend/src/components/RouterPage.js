@@ -44,12 +44,12 @@ const RouterPage = () => {
           <UserContext.Provider value={userInfo}>
             <PostsContext.Provider value={{ posts, setPosts }}>
               <CommentsContext.Provider value={{ comment, setComment }}>
-                <Route path="/signup" component={Signup}></Route>
-                <Route path="/signin" component={Login}></Route>
+                <Route path="/register" component={Signup}></Route>
+                <Route path="/login" component={Login}></Route>
                 <Route path="/homepage" component={HomePage}></Route>
                 <Route exact path="/" component={HomePage}></Route>
                 <Route path="/following" component={FollowHomePage}></Route>
-                <Route path="/Profile" component={Profile}></Route>
+                <Route path="/profile" component={Profile}></Route>
               </CommentsContext.Provider>
             </PostsContext.Provider>
           </UserContext.Provider>

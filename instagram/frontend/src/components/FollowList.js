@@ -50,10 +50,10 @@ const FollowList = () => {
         posts.map((item) => (
           <Posts
             uid={item.id}
-            name={item.owner}
+            author={item.author}
             avatar={LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar}
             postImage={item.photo}
-            postComment={item.title}
+            postCaption={item.caption}
             key={item.id}
             pid={item.id}
           />
