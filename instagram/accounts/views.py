@@ -55,11 +55,6 @@ class FollowAPI(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 
-
-# def get_object(self):
-# 	return self.request.user
-
-
 # Get User List API
 class UserListAPI(generics.ListAPIView):
     queryset = User.objects.all()
@@ -77,5 +72,5 @@ class FollowedPostsAPI(generics.ListAPIView):
 
     def get_queryset(self):
         followed_people = Follow.objects.filter(user=self.request.user).values('following')
-        return Post.objects.filter(owner__in=followed_people)
+        return Post.objects.filter(author__in=followed_people)
 

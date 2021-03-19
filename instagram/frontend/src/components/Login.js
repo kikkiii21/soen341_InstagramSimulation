@@ -104,7 +104,7 @@ const Login = () => {
       body: JSON.stringify(dataObject),
     };
     axios
-      .post("/login", requestOptions.body, {
+      .post("/loginEndpoint", requestOptions.body, {
         headers: { "Content-Type": "application/json" },
       })
       .then(async (response) => {
@@ -112,7 +112,7 @@ const Login = () => {
         const token = response.data.token;
         const userId = response.data.user.id;
         const newInfo = {
-          name: fullName,
+          author: fullName,
           avatar: "../../static/images/arthur.jpg",
           id: userId,
           token: token,
@@ -210,7 +210,7 @@ const Login = () => {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="signup" variant="body2" color="textPrimary">
+                <Link href="register" variant="body2" color="textPrimary">
                   New to Instagram? Sign up
                 </Link>
               </Grid>

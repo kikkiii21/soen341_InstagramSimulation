@@ -4,10 +4,10 @@ from .views import index
 
 urlpatterns = [
     path('', index),
-    path('signup', index),
-    path('signin', index),
+    path('register', index),
+    path('login', index),
     path('homepage', index),
     path('following', index),
-    path('Profile', index),
+    path('profile', index),
 
 ]

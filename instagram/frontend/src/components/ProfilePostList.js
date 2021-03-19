@@ -12,7 +12,7 @@ const ProfilePostList = () => {
 
   useEffect(() => {
     axios
-      .get("posts/")
+      .get("postsEndpoint/")
       .then((response) => {
         serPostsData(response.data);
       })
@@ -23,7 +23,7 @@ const ProfilePostList = () => {
 
   useEffect(() => {
     const profilePosts = postsData.filter(
-      (post) => post.owner == localProfileName
+      (post) => post.author == localProfileName
     );
     setUserVisitedPictures(profilePosts);
     setImagesLoading(false);

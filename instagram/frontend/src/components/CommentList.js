@@ -20,7 +20,7 @@ const CommentList = ({ pid }) => {
   useEffect(() => {
     axios
 
-      .get("comments/")
+      .get("commentsEndpoint/")
       .then((response) => {
         setComment(response.data);
       })
@@ -44,8 +44,8 @@ const CommentList = ({ pid }) => {
           (item) =>
             item.post == pid && (
               <Comments
-                username={item.owner}
-                comment={item.body}
+                author={item.author}
+                comment={item.comment}
                 key={uid()}
                 pid={item.pid}
               />

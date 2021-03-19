@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 # Comment Serializer
 class CommentSerializer(serializers.ModelSerializer):
-	owner = serializers.ReadOnlyField(source='owner.username')
+	author = serializers.ReadOnlyField(source='author.username')
 
 	class Meta:
 		model = Comment
-		fields = ['id', 'body', 'owner', 'post']
+		fields = ['id', 'comment', 'author', 'post']
