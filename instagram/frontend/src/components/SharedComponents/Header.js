@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import "../../static/css/header.css";
+import "../../../static/css/header.css";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import WebIcon from "@material-ui/icons/Web";
 import TuneIcon from "@material-ui/icons/Tune";
-import { UserStatusContext } from "./UserStatusContext";
-import { UserContext } from "./AppContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
+import { UserContext } from "../Context/AppContext";
 import axios from "axios";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 

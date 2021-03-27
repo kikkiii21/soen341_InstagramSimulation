@@ -1,5 +1,5 @@
 import React from "react";
-import "../../static/css/comment.css";
+import "../../../static/css/comment.css";
 import Grid from "@material-ui/core/Grid";
 
 const Comments = ({ author, comment, key, pid }) => {

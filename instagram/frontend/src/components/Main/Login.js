@@ -4,13 +4,13 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import logo from "../../static/images/logo.svg";
+import logo from "../../../static/images/logo.svg";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
-import { UserContext } from "./AppContext";
-import { UserStatusContext } from "./UserStatusContext";
+import { UserContext } from "../Context/AppContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
 import {
   BrowserRouter as Router,
   Switch,

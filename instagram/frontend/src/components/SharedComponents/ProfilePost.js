@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../static/css/profile.css";
+import "../../../static/css/profile.css";
 
 const ProfilePost = ({ imageUrl, key }) => {
   return (

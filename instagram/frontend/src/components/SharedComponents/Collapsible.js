@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CommentList from "./CommentList";
-import "../../static/css/collapsible.css";
+import "../../../static/css/collapsible.css";
 
 function Collapsible({ pid, event }) {
   return (

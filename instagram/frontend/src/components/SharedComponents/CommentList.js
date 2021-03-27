@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 import Comments from "./Comments";
-import { CommentsContext } from "./CommentsContext";
+import { CommentsContext } from "../Context/CommentsContext";
 import { v4 as uid } from "uuid";
-import { UserContext } from "./AppContext";
-import { UserStatusContext } from "./UserStatusContext";
+import { UserContext } from "../Context/AppContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
 import Posts from "./Posts";
 
 axios.defaults.xsrfCookieName = "csrftoken";

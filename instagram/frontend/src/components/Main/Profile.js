@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../../static/css/profile.css";
-import Header from "./Header";
+import "../../../static/css/profile.css";
+import Header from "../SharedComponents/Header";
 import axios from "axios";
-import ProfilePostList from "./ProfilePostList";
-const Myprofile = () => {
+import ProfilePostList from "../SharedComponents/ProfilePostList";
+const Profile = () => {
   //state
   const [userVisitedName, setUserVisitedName] = useState("");
   const [contentsLoading, setContentLoading] = useState(true);
@@ -119,4 +119,4 @@ const Myprofile = () => {
   );
 };
 
-export default Myprofile;
+export default Profile;

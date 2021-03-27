@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Header from "./Header";
+import Header from "../SharedComponents/Header";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
-import "../../static/css/settings.css";
+import "../../../static/css/settings.css";
 
 const settingsStyles = makeStyles(() => ({
   card: {

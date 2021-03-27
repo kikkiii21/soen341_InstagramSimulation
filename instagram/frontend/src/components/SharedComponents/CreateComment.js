@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import "../../static/css/comment.css";
-import { UserContext } from "./AppContext";
-import { CommentsContext } from "./CommentsContext";
+import "../../../static/css/comment.css";
+import { UserContext } from "../Context/AppContext";
+import { CommentsContext } from "../Context/CommentsContext";
+import { v4 as uid } from "uuid";
 import axios from "axios";
 
 const CreateComment = ({ pid }) => {
@@ -39,7 +40,6 @@ const CreateComment = ({ pid }) => {
             }`,
           },
         })
-
         .catch((err) => console.log(err));
   };
 
@@ -48,10 +48,11 @@ const CreateComment = ({ pid }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="CommentBar">
           <input
+            onChange={commentChangeHandler}
+            value={newComment}
             class="text-field"
             type="text"
             ref={register}
-            onChange={commentChangeHandler}
           />
 
           <button class="button">Comment</button>
