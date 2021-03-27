@@ -98,7 +98,7 @@ const Header = () => {
         <div className="spacer"></div>
         <div className="nav-actions">
           <div className={classes.navPages}>
-            <a href="#">
+            <a href="settings">
               <TuneIcon className={classes.navIcons} />
             </a>
             <a href="homepage">

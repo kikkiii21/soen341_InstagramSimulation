@@ -17,6 +17,7 @@ import PostList from "./PostList";
 import { UserStatusContext } from "./UserStatusContext";
 import { CommentsContext } from "./CommentsContext";
 import Profile from "./Profile";
+import Settings from './Settings';
 
 const RouterPage = () => {
   const [posts, setPosts] = useState([]);
@@ -50,6 +51,7 @@ const RouterPage = () => {
                 <Route exact path="/" component={HomePage}></Route>
                 <Route path="/following" component={FollowHomePage}></Route>
                 <Route path="/profile" component={Profile}></Route>
+                <Route path="/settings" component={Settings}></Route>
               </CommentsContext.Provider>
             </PostsContext.Provider>
           </UserContext.Provider>
