@@ -38,6 +38,8 @@ const useStyles = makeStyles(() => ({
     transitionDuration: "0.4s",
     borderRadius: "3px",
     cursor: "pointer",
+    width: "60px",
+    height: "30px",
     "&:hover": {
       backgroundColor: "#e35b6d",
       transitionDuration: "0.4s",
@@ -114,11 +116,9 @@ const Header = () => {
             <a href="following" className="link-styling">
               <PeopleAltOutlinedIcon className={classes.navIcons} />
             </a>
-          </div>
-          <div className="nav-logout-btn">
-            <button className={classes.logoutBtn} onClick={Logout}>
+            <a className={classes.logoutBtn} onClick={Logout}>
               <ExitToAppOutlinedIcon className={classes.navLogoutIcons} />
-            </button>
+            </a>
           </div>
         </div>
       </div>
