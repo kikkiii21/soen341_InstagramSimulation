@@ -60,7 +60,7 @@ const Profile = () => {
         const parseFollowers = response.data;
         const num = parseFollowers.filter((item) => item.following == userId);
         const followCheck = parseFollowers.filter(
-          (item) => item.user == JSON.parse(localUserInfo).name
+          (item) => item.user == JSON.parse(localUserInfo).author
         );
         const checked = followCheck.filter((item) => item.following == userId);
 
