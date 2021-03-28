@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { UserContext } from "./AppContext";
-import { UserStatusContext } from "./UserStatusContext";
+import { UserContext } from "../Context/AppContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
 
 const UserInfoStyles = makeStyles((theme) => ({
   card: {

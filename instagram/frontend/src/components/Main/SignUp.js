@@ -4,19 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import logo from "../../static/images/logo.svg";
+import logo from "../../../static/images/logo.svg";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link as Lin,
-  Redirect,
-} from "react-router-dom";
 import Login from "./Login";
 
 //declaring some package instances

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import "../../static/css/header.css";
+import "../../../static/css/header.css";
 import { makeStyles } from "@material-ui/core/styles";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import WebIcon from "@material-ui/icons/Web";
 import TuneIcon from "@material-ui/icons/Tune";
-import { UserStatusContext } from "./UserStatusContext";
-import { UserContext } from "./AppContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
+import { UserContext } from "../Context/AppContext";
 import axios from "axios";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 
@@ -38,6 +38,8 @@ const useStyles = makeStyles(() => ({
     transitionDuration: "0.4s",
     borderRadius: "3px",
     cursor: "pointer",
+    width: "60px",
+    height: "30px",
     "&:hover": {
       backgroundColor: "#e35b6d",
       transitionDuration: "0.4s",
@@ -98,7 +100,7 @@ const Header = () => {
         <div className="spacer"></div>
         <div className="nav-actions">
           <div className={classes.navPages}>
-            <a href="#">
+            <a href="settings">
               <TuneIcon className={classes.navIcons} />
             </a>
             <a href="homepage">
@@ -114,11 +116,9 @@ const Header = () => {
             <a href="following" className="link-styling">
               <PeopleAltOutlinedIcon className={classes.navIcons} />
             </a>
-          </div>
-          <div className="nav-logout-btn">
-            <button className={classes.logoutBtn} onClick={Logout}>
+            <a className={classes.logoutBtn} onClick={Logout}>
               <ExitToAppOutlinedIcon className={classes.navLogoutIcons} />
-            </button>
+            </a>
           </div>
         </div>
       </div>

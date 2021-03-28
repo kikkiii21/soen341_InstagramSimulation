@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../../static/css/profile.css";
-import Header from "./Header";
+import "../../../static/css/profile.css";
+import Header from "../SharedComponents/Header";
 import axios from "axios";
-import ProfilePostList from "./ProfilePostList";
-const Myprofile = () => {
+import ProfilePostList from "../SharedComponents/ProfilePostList";
+const Profile = () => {
   //state
   const [userVisitedName, setUserVisitedName] = useState("");
   const [contentsLoading, setContentLoading] = useState(true);
@@ -60,7 +60,7 @@ const Myprofile = () => {
         const parseFollowers = response.data;
         const num = parseFollowers.filter((item) => item.following == userId);
         const followCheck = parseFollowers.filter(
-          (item) => item.user == JSON.parse(localUserInfo).name
+          (item) => item.user == JSON.parse(localUserInfo).author
         );
         const checked = followCheck.filter((item) => item.following == userId);
 
@@ -119,4 +119,4 @@ const Myprofile = () => {
   );
 };
 
-export default Myprofile;
+export default Profile;

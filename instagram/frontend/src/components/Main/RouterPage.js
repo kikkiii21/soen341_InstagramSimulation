@@ -10,20 +10,20 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import { UserContext } from "./AppContext";
+import { UserContext } from "../Context/AppContext";
 import { v4 as uid } from "uuid";
-import { PostsContext } from "./PostsContext";
-import PostList from "./PostList";
-import { UserStatusContext } from "./UserStatusContext";
-import { CommentsContext } from "./CommentsContext";
+import { PostsContext } from "../Context/PostsContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
+import { CommentsContext } from "../Context/CommentsContext";
 import Profile from "./Profile";
+import Settings from "./Settings";
 
 const RouterPage = () => {
   const [posts, setPosts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [LoggedInUserInfo, setLoggedInUserInfo] = useState({
     name: "Arthur Morgan",
-    avatar: "../../static/images/arthur.jpg",
+    avatar: "../../../static/images/arthur.jpg",
     id: uid(),
   });
   const [comment, setComment] = useState([]);
@@ -50,6 +50,7 @@ const RouterPage = () => {
                 <Route exact path="/" component={HomePage}></Route>
                 <Route path="/following" component={FollowHomePage}></Route>
                 <Route path="/profile" component={Profile}></Route>
+                <Route path="/settings" component={Settings}></Route>
               </CommentsContext.Provider>
             </PostsContext.Provider>
           </UserContext.Provider>

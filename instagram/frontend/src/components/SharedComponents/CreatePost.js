@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import "../../static/css/post.css";
+import "../../../static/css/post.css";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { v4 as uid } from "uuid";
-import { UserContext } from "./AppContext";
-import { PostsContext } from "./PostsContext";
-import { UserStatusContext } from "./UserStatusContext";
+import { UserContext } from "../Context/AppContext";
+import { PostsContext } from "../Context/PostsContext";
+import { UserStatusContext } from "../Context/UserStatusContext";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 // to account for cross site request forgery vulnerability
 // required by django backend

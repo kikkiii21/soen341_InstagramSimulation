@@ -9,5 +9,6 @@ urlpatterns = [
     path('homepage', index),
     path('following', index),
     path('profile', index),
+    path('settings', index),
 
 ]
