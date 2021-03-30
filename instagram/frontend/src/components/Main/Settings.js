@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
 import "../../../static/css/settings.css";
+import axios from "axios";
 
 const settingsStyles = makeStyles(() => ({
   card: {
@@ -138,6 +139,15 @@ const Settings = () => {
     setNewImage(URL.createObjectURL(e.target.files[0]));
   };
 
+  //Submit to api endpoint
+    axios.put("/updateProfile/",requestOptions.body,{
+          headers: { "content-type": "application/json"},
+    })
+        then.()
+        .catch((err) => console.log(err));
+  }
+
+
   return (
     <Grid container spacing={1} justify="center">
       <Grid item xs={12} className={styles.headerSpace}>
@@ -148,7 +158,9 @@ const Settings = () => {
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-          <form className={styles.form}>
+          <form className={styles.form}
+          onSubmit={handleSubmit( =>updateHandler() )}
+          >
             <div className={styles.contents}>
               <div className={styles.hrWrapper}>
                 <div className="separator">Update Profile Picture</div>
@@ -236,7 +248,8 @@ const Settings = () => {
                   fullWidth
                 />
               </div>
-              <button className={styles.submit}>Submit</button>
+              <button
+                  className={styles.submit}>Submit</button>
             </div>
           </form>
         </div>

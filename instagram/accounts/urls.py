@@ -1,5 +1,6 @@
 from django.urls import path, include
-from .views import RegisterAPI, LoginAPI, UserAPI, FollowAPI, UserListAPI, FollowedPostsAPI, ProfileListAPI
+from .views import RegisterAPI, LoginAPI, UserAPI, FollowAPI, UserListAPI, FollowedPostsAPI, ProfileListAPI, \
+	ChangePasswordView,ProfileUpdateView
 from rest_framework.urlpatterns import format_suffix_patterns
 from knox import views as knox_views
 
@@ -11,7 +12,9 @@ urlpatterns = [
 	path('profilelistEndpoint/', ProfileListAPI.as_view(), name='list-all-profiles'),
 	path('followEndpoint/', FollowAPI.as_view()),
 	path('followingEndpoint/', FollowedPostsAPI.as_view()),
-	path('logoutEndpoint', knox_views.LogoutView.as_view(), name = 'logout-user'),
+	path('logoutEndpoint', knox_views.LogoutView.as_view(), name='logout-user'),
+	path('changePassword/<int:pk>/', ChangePasswordView.as_view(), name='auth-change-password'),
+	path('updateProfile/', ProfileUpdateView.as_view(), name='auth-update-profile'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

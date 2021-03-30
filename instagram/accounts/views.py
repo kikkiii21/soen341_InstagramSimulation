@@ -1,11 +1,13 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, ProfileSerializer
+from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, \
+    ProfileSerializer, ChangePasswordSerializer, UserProfileSerializer
 from django.contrib.auth.models import User
 from .models import Profile, Follow
 from posts.serializers import PostSerializer
 from posts.models import Post
+
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -46,6 +48,37 @@ class UserAPI(generics.RetrieveAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
 
+
+# class ProfileView(generics.UpdateAPIView):
+#     permission_classes = permissions.IsAuthenticated
+#     serializer_class = ProfileSerializer
+#     queryset = Profile.objects.all()
+
+
+class ProfileUpdateView(generics.UpdateAPIView):
+    #authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserProfileSerializer
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+
+# class ProfileUpdateView(generics.UpdateAPIView):
+#     queryset = Profile.objects.all()
+#     permission_classes = (permissions.IsAuthenticated,)
+#     serializer_class = ProfileUpdateSerializer
+#     #
+#     # def get_object(self):
+#     #     return Profile.objects.get(user=self.request.user)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
+
+
 class FollowAPI(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
@@ -58,7 +91,7 @@ class FollowAPI(generics.ListCreateAPIView):
 # Get User List API
 class UserListAPI(generics.ListAPIView):
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
 
 # Get Profile List API
