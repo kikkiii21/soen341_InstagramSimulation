@@ -132,20 +132,36 @@ const Settings = () => {
     JSON.parse(localStorage.getItem("userInfo"))
   );
   const [newImage, setNewImage] = useState(userInfo.avatar);
+  const [currentPassword, setCurrentPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+  const [confirmNewPassword, setConfirmNewPassword] = useState();
   console.log(userInfo);
 
   //Event Handlers
   const profileImageHandler = (e) => {
     setNewImage(URL.createObjectURL(e.target.files[0]));
   };
+  const currentPasswordHandler = (e) =>{
+    setCurrentPassword(e.target.value)
+  };
+   const newPasswordHandler = (e) =>{
+    setNewPassword(e.target.value)
+  };
+   const confirmNewPasswordHandler = (e) =>{
+    setConfirmNewPassword(e.target.value)
+  };
 
-  //Submit to api endpoint
-    axios.put("/updateProfile/",requestOptions.body,{
-          headers: { "content-type": "application/json"},
-    })
-        then.()
-        .catch((err) => console.log(err));
-  }
+   const updatePasswordHandler=()=>{
+     const passwordObject={"old_password":currentPassword,"password":newPassword,"password2":confirmNewPassword}
+   axios.put(`changePassword/${userInfo.id}`,passwordObject, {
+     headers: {
+       "content-type": "application/json",
+       Authorization: `token ${ userInfo.token
+       }`,
+     },
+   })
+    .catch((err) => console.log(err));
+   };
 
 
   return (
@@ -158,9 +174,7 @@ const Settings = () => {
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-          <form className={styles.form}
-          onSubmit={handleSubmit( =>updateHandler() )}
-          >
+          <form className={styles.form}>
             <div className={styles.contents}>
               <div className={styles.hrWrapper}>
                 <div className="separator">Update Profile Picture</div>
@@ -225,7 +239,16 @@ const Settings = () => {
                   variant="outlined"
                   fullWidth
                 />
-                <TextField
+
+              </div>
+              <button
+                  className={styles.submit}>Submit</button>
+            </div>
+          </form>
+          <form onSubmit={updatePasswordHandler}>
+            <div className={styles.contents}>
+              <div className={styles.textInfoSection}>
+                                <TextField
                   type="password"
                   required
                   inputRef={updateInfo}
@@ -235,6 +258,7 @@ const Settings = () => {
                   label="Current Password"
                   variant="outlined"
                   fullWidth
+                  onChange={currentPasswordHandler}
                 />
                 <TextField
                   type="password"
@@ -246,11 +270,26 @@ const Settings = () => {
                   label="New Password"
                   variant="outlined"
                   fullWidth
+                  onChange={newPasswordHandler}
                 />
-              </div>
-              <button
+                <TextField
+                  type="password"
+                  required
+                  inputRef={updateInfo}
+                  name="Cpassword"
+                  id="Cpassword"
+                  className={styles.TextField}
+                  label="Confirm New Password"
+                  variant="outlined"
+                  fullWidth
+                  onChange={confirmNewPasswordHandler}
+                />
+                  <button
                   className={styles.submit}>Submit</button>
+
+              </div>
             </div>
+
           </form>
         </div>
       </Grid>
