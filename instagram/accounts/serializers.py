@@ -10,10 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
     posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     follows = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    username = serializers.ReadOnlyField(read_only=True)
 
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'follows')
+
 
 
 # Profile Serializer
@@ -34,20 +36,20 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True, many=False)
 
+
     class Meta:
         model = Profile
         fields = ('id', 'user', 'photo')
-        read_only_fields = ('id', 'user')
 
     def update(self, instance, validated_data):
+        username = serializers.ReadOnlyField(source='user.username')
         user_data = validated_data.pop('user')
         username = self.data['user']['username']
-        # user_email = self.data['user']['email']
         user = User.objects.get(username=username)
-        #print user
+
         user_serializer = UserSerializer(data=user_data)
         if user_serializer.is_valid():
-            user_serializer.update(user,user_data,)
+            user_serializer.update(user, user_data,)
         instance.save()
         return instance
 

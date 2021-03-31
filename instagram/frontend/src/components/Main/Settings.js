@@ -151,9 +151,23 @@ const Settings = () => {
     setConfirmNewPassword(e.target.value)
   };
 
-   const updatePasswordHandler=()=>{
+   // const =(e)=>{
+   //   e.preventDefault()
+   //   const passwordObject={"old_password":currentPassword,"password":newPassword,"password2":confirmNewPassword}
+   // axios.put(`changePassword/${userInfo.id}/`,passwordObject, {
+   //   headers: {
+   //     "content-type": "application/json",
+   //     Authorization: `token ${ userInfo.token
+   //     }`,
+   //   },
+   // })
+   //  .catch((err) => console.log(err));
+   // };
+
+   const updatePasswordHandler=(e)=>{
+     e.preventDefault()
      const passwordObject={"old_password":currentPassword,"password":newPassword,"password2":confirmNewPassword}
-   axios.put(`changePassword/${userInfo.id}`,passwordObject, {
+   axios.put(`changePassword/${userInfo.id}/`,passwordObject, {
      headers: {
        "content-type": "application/json",
        Authorization: `token ${ userInfo.token
@@ -248,7 +262,7 @@ const Settings = () => {
           <form onSubmit={updatePasswordHandler}>
             <div className={styles.contents}>
               <div className={styles.textInfoSection}>
-                                <TextField
+                <TextField
                   type="password"
                   required
                   inputRef={updateInfo}
@@ -289,7 +303,6 @@ const Settings = () => {
 
               </div>
             </div>
-
           </form>
         </div>
       </Grid>
