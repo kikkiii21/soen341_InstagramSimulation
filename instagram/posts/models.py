@@ -11,3 +11,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+    def get_post_caption(self):
+        return self.caption + ' belongs to ' + self.author.username + '.'
