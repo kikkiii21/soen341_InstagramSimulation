@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import RegisterAPI, LoginAPI, UserAPI, FollowAPI, UserListAPI, FollowedPostsAPI, ProfileListAPI, \
-	ChangePasswordView,ProfileUpdateView
+	ChangePasswordView, ProfileUpdateView
 from rest_framework.urlpatterns import format_suffix_patterns
 from knox import views as knox_views
 
@@ -18,3 +18,4 @@ urlpatterns = [
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+

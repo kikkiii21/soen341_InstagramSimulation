@@ -42,7 +42,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'photo')
 
     def update(self, instance, validated_data):
-        username = serializers.ReadOnlyField(source='user.username')
+        #username = serializers.ReadOnlyField(source='user.username')
         user_data = validated_data.pop('user')
         username = self.data['user']['username']
         user = User.objects.get(username=username)

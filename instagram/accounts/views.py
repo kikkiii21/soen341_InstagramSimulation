@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser,FormParser
 from knox.models import AuthToken
 from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, \
     ChangePasswordSerializer, UserProfileSerializer
@@ -59,6 +60,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
     #authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserProfileSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)

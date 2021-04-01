@@ -111,10 +111,9 @@ const Login = () => {
         const fullName = response.data.user.username;
         const token = response.data.token;
         const userId = response.data.user.id;
-        const userProfilePic = response.data.user.photo;
         const newInfo = {
           author: fullName,
-          avatar: userProfilePic,
+          avatar: "../../static/images/arthur.jpg",
           id: userId,
           token: token,
         };

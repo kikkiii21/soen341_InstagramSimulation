@@ -131,15 +131,27 @@ const Settings = () => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
   );
-  const [newImage, setNewImage] = useState(userInfo.avatar);
+  const [newImage, setNewImage] = useState({url:userInfo.avatar, raw:""});
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
+  const [newFirstName,setNewFirstName] = useState();
+  const [newLastName,setNewLastName] = useState();
+  const [newEmail,setNewEmail] = useState();
   console.log(userInfo);
 
   //Event Handlers
   const profileImageHandler = (e) => {
-    setNewImage(URL.createObjectURL(e.target.files[0]));
+    setNewImage({url:URL.createObjectURL(e.target.files[0]),raw:e.target.files[0]});
+   //  const imageObject={"photo":newImage}
+   //     axios.put(`updateProfile/`,imageObject, {
+   //   headers: {
+   //     "content-type": "multipart/form-data",
+   //     Authorization: `token ${ userInfo.token
+   //     }`,
+   //   },
+   // })
+   //  .catch((err) => console.log(err));
   };
   const currentPasswordHandler = (e) =>{
     setCurrentPassword(e.target.value)
@@ -150,19 +162,40 @@ const Settings = () => {
    const confirmNewPasswordHandler = (e) =>{
     setConfirmNewPassword(e.target.value)
   };
+     const newFirstNameHandler= (e) =>{
+    setNewFirstName(e.target.value)
+  };
+   const newLastNameHandler = (e) =>{
+    setNewLastName(e.target.value)
+  };
+   const newEmailHandler = (e) =>{
+    setNewEmail(e.target.value)
+  };
 
-   // const =(e)=>{
-   //   e.preventDefault()
-   //   const passwordObject={"old_password":currentPassword,"password":newPassword,"password2":confirmNewPassword}
-   // axios.put(`changePassword/${userInfo.id}/`,passwordObject, {
-   //   headers: {
-   //     "content-type": "application/json",
-   //     Authorization: `token ${ userInfo.token
-   //     }`,
-   //   },
-   // })
-   //  .catch((err) => console.log(err));
-   // };
+   const updateProfileHandler=(e)=>{
+       e.preventDefault()
+    //  const profileObject={
+    //     "user" : {
+    //     "first_name": newFirstName,
+    //     "last_name": newLastName,
+    //     "email": newEmail
+    // },
+    // "photo": newImage
+    //   }
+     let form_data = new FormData();
+       const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
+       form_data.append("user",userObj)
+     form_data.append("photo",newImage.raw)
+   axios.put(`updateProfile/`,form_data, {
+     headers: {
+       // "content-type": "application/json",
+       "content-type": "multipart/form-data",
+       Authorization: `token ${ userInfo.token
+       }`,
+     },
+   })
+    .catch((err) => console.log(err));
+   };
 
    const updatePasswordHandler=(e)=>{
      e.preventDefault()
@@ -188,7 +221,7 @@ const Settings = () => {
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={updateProfileHandler}>
             <div className={styles.contents}>
               <div className={styles.hrWrapper}>
                 <div className="separator">Update Profile Picture</div>
@@ -201,16 +234,16 @@ const Settings = () => {
                   <AddAPhotoIcon className={styles.imgBtn} fontSize="default" />
                 </label>
                 <input
-                  required
+                  //required
                   value={null}
-                  // onChange={imageSelectedHandler}
-                  ref={updateInfo}
+                  //ref={updateInfo}
                   name="avatar"
                   id="profilePhoto"
                   className={styles.hideImageInput}
                   type="file"
                   onChange={profileImageHandler}
                 />
+                <button className={styles.submit} onSubmit={profileImageHandler}>Update</button>
               </div>
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
@@ -219,39 +252,43 @@ const Settings = () => {
                 <TextField
                   defaultValue={userInfo.author}
                   type="text"
-                  required
-                  inputRef={updateInfo}
+                  //required
+                  //inputRef={updateInfo}
                   name="firstName"
                   id="firstName"
                   className={styles.TextField}
                   label="First Name"
                   variant="outlined"
                   fullWidth
+                  onChange={newFirstNameHandler}
                 />
                 <TextField
+
                   type="text"
-                  required
-                  inputRef={updateInfo}
+                  //required
+                  //inputRef={updateInfo}
                   name="lastName"
                   id="lastName"
                   className={styles.TextField}
                   label="Last Name"
                   variant="outlined"
                   fullWidth
+                  onChange={newLastNameHandler}
                 />
                 <div className={styles.hrWrapper}>
-                  <div className="separator">Update Email/Password</div>
+                  {/*<div className="separator">Update Email/Password</div>*/}
                 </div>
                 <TextField
                   type="email"
-                  required
-                  inputRef={updateInfo}
+                  //required
+                  //inputRef={updateInfo}
                   name="email"
                   id="email"
                   className={styles.TextField}
                   label="Email Address"
                   variant="outlined"
                   fullWidth
+                  onChange={newEmailHandler}
                 />
 
               </div>
@@ -265,7 +302,7 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  inputRef={updateInfo}
+                  //inputRef={updateInfo}
                   name="password"
                   id="password"
                   className={styles.TextField}
@@ -277,7 +314,7 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  inputRef={updateInfo}
+                  //inputRef={updateInfo}
                   name="Npassword"
                   id="Npassword"
                   className={styles.TextField}
@@ -289,7 +326,7 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  inputRef={updateInfo}
+                  //inputRef={updateInfo}
                   name="Cpassword"
                   id="Cpassword"
                   className={styles.TextField}
