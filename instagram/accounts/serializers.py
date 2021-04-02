@@ -17,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'posts', 'comments', 'follows')
 
 
-
 # Profile Serializer
 class ProfileSerializer(serializers.ModelSerializer):
     # username = serializers.CharField(source='user.username', read_only=True)
@@ -30,28 +29,48 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'user')
+        fields = ('id', 'photo')
 
+
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     # user = UserSerializer(required=True, many=False)
+#
+#     class Meta:
+#         model = User
+#         fields = ('id', 'first_name', 'last_name', 'email')
+#
+#     # def update(self, instance, validated_data):
+#     #     user_data = validated_data.pop('user')
+#     #     username = self.data['user']['username']
+#     #     user = User.objects.get(username=username)
+#     #
+#     #     user_serializer = UserSerializer(data=user_data)
+#     #
+#     #     if user_serializer.is_valid():
+#     #         user_serializer.update(user, user_data,)
+#     #
+#     #     instance.save()
+#     #     return instance
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True, many=False)
-
 
     class Meta:
         model = Profile
         fields = ('id', 'user', 'photo')
 
     def update(self, instance, validated_data):
-        #username = serializers.ReadOnlyField(source='user.username')
-        user_data = validated_data.pop('user')
-        username = self.data['user']['username']
-        user = User.objects.get(username=username)
+        nested_serializer = self.fields['user']
+        nested_instance = instance.user
+        nested_data = validated_data.pop('user')
+        nested_serializer.update(nested_instance, nested_data)
+        return super(UserProfileSerializer, self).update(instance, validated_data)
 
-        user_serializer = UserSerializer(data=user_data)
-        if user_serializer.is_valid():
-            user_serializer.update(user, user_data,)
-        instance.save()
-        return instance
+
+class UserPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('id', 'photo')
 
 
 # class ProfileUpdateSerializer(serializers.ModelSerializer):
@@ -113,15 +132,17 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
         return instance
 
+
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+        user = User.objects.create_user(validated_data['username'], first_name=validated_data['first_name'], \
+         last_name=validated_data['last_name'], email=validated_data['email'], password=validated_data['password'])
         return user
 
 

@@ -112,7 +112,7 @@ const SignUp = () => {
       body: JSON.stringify(dataObject),
     };
     axios
-      .post("/registerEndpoint", requestOptions.body, {
+      .post("/registerEndpoint/", requestOptions.body, {
         headers: { "Content-Type": "application/json" },
       })
       .then(

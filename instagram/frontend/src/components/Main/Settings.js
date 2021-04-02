@@ -127,32 +127,42 @@ const settingsStyles = makeStyles(() => ({
 const Settings = () => {
   //State
   const styles = settingsStyles();
-  const { updateInfo, handleSubmit } = useForm();
+  const {updateInfo, handleSubmit} = useForm();
   const [userInfo, setUserInfo] = useState(
-    JSON.parse(localStorage.getItem("userInfo"))
+      JSON.parse(localStorage.getItem("userInfo"))
   );
-  const [newImage, setNewImage] = useState({url:userInfo.avatar, raw:""});
+  const [newImage, setNewImage] = useState(userInfo.avatar);
+  console.log(userInfo);
+
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
-  const [newFirstName,setNewFirstName] = useState();
-  const [newLastName,setNewLastName] = useState();
-  const [newEmail,setNewEmail] = useState();
+  const [newFirstName, setNewFirstName] = useState();
+  const [newLastName, setNewLastName] = useState();
+  const [newEmail, setNewEmail] = useState();
   console.log(userInfo);
 
   //Event Handlers
   const profileImageHandler = (e) => {
-    setNewImage({url:URL.createObjectURL(e.target.files[0]),raw:e.target.files[0]});
-   //  const imageObject={"photo":newImage}
-   //     axios.put(`updateProfile/`,imageObject, {
-   //   headers: {
-   //     "content-type": "multipart/form-data",
-   //     Authorization: `token ${ userInfo.token
-   //     }`,
-   //   },
-   // })
-   //  .catch((err) => console.log(err));
+    setNewImage(URL.createObjectURL(e.target.files[0]));
   };
+
+  const updateImageHandler = () => {
+    //const imageObject = {"photo":newImage}
+    let form_data = new FormData();
+    form_data.append('photo', newImage)
+
+    axios.put(`updatePhoto/`, form_data, {
+      headers: {
+        //"content-type": "application/json",
+        "content-type":"multipart/form-data",
+        Authorization: `token ${userInfo.token
+        }`,
+      },
+    })
+        .catch((err) => console.log(err));
+  };
+
   const currentPasswordHandler = (e) =>{
     setCurrentPassword(e.target.value)
   };
@@ -174,28 +184,37 @@ const Settings = () => {
 
    const updateProfileHandler=(e)=>{
        e.preventDefault()
-    //  const profileObject={
-    //     "user" : {
-    //     "first_name": newFirstName,
-    //     "last_name": newLastName,
-    //     "email": newEmail
-    // },
-    // "photo": newImage
-    //   }
-     let form_data = new FormData();
-       const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
-       form_data.append("user",userObj)
-     form_data.append("photo",newImage.raw)
-   axios.put(`updateProfile/`,form_data, {
-     headers: {
-       // "content-type": "application/json",
-       "content-type": "multipart/form-data",
+     const profileObject={
+        "user" : {
+        "first_name": newFirstName,
+        "last_name": newLastName,
+        "email": newEmail
+    },
+      }
+      axios.patch(`updateProfile/`,profileObject,{
+           headers: {
+       "content-type": "application/json",
        Authorization: `token ${ userInfo.token
        }`,
-     },
+      }
    })
-    .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
    };
+
+   //   let form_data = new FormData();
+   //     const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
+   //     form_data.append("user",userObj)
+   //   form_data.append("photo",newImage.raw)
+   // axios.put(`updateProfile/`,form_data, {
+   //   headers: {
+   //     // "content-type": "application/json",
+   //     "content-type": "multipart/form-data",
+   //     Authorization: `token ${ userInfo.token
+   //     }`,
+   //   },
+   // })
+   //  .catch((err) => console.log(err));
+   // };
 
    const updatePasswordHandler=(e)=>{
      e.preventDefault()
@@ -221,9 +240,23 @@ const Settings = () => {
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-          <form className={styles.form} onSubmit={updateProfileHandler}>
             <div className={styles.contents}>
-              <div className={styles.hrWrapper}>
+                <form onSubmit={updateImageHandler}>
+
+                    <input
+                  //required
+                  //ref={updateInfo}
+                  name="avatar"
+                  id="profilePhoto"
+                  className={styles.hideImageInput}
+                  type="file"
+                  onChange={profileImageHandler}
+                />
+                <button className={styles.submit} >Update</button>
+
+                </form>
+                <form className={styles.form} >
+                   <div className={styles.hrWrapper}>
                 <div className="separator">Update Profile Picture</div>
               </div>
               <div className={styles.photoSection}>
@@ -233,24 +266,14 @@ const Settings = () => {
                 <label for="profilePhoto">
                   <AddAPhotoIcon className={styles.imgBtn} fontSize="default" />
                 </label>
-                <input
-                  //required
-                  value={null}
-                  //ref={updateInfo}
-                  name="avatar"
-                  id="profilePhoto"
-                  className={styles.hideImageInput}
-                  type="file"
-                  onChange={profileImageHandler}
-                />
-                <button className={styles.submit} onSubmit={profileImageHandler}>Update</button>
+
               </div>
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Full Name</div>
                 </div>
                 <TextField
-                  defaultValue={userInfo.author}
+                  defaultValue={userInfo.first_name}
                   type="text"
                   //required
                   //inputRef={updateInfo}
@@ -267,6 +290,7 @@ const Settings = () => {
                   type="text"
                   //required
                   //inputRef={updateInfo}
+                  defaultValue={userInfo.last_name}
                   name="lastName"
                   id="lastName"
                   className={styles.TextField}
@@ -282,6 +306,7 @@ const Settings = () => {
                   type="email"
                   //required
                   //inputRef={updateInfo}
+                  defaultValue={userInfo.email}
                   name="email"
                   id="email"
                   className={styles.TextField}
@@ -293,9 +318,9 @@ const Settings = () => {
 
               </div>
               <button
-                  className={styles.submit}>Submit</button>
-            </div>
+                  className={styles.submit} onClick={updateProfileHandler}>PLEASEWORK</button>
           </form>
+          </div>
           <form onSubmit={updatePasswordHandler}>
             <div className={styles.contents}>
               <div className={styles.textInfoSection}>

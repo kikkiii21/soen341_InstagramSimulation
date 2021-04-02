@@ -104,15 +104,21 @@ const Login = () => {
       body: JSON.stringify(dataObject),
     };
     axios
-      .post("/loginEndpoint", requestOptions.body, {
+      .post("/loginEndpoint/", requestOptions.body, {
         headers: { "Content-Type": "application/json" },
       })
       .then(async (response) => {
-        const fullName = response.data.user.username;
+        const username = response.data.user.username;
         const token = response.data.token;
         const userId = response.data.user.id;
+        const firstName = response.data.user.first_name;
+        const lastName = response.data.user.last_name;
+        const email = response.data.user.email;
         const newInfo = {
-          author: fullName,
+          author: username,
+          first_name:firstName,
+          last_name:lastName,
+          email:email,
           avatar: "../../static/images/arthur.jpg",
           id: userId,
           token: token,

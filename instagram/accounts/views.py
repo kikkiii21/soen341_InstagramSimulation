@@ -1,9 +1,9 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser,FormParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from knox.models import AuthToken
 from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, \
-    ChangePasswordSerializer, UserProfileSerializer
+    ChangePasswordSerializer, UserProfileSerializer,ProfileSerializer, UserPhotoSerializer
 from django.contrib.auth.models import User
 from .models import Profile, Follow
 from posts.serializers import PostSerializer
@@ -60,10 +60,30 @@ class ProfileUpdateView(generics.UpdateAPIView):
     #authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserProfileSerializer
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+
+class PhotoUpdateView(generics.UpdateAPIView):
+    # authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserPhotoSerializer
     parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
+
+# class ProfilePictureUpdateView(generics.UpdateAPIView):
+#     #authentication_classes = (authentication.TokenAuthentication,)
+#     permission_classes = (permissions.IsAuthenticated,)
+#     serializer_class = ProfileSerializer
+#
+#     def get_object(self):
+#         return Profile.objects.get(user=self.request.user)
+
+    # def get_object(self):
+    #     return Profile.objects.get(user=self.request.photo)
 
 
 # class ProfileUpdateView(generics.UpdateAPIView):
