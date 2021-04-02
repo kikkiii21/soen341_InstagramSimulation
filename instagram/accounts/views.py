@@ -57,7 +57,7 @@ class UserAPI(generics.RetrieveAPIView):
 
 
 class ProfileUpdateView(generics.UpdateAPIView):
-    #authentication_classes = (authentication.TokenAuthentication,)
+    # authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserProfileSerializer
 
@@ -120,7 +120,7 @@ class UserListAPI(generics.ListAPIView):
 # Get Profile List API
 class ProfileListAPI(generics.ListAPIView):
     queryset = Profile.objects.all()
-    serializer_class = UserProfileSerializer
+    serializer_class = ProfileSerializer
 
 
 class FollowedPostsAPI(generics.ListAPIView):
