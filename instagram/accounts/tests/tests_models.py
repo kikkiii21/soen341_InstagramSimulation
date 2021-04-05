@@ -2,6 +2,7 @@ from django.test import TestCase
 from ..models import Profile, Follow
 from django.contrib.auth.models import User
 
+
 # test to see if app returns specific users' email addresses
 class GetEmailTest(TestCase):
 

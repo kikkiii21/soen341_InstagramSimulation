@@ -149,6 +149,6 @@ LOGIN_REDIRECT_URL = '/posts/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'instagram')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/images/'
 
 LOGIN_URL = 'login'

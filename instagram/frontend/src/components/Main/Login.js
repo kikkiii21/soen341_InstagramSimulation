@@ -120,7 +120,7 @@ const Login = () => {
           first_name:firstName,
           last_name:lastName,
           email:email,
-          // avatar: "../../static/images/profile.png",
+          avatar: "../../static/images/profile.png",
           id: userId,
           token: token,
         };
