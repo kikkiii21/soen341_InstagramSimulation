@@ -29,7 +29,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'user')
+        fields = ('id', 'user','photo')
 
 
 # class UserProfileSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'user', 'photo')
+        fields = ('id', 'user')
 
     def update(self, instance, validated_data):
         nested_serializer = self.fields['user']

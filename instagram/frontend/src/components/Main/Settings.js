@@ -7,6 +7,10 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
 import "../../../static/css/settings.css";
 import axios from "axios";
+import FormData from 'form-data'
+import { UserStatusContext } from "../Context/UserStatusContext";
+import {UserContext} from "../Context/AppContext";
+
 
 const settingsStyles = makeStyles(() => ({
   card: {
@@ -128,10 +132,11 @@ const Settings = () => {
   //State
   const styles = settingsStyles();
   const {updateInfo, handleSubmit} = useForm();
+    const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState(
       JSON.parse(localStorage.getItem("userInfo"))
   );
-  const [newImage, setNewImage] = useState(userInfo.avatar);
+  const [newImage, setNewImage] = useState({url:userInfo.avatar, raw: null});
   console.log(userInfo);
 
   const [currentPassword, setCurrentPassword] = useState();
@@ -140,29 +145,56 @@ const Settings = () => {
   const [newFirstName, setNewFirstName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [newEmail, setNewEmail] = useState();
-  console.log(userInfo);
+
 
   //Event Handlers
-  const profileImageHandler = (e) => {
-    setNewImage(URL.createObjectURL(e.target.files[0]));
-  };
+  const profileImageHandler =(e) =>{
+    setNewImage({url:URL.createObjectURL(e.target.files[0]),raw: e.target.files[0]})
+  }
+  console.log(newImage.url)
+  // const profileImageHandler = (e) => {
+  //   setNewImage(URL.createObjectURL(e.target.files[0]));
+  // };
 
-  const updateImageHandler = () => {
+
+  const updateImageHandler = (e) => {
+     e.preventDefault()
     //const imageObject = {"photo":newImage}
     let form_data = new FormData();
-    form_data.append('photo', newImage)
+    form_data.append("photo", newImage.raw);
 
     axios.put(`updatePhoto/`, form_data, {
       headers: {
         //"content-type": "application/json",
         "content-type":"multipart/form-data",
-        Authorization: `token ${userInfo.token
-        }`,
+        Authorization: `token ${userInfo.token}`,
       },
     })
-        .catch((err) => console.log(err));
+        .then((res) => {
+        const newInfoImage ={...userInfo}
+
+        newInfoImage.avatar = res.data.photo;
+        console.log(">>>>>>>>>>>>>>>>>>>",newInfoImage);
+        localStorage.setItem("userInfo", JSON.stringify(newInfoImage))
+        setLoggedInUserInfo(newInfoImage)
+      })
+      .catch((err) => console.log(err));
+
   };
 
+  // const updateImageHandler=()=>{
+  //   const imageObject ={"photo":newImage.raw}
+  //   axios.put(`updatePhoto/${userInfo.id}/`,imageObject,{
+  //     headers: {
+  //      "content-type": "multipart/form-data",
+  //      Authorization: `token ${ userInfo.token
+  //      }`,
+  //     }
+  //  })
+  //         .catch((err) => console.log(err));
+  //
+  // };
+console.log(userInfo.avatar);
   const currentPasswordHandler = (e) =>{
     setCurrentPassword(e.target.value)
   };
@@ -241,33 +273,35 @@ const Settings = () => {
       <Grid item xs={8}>
         <div className={styles.card}>
             <div className={styles.contents}>
-                <form onSubmit={updateImageHandler}>
+                <form className={styles.form} >
+                  <div className={styles.textInfoSection}>
+                  <div className={styles.hrWrapper}>
+                    <div className="separator">Update Profile Picture</div>
+                  </div>
+                  <div className={styles.photoSection}>
+                    <div className={styles.PostUserAvatar}>
+                      <img className={styles.image} src={newImage.url} alt="Username"/>
+                    </div>
+                    <label htmlFor="profilePhoto">
+                      <AddAPhotoIcon className={styles.imgBtn} fontSize="default"/>
+                    </label>
 
+                  </div>
                     <input
                   //required
                   //ref={updateInfo}
+
                   name="avatar"
                   id="profilePhoto"
                   className={styles.hideImageInput}
                   type="file"
                   onChange={profileImageHandler}
                 />
-                <button className={styles.submit} >Update</button>
-
+                <button className={styles.submit} onClick={updateImageHandler} >FookU</button>
+                  </div>
                 </form>
-                <form className={styles.form} >
-                   <div className={styles.hrWrapper}>
-                <div className="separator">Update Profile Picture</div>
-              </div>
-              <div className={styles.photoSection}>
-                <div className={styles.PostUserAvatar}>
-                  <img className={styles.image} src={newImage} alt="Username" />
-                </div>
-                <label for="profilePhoto">
-                  <AddAPhotoIcon className={styles.imgBtn} fontSize="default" />
-                </label>
 
-              </div>
+                <form className={styles.form} >
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Full Name</div>
@@ -299,9 +333,7 @@ const Settings = () => {
                   fullWidth
                   onChange={newLastNameHandler}
                 />
-                <div className={styles.hrWrapper}>
-                  {/*<div className="separator">Update Email/Password</div>*/}
-                </div>
+
                 <TextField
                   type="email"
                   //required
@@ -316,14 +348,18 @@ const Settings = () => {
                   onChange={newEmailHandler}
                 />
 
-              </div>
+
               <button
-                  className={styles.submit} onClick={updateProfileHandler}>PLEASEWORK</button>
+                  className={styles.submit} onClick={updateProfileHandler}>Update</button>
+                </div>
           </form>
           </div>
           <form onSubmit={updatePasswordHandler}>
             <div className={styles.contents}>
               <div className={styles.textInfoSection}>
+                                <div className={styles.hrWrapper}>
+                  <div className="separator">Update Email/Password</div>
+                </div>
                 <TextField
                   type="password"
                   required

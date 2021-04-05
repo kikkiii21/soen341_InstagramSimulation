@@ -23,7 +23,7 @@ const RouterPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [LoggedInUserInfo, setLoggedInUserInfo] = useState({
     name: "Arthur Morgan",
-    avatar: "../../../static/images/arthur.jpg",
+    avatar: "../../../static/media/arthur.jpg",
     id: uid(),
   });
   const [comment, setComment] = useState([]);

@@ -114,12 +114,13 @@ const Login = () => {
         const firstName = response.data.user.first_name;
         const lastName = response.data.user.last_name;
         const email = response.data.user.email;
+        console.log(response.data)
         const newInfo = {
           author: username,
           first_name:firstName,
           last_name:lastName,
           email:email,
-          avatar: "../../static/images/arthur.jpg",
+          // avatar: "../../static/images/profile.png",
           id: userId,
           token: token,
         };
