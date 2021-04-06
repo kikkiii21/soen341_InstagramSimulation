@@ -17,6 +17,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import UserInfo from "../SharedComponents/UserInfo";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -120,7 +121,7 @@ const Login = () => {
           first_name:firstName,
           last_name:lastName,
           email:email,
-          avatar: "../../static/images/profile.png",
+          avatar: UserInfo.avatar,
           id: userId,
           token: token,
         };

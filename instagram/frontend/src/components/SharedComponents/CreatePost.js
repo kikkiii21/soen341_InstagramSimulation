@@ -195,7 +195,7 @@ const CreatePost = () => {
               <img
                 className={style.image}
                 src={LoggedInUserInfo.avatar || JSON.parse(local).avatar}
-                alt="Username"
+                alt="ProfilePic"
               />
             </div>
           </div>

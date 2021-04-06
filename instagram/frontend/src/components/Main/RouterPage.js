@@ -17,13 +17,14 @@ import { UserStatusContext } from "../Context/UserStatusContext";
 import { CommentsContext } from "../Context/CommentsContext";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import UserInfo from "../SharedComponents/UserInfo";
 
 const RouterPage = () => {
   const [posts, setPosts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [LoggedInUserInfo, setLoggedInUserInfo] = useState({
-    name: "Arthur Morgan",
-    avatar: "../../../static/images/arthur.jpg",
+    name: "ProfilePic",
+    avatar: UserInfo.avatar,
     id: uid(),
   });
   const [comment, setComment] = useState([]);

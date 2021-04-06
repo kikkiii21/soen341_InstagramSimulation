@@ -31,6 +31,8 @@ const HomePage = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const status = localStorage.getItem("userStatus");
 
+
+
   const style = homeStyles();
   return (
     <>

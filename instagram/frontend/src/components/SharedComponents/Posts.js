@@ -32,7 +32,7 @@ const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
         <header>
           <div className="Post-user">
             <div className="Post-user-avatar">
-              <img src={avatar} alt="Chris" />
+              <img src={avatar} alt="ProfilePic" />
             </div>
             <div className="Post-user-nickname">
               <span>

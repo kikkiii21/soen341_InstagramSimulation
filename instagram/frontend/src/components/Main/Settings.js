@@ -280,7 +280,7 @@ console.log(userInfo.avatar);
                   </div>
                   <div className={styles.photoSection}>
                     <div className={styles.PostUserAvatar}>
-                      <img className={styles.image} src={newImage.url} alt="Username"/>
+                      <img className={styles.image} src={newImage.url} alt="ProfilePic"/>
                     </div>
                     <label htmlFor="profilePhoto">
                       <AddAPhotoIcon className={styles.imgBtn} fontSize="default"/>
