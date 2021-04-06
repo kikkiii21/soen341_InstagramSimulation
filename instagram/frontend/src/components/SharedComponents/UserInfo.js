@@ -60,7 +60,7 @@ const UserInfo = () => {
         <div className={user.PostUserAvatar}>
           <img
             className={user.image}
-            src={JSON.parse(localInfo).avatar || LoggedInUserInfo.avatar}
+            src={JSON.parse(localInfo).avatar}
             alt="ProfilePic"
           />
         </div>

@@ -17,6 +17,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import axios from "axios";
 
 const homeStyles = makeStyles((theme) => ({
   contain: {
@@ -30,7 +31,50 @@ const HomePage = () => {
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const status = localStorage.getItem("userStatus");
+  const [ProfileImage, setProfileImage] = useState();
+  const [UserProfileImage, setUserProfileImage] = useState();
+ const [userInfo, setUserInfo] = useState(
+      JSON.parse(localStorage.getItem("userInfo"))
+  );
 
+
+   useEffect(() => {
+     axios
+         .get("profilePictureList/")
+         .then((response) => {
+           setProfileImage(response.data);
+           localStorage.setItem("profileImages",JSON.stringify(response.data))
+           console.log(response.data)
+         })
+         .catch((err) => {
+           console.error(err);
+         });
+  }, []);
+
+   useEffect(() => {
+     axios.get("updatePhoto/",  {
+       headers: {
+         "content-type": "application/json",
+         Authorization: `token ${userInfo.token
+         }`,
+       }
+       })
+         .then((response) => {
+           setUserProfileImage(response.data);
+           localStorage.setItem("userProfileImages",JSON.stringify(response.data))
+           console.log(response.data)
+         })
+         .catch((err) => {
+           console.error(err);
+         });
+  }, []);
+
+    useEffect(() => {
+        const newAvatar = {...userInfo}
+        newAvatar.avatar = UserProfileImage
+        localStorage.setItem("userInfo",JSON.stringify(newAvatar))
+        }, [UserProfileImage]
+    );
 
 
   const style = homeStyles();
