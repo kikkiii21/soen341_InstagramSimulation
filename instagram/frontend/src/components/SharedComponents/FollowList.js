@@ -10,7 +10,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const FollowList = () => {
-  const { posts, setPosts } = useContext(PostsContext);
+  const [ followedPosts, setFollowedPosts ] = useState([]);
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const FollowList = () => {
     axios
       .get("../followingEndpoint/", config)
       .then((response) => {
-        setPosts(response.data);
+        setFollowedPosts(response.data);
         // console.log(response.data)
       })
       .catch((err) => {
@@ -39,15 +39,15 @@ const FollowList = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("posts", JSON.stringify(posts));
-  }, [posts]);
+    localStorage.setItem("followedPosts", JSON.stringify(followedPosts));
+  }, [followedPosts]);
 
   return (
     <>
       {loading ? (
         <div>Loading ...</div>
       ) : (
-        posts.map((item) => (
+        followedPosts.map((item) => (
           <Posts
             uid={item.id}
             author={item.author}

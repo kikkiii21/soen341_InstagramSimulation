@@ -17,7 +17,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import UserInfo from "../SharedComponents/UserInfo";
+// import UserInfo from "../SharedComponents/UserInfo";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -115,13 +115,12 @@ const Login = () => {
         const firstName = response.data.user.first_name;
         const lastName = response.data.user.last_name;
         const email = response.data.user.email;
-        console.log(response.data)
         const newInfo = {
           author: username,
           first_name:firstName,
           last_name:lastName,
           email:email,
-          avatar: UserInfo.avatar,
+          avatar: "",
           id: userId,
           token: token,
         };

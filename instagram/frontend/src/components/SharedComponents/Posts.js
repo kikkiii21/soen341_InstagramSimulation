@@ -27,7 +27,9 @@ const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
     window.location = "/profile";
   };
   return (
+    
     <Grid item xs={12}>
+    {console.log("inside posts")}
       <article className="Post">
         <header>
           <div className="Post-user">

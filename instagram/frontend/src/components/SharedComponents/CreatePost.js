@@ -136,6 +136,8 @@ const CreatePost = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const { posts, setPosts } = useContext(PostsContext);
   const local = localStorage.getItem("userInfo");
+ 
+  // console.log("Oiii >>>>>>>>>",JSON.parse(local));
 
   // Event Handlers
 
@@ -159,7 +161,7 @@ const CreatePost = () => {
       avatar: LoggedInUserInfo.avatar,
       photo: selectedImage.url,
       caption: caption,
-      id: uid(),
+      
     };
     setPosts([newPost, ...posts]);
 
@@ -194,7 +196,7 @@ const CreatePost = () => {
             <div className={style.PostUserAvatar}>
               <img
                 className={style.image}
-                src={JSON.parse(local).avatar}
+                src={JSON.parse(local).avatar || ""}
                 alt="ProfilePic"
               />
             </div>

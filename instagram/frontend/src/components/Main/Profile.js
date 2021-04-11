@@ -17,6 +17,8 @@ const Profile = () => {
   const localUserInfo = localStorage.getItem("userInfo");
   const isProfileOwner = JSON.parse(localUserInfo).author == redirectedName;
   const [alreadyFollowing, setAlreadyFollowing] = useState(true);
+  const [profilePictures, setProfilePictures] = useState(JSON.parse(localStorage.getItem("profileImages")))
+  const [currentProfileImage, setCurrentProfileImage] = useState(profilePictures.filter((obj) => obj.id == JSON.parse(localUserInfo).id))
 
   //Event Handlers
   const followUserHandler = () => {
@@ -38,7 +40,12 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("userlistEndpoint/")
+      .get("userlistEndpoint/", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${JSON.parse(localUserInfo).token}`,
+        },
+      })
       .then((response) => {
         const parseUser = response.data.filter(
           (user) => user.username == redirectedName
@@ -47,6 +54,14 @@ const Profile = () => {
         setNumberOfFollowing(parseUser[0].follows.length);
         setNumberOfPosts(parseUser[0].posts.length);
         setUserId(parseUser[0].id);
+        localStorage.setItem("userList", JSON.stringify(response.data));
+        let focusUser = response.data.filter((obj) => obj.username == redirectedName)
+        let profileCorrection = profilePictures.filter((obj) => obj.id == focusUser[0].id)[0];
+        setCurrentProfileImage(profileCorrection)
+        console.log("focusUser >>>", focusUser);
+        console.log("profileCorrection >>>", profileCorrection);
+        console.log("currentProfileImage >>>", currentProfileImage);
+        console.log("focusUser.id >>>", focusUser[0].id);
       })
       .catch((err) => {
         console.error(err);
@@ -91,7 +106,7 @@ const Profile = () => {
       <div class="info-card">
         <div className="user-info-card">
           <div className="profile-wrap">
-            <img src={JSON.parse(localUserInfo).avatar} />
+            <img src={currentProfileImage.photo} />
           </div>
           <div className="placeholder"></div>
           <div className="user-stats">

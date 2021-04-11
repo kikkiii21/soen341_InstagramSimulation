@@ -7,10 +7,9 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
 import "../../../static/css/settings.css";
 import axios from "axios";
-import FormData from 'form-data'
+import FormData from "form-data";
 import { UserStatusContext } from "../Context/UserStatusContext";
-import {UserContext} from "../Context/AppContext";
-
+import { UserContext } from "../Context/AppContext";
 
 const settingsStyles = makeStyles(() => ({
   card: {
@@ -131,55 +130,56 @@ const settingsStyles = makeStyles(() => ({
 const Settings = () => {
   //State
   const styles = settingsStyles();
-  const {updateInfo, handleSubmit} = useForm();
-    const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
+  const { updateInfo, handleSubmit } = useForm();
+  const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState(
-      JSON.parse(localStorage.getItem("userInfo"))
+    JSON.parse(localStorage.getItem("userInfo"))
   );
-  const [newImage, setNewImage] = useState({url:userInfo.avatar, raw: null});
-  console.log(userInfo);
+  const [newImage, setNewImage] = useState({ url: userInfo.avatar, raw: null });
+  console.log("AHAHAAHAHAHAAHAH",userInfo.first_name);
 
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
-  const [newFirstName, setNewFirstName] = useState();
-  const [newLastName, setNewLastName] = useState();
-  const [newEmail, setNewEmail] = useState();
-
+  const [newFirstName, setNewFirstName] = useState(userInfo.first_name);
+  const [newLastName, setNewLastName] = useState(userInfo.last_name);
+  const [newEmail, setNewEmail] = useState(userInfo.email);
 
   //Event Handlers
-  const profileImageHandler =(e) =>{
-    setNewImage({url:URL.createObjectURL(e.target.files[0]),raw: e.target.files[0]})
-  }
-  console.log(newImage.url)
+  const profileImageHandler = (e) => {
+    setNewImage({
+      url: URL.createObjectURL(e.target.files[0]),
+      raw: e.target.files[0],
+    });
+  };
+  // console.log(newImage.url);
   // const profileImageHandler = (e) => {
   //   setNewImage(URL.createObjectURL(e.target.files[0]));
   // };
 
-
   const updateImageHandler = (e) => {
-     e.preventDefault()
+    e.preventDefault();
     //const imageObject = {"photo":newImage}
     let form_data = new FormData();
     form_data.append("photo", newImage.raw);
 
-    axios.put(`updatePhoto/`, form_data, {
-      headers: {
-        //"content-type": "application/json",
-        "content-type":"multipart/form-data",
-        Authorization: `token ${userInfo.token}`,
-      },
-    })
-        .then((res) => {
-        const newInfoImage ={...userInfo}
+    axios
+      .put(`updatePhoto/`, form_data, {
+        headers: {
+          //"content-type": "application/json",
+          "content-type": "multipart/form-data",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+      .then((res) => {
+        const newInfoImage = { ...userInfo };
 
         newInfoImage.avatar = res.data.photo;
-        console.log(">>>>>>>>>>>>>>>>>>>",newInfoImage);
-        localStorage.setItem("userInfo", JSON.stringify(newInfoImage))
-        setLoggedInUserInfo(newInfoImage)
+        console.log(">>>>>>>>>>>>>>>>>>>", newInfoImage);
+        localStorage.setItem("userInfo", JSON.stringify(newInfoImage));
+        setLoggedInUserInfo(newInfoImage);
       })
       .catch((err) => console.log(err));
-
   };
 
   // const updateImageHandler=()=>{
@@ -194,73 +194,86 @@ const Settings = () => {
   //         .catch((err) => console.log(err));
   //
   // };
-console.log(userInfo.avatar);
-  const currentPasswordHandler = (e) =>{
-    setCurrentPassword(e.target.value)
+  // console.log(userInfo.avatar);
+  const currentPasswordHandler = (e) => {
+    setCurrentPassword(e.target.value);
   };
-   const newPasswordHandler = (e) =>{
-    setNewPassword(e.target.value)
+  const newPasswordHandler = (e) => {
+    setNewPassword(e.target.value);
   };
-   const confirmNewPasswordHandler = (e) =>{
-    setConfirmNewPassword(e.target.value)
+  const confirmNewPasswordHandler = (e) => {
+    setConfirmNewPassword(e.target.value);
   };
-     const newFirstNameHandler= (e) =>{
-    setNewFirstName(e.target.value)
+  const newFirstNameHandler = (e) => {
+    setNewFirstName(e.target.value);
   };
-   const newLastNameHandler = (e) =>{
-    setNewLastName(e.target.value)
+  const newLastNameHandler = (e) => {
+    setNewLastName(e.target.value);
   };
-   const newEmailHandler = (e) =>{
-    setNewEmail(e.target.value)
+  const newEmailHandler = (e) => {
+    setNewEmail(e.target.value);
   };
 
-   const updateProfileHandler=(e)=>{
-       e.preventDefault()
-     const profileObject={
-        "user" : {
-        "first_name": newFirstName,
-        "last_name": newLastName,
-        "email": newEmail
-    },
-      }
-      axios.patch(`updateProfile/`,profileObject,{
-           headers: {
-       "content-type": "application/json",
-       Authorization: `token ${ userInfo.token
-       }`,
-      }
-   })
-          .catch((err) => console.log(err));
-   };
+  const updateProfileHandler = (e) => {
+    e.preventDefault();
+    const profileObject = {
+      user: {
+        first_name: newFirstName,
+        last_name: newLastName,
+        email: newEmail,
+      },
+    };
+    const updateUserState = { ...userInfo };
+    updateUserState.first_name = newFirstName;
+    updateUserState.last_name = newLastName;
+    updateUserState.email = newEmail;
+    setUserInfo(updateUserState);
+    localStorage.removeItem("userInfo")
+    localStorage.setItem("userInfo",JSON.stringify(updateUserState))
+    console.log("here here here", userInfo);
+    axios
+      .patch(`updateProfile/`, profileObject, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
-   //   let form_data = new FormData();
-   //     const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
-   //     form_data.append("user",userObj)
-   //   form_data.append("photo",newImage.raw)
-   // axios.put(`updateProfile/`,form_data, {
-   //   headers: {
-   //     // "content-type": "application/json",
-   //     "content-type": "multipart/form-data",
-   //     Authorization: `token ${ userInfo.token
-   //     }`,
-   //   },
-   // })
-   //  .catch((err) => console.log(err));
-   // };
+  //   let form_data = new FormData();
+  //     const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
+  //     form_data.append("user",userObj)
+  //   form_data.append("photo",newImage.raw)
+  // axios.put(`updateProfile/`,form_data, {
+  //   headers: {
+  //     // "content-type": "application/json",
+  //     "content-type": "multipart/form-data",
+  //     Authorization: `token ${ userInfo.token
+  //     }`,
+  //   },
+  // })
+  //  .catch((err) => console.log(err));
+  // };
 
-   const updatePasswordHandler=(e)=>{
-     e.preventDefault()
-     const passwordObject={"old_password":currentPassword,"password":newPassword,"password2":confirmNewPassword}
-   axios.put(`changePassword/${userInfo.id}/`,passwordObject, {
-     headers: {
-       "content-type": "application/json",
-       Authorization: `token ${ userInfo.token
-       }`,
-     },
-   })
-    .catch((err) => console.log(err));
-   };
-
+  const updatePasswordHandler = (e) => {
+    e.preventDefault();
+    const passwordObject = {
+      old_password: currentPassword,
+      password: newPassword,
+      password2: confirmNewPassword,
+    };
+    axios
+      .put(`changePassword/${userInfo.id}/`, passwordObject, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Grid container spacing={1} justify="center">
@@ -272,22 +285,28 @@ console.log(userInfo.avatar);
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-            <div className={styles.contents}>
-                <form className={styles.form} >
-                  <div className={styles.textInfoSection}>
-                  <div className={styles.hrWrapper}>
-                    <div className="separator">Update Profile Picture</div>
+          <div className={styles.contents}>
+            <form className={styles.form}>
+              <div className={styles.textInfoSection}>
+                <div className={styles.hrWrapper}>
+                  <div className="separator">Update Profile Picture</div>
+                </div>
+                <div className={styles.photoSection}>
+                  <div className={styles.PostUserAvatar}>
+                    <img
+                      className={styles.image}
+                      src={newImage.url}
+                      alt="ProfilePic"
+                    />
                   </div>
-                  <div className={styles.photoSection}>
-                    <div className={styles.PostUserAvatar}>
-                      <img className={styles.image} src={newImage.url} alt="ProfilePic"/>
-                    </div>
-                    <label htmlFor="profilePhoto">
-                      <AddAPhotoIcon className={styles.imgBtn} fontSize="default"/>
-                    </label>
-
-                  </div>
-                    <input
+                  <label htmlFor="profilePhoto">
+                    <AddAPhotoIcon
+                      className={styles.imgBtn}
+                      fontSize="default"
+                    />
+                  </label>
+                </div>
+                <input
                   //required
                   //ref={updateInfo}
 
@@ -297,11 +316,13 @@ console.log(userInfo.avatar);
                   type="file"
                   onChange={profileImageHandler}
                 />
-                <button className={styles.submit} onClick={updateImageHandler} >FookU</button>
-                  </div>
-                </form>
+                <button className={styles.submit} onClick={updateImageHandler}>
+                  FookU
+                </button>
+              </div>
+            </form>
 
-                <form className={styles.form} >
+            <form className={styles.form}>
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Full Name</div>
@@ -320,7 +341,6 @@ console.log(userInfo.avatar);
                   onChange={newFirstNameHandler}
                 />
                 <TextField
-
                   type="text"
                   //required
                   //inputRef={updateInfo}
@@ -348,16 +368,19 @@ console.log(userInfo.avatar);
                   onChange={newEmailHandler}
                 />
 
-
-              <button
-                  className={styles.submit} onClick={updateProfileHandler}>Update</button>
-                </div>
-          </form>
+                <button
+                  className={styles.submit}
+                  onClick={updateProfileHandler}
+                >
+                  Update
+                </button>
+              </div>
+            </form>
           </div>
           <form onSubmit={updatePasswordHandler}>
             <div className={styles.contents}>
               <div className={styles.textInfoSection}>
-                                <div className={styles.hrWrapper}>
+                <div className={styles.hrWrapper}>
                   <div className="separator">Update Email/Password</div>
                 </div>
                 <TextField
@@ -396,9 +419,7 @@ console.log(userInfo.avatar);
                   fullWidth
                   onChange={confirmNewPasswordHandler}
                 />
-                  <button
-                  className={styles.submit}>Submit</button>
-
+                <button className={styles.submit}>Submit</button>
               </div>
             </div>
           </form>
