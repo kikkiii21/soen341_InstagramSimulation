@@ -15,6 +15,12 @@ const FollowList = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [loading, setLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
+  const [profiles, setProfiles] = useState(
+    JSON.parse(localStorage.getItem("profileImages"))
+  );
+  const [userList, setUserList] = useState(
+    JSON.parse(localStorage.getItem("userList"))
+  );
 
   let config = {
     headers: {
@@ -25,21 +31,32 @@ const FollowList = () => {
     },
   };
 
+  const profileImageParser = (dataArray) => {
+    dataArray.map((obj) => {
+      const userMatchId = userList.filter(
+        (user) => user.username == obj.author
+      )[0].id;
+      obj.avatar = profiles.filter((img) => img.id == userMatchId)[0].photo;
+    });
+  };
+
   useEffect(() => {
     axios
       .get("../followingEndpoint/", config)
       .then((response) => {
-        setFollowedPosts(response.data);
+        const data = response.data;
+        profileImageParser(data);
+        setFollowedPosts(data);
         // console.log(response.data)
       })
       .catch((err) => {
         console.error(err);
       });
-    setLoading(false);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("followedPosts", JSON.stringify(followedPosts));
+    setLoading(false);
   }, [followedPosts]);
 
   return (

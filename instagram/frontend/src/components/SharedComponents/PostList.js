@@ -29,7 +29,6 @@ const PostList = () => {
     axios
       .get("postsEndpoint/")
       .then((response) => {
-        console.log("here are my posts first >>>", response.data);
         const data = response.data;
         profileImageParser(data);
         setPosts(data);
@@ -44,7 +43,6 @@ const PostList = () => {
     setLoading(false);
   }, [posts]);
 
-  console.log("JOOOOOO >>>", posts);
   return (
     <>
       {loading ? (

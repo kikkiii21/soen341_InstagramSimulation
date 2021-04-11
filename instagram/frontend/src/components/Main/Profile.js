@@ -66,10 +66,6 @@ const Profile = () => {
           (obj) => obj.id == focusUser[0].id
         )[0];
         setCurrentProfileImage(profileCorrection);
-        console.log("focusUser >>>", focusUser);
-        console.log("profileCorrection >>>", profileCorrection);
-        console.log("currentProfileImage >>>", currentProfileImage);
-        console.log("focusUser.id >>>", focusUser[0].id);
       })
       .catch((err) => {
         console.error(err);

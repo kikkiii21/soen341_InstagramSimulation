@@ -27,7 +27,6 @@ const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
   };
   return (
     <Grid item xs={12}>
-      {console.log("inside posts")}
       <article className="Post">
         <header>
           <div className="Post-user">
