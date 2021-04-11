@@ -10,7 +10,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const FollowList = () => {
-  const [ followedPosts, setFollowedPosts ] = useState([]);
+  const [followedPosts, setFollowedPosts] = useState([]);
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [loading, setLoading] = useState(true);

@@ -136,8 +136,6 @@ const CreatePost = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const { posts, setPosts } = useContext(PostsContext);
   const local = localStorage.getItem("userInfo");
- 
-  // console.log("Oiii >>>>>>>>>",JSON.parse(local));
 
   // Event Handlers
 
@@ -161,7 +159,6 @@ const CreatePost = () => {
       avatar: LoggedInUserInfo.avatar,
       photo: selectedImage.url,
       caption: caption,
-      
     };
     setPosts([newPost, ...posts]);
 
@@ -179,9 +176,6 @@ const CreatePost = () => {
             LoggedInUserInfo.token || JSON.parse(local).token
           }`,
         },
-      })
-      .then((res) => {
-        // console.log(res.data);
       })
       .catch((err) => console.log(err));
 

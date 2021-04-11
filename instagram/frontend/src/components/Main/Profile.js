@@ -17,8 +17,12 @@ const Profile = () => {
   const localUserInfo = localStorage.getItem("userInfo");
   const isProfileOwner = JSON.parse(localUserInfo).author == redirectedName;
   const [alreadyFollowing, setAlreadyFollowing] = useState(true);
-  const [profilePictures, setProfilePictures] = useState(JSON.parse(localStorage.getItem("profileImages")))
-  const [currentProfileImage, setCurrentProfileImage] = useState(profilePictures.filter((obj) => obj.id == JSON.parse(localUserInfo).id))
+  const [profilePictures, setProfilePictures] = useState(
+    JSON.parse(localStorage.getItem("profileImages"))
+  );
+  const [currentProfileImage, setCurrentProfileImage] = useState(
+    profilePictures.filter((obj) => obj.id == JSON.parse(localUserInfo).id)
+  );
 
   //Event Handlers
   const followUserHandler = () => {
@@ -55,9 +59,13 @@ const Profile = () => {
         setNumberOfPosts(parseUser[0].posts.length);
         setUserId(parseUser[0].id);
         localStorage.setItem("userList", JSON.stringify(response.data));
-        let focusUser = response.data.filter((obj) => obj.username == redirectedName)
-        let profileCorrection = profilePictures.filter((obj) => obj.id == focusUser[0].id)[0];
-        setCurrentProfileImage(profileCorrection)
+        let focusUser = response.data.filter(
+          (obj) => obj.username == redirectedName
+        );
+        let profileCorrection = profilePictures.filter(
+          (obj) => obj.id == focusUser[0].id
+        )[0];
+        setCurrentProfileImage(profileCorrection);
         console.log("focusUser >>>", focusUser);
         console.log("profileCorrection >>>", profileCorrection);
         console.log("currentProfileImage >>>", currentProfileImage);

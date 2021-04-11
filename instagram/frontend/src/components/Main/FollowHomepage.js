@@ -1,7 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Container, FormHelperText } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import Header from "../SharedComponents/Header";
 import Paper from "@material-ui/core/Paper";
 import UserInfo from "../SharedComponents/UserInfo";
@@ -13,12 +11,6 @@ import { UserStatusContext } from "../Context/UserStatusContext";
 
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
-const homeStyles = makeStyles((theme) => ({
-  contain: {
-    position: "fixed",
-  },
-}));
-
 const FollowHomePage = () => {
   //state
   const { posts, setPosts } = useContext(PostsContext);
@@ -26,7 +18,6 @@ const FollowHomePage = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const status = localStorage.getItem("userStatus");
 
-  const style = homeStyles();
   return (
     <>
       <Route>

@@ -17,7 +17,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-// import UserInfo from "../SharedComponents/UserInfo";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -117,9 +116,9 @@ const Login = () => {
         const email = response.data.user.email;
         const newInfo = {
           author: username,
-          first_name:firstName,
-          last_name:lastName,
-          email:email,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
           avatar: "",
           id: userId,
           token: token,
@@ -139,7 +138,6 @@ const Login = () => {
         }
       });
   };
-
 
   useEffect(() => {
     if (isLoggedIn === true && LoggedInUserInfo.name !== null) {

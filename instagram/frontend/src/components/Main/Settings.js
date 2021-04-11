@@ -2,13 +2,11 @@ import React, { useContext, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Header from "../SharedComponents/Header";
 import { makeStyles } from "@material-ui/core/styles";
-import { useForm } from "react-hook-form";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
 import "../../../static/css/settings.css";
 import axios from "axios";
 import FormData from "form-data";
-import { UserStatusContext } from "../Context/UserStatusContext";
 import { UserContext } from "../Context/AppContext";
 
 const settingsStyles = makeStyles(() => ({
@@ -130,14 +128,11 @@ const settingsStyles = makeStyles(() => ({
 const Settings = () => {
   //State
   const styles = settingsStyles();
-  const { updateInfo, handleSubmit } = useForm();
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
   );
   const [newImage, setNewImage] = useState({ url: userInfo.avatar, raw: null });
-  console.log("AHAHAAHAHAHAAHAH",userInfo.first_name);
-
   const [currentPassword, setCurrentPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmNewPassword, setConfirmNewPassword] = useState();
@@ -152,21 +147,15 @@ const Settings = () => {
       raw: e.target.files[0],
     });
   };
-  // console.log(newImage.url);
-  // const profileImageHandler = (e) => {
-  //   setNewImage(URL.createObjectURL(e.target.files[0]));
-  // };
 
   const updateImageHandler = (e) => {
     e.preventDefault();
-    //const imageObject = {"photo":newImage}
     let form_data = new FormData();
     form_data.append("photo", newImage.raw);
 
     axios
       .put(`updatePhoto/`, form_data, {
         headers: {
-          //"content-type": "application/json",
           "content-type": "multipart/form-data",
           Authorization: `token ${userInfo.token}`,
         },
@@ -182,19 +171,6 @@ const Settings = () => {
       .catch((err) => console.log(err));
   };
 
-  // const updateImageHandler=()=>{
-  //   const imageObject ={"photo":newImage.raw}
-  //   axios.put(`updatePhoto/${userInfo.id}/`,imageObject,{
-  //     headers: {
-  //      "content-type": "multipart/form-data",
-  //      Authorization: `token ${ userInfo.token
-  //      }`,
-  //     }
-  //  })
-  //         .catch((err) => console.log(err));
-  //
-  // };
-  // console.log(userInfo.avatar);
   const currentPasswordHandler = (e) => {
     setCurrentPassword(e.target.value);
   };
@@ -228,8 +204,8 @@ const Settings = () => {
     updateUserState.last_name = newLastName;
     updateUserState.email = newEmail;
     setUserInfo(updateUserState);
-    localStorage.removeItem("userInfo")
-    localStorage.setItem("userInfo",JSON.stringify(updateUserState))
+    localStorage.removeItem("userInfo");
+    localStorage.setItem("userInfo", JSON.stringify(updateUserState));
     console.log("here here here", userInfo);
     axios
       .patch(`updateProfile/`, profileObject, {
@@ -241,21 +217,6 @@ const Settings = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-
-  //   let form_data = new FormData();
-  //     const userObj={"first_name":newFirstName, "last_name": newLastName, "email": newEmail}
-  //     form_data.append("user",userObj)
-  //   form_data.append("photo",newImage.raw)
-  // axios.put(`updateProfile/`,form_data, {
-  //   headers: {
-  //     // "content-type": "application/json",
-  //     "content-type": "multipart/form-data",
-  //     Authorization: `token ${ userInfo.token
-  //     }`,
-  //   },
-  // })
-  //  .catch((err) => console.log(err));
-  // };
 
   const updatePasswordHandler = (e) => {
     e.preventDefault();
@@ -307,9 +268,6 @@ const Settings = () => {
                   </label>
                 </div>
                 <input
-                  //required
-                  //ref={updateInfo}
-
                   name="avatar"
                   id="profilePhoto"
                   className={styles.hideImageInput}
@@ -317,7 +275,7 @@ const Settings = () => {
                   onChange={profileImageHandler}
                 />
                 <button className={styles.submit} onClick={updateImageHandler}>
-                  FookU
+                  Update
                 </button>
               </div>
             </form>
@@ -330,8 +288,6 @@ const Settings = () => {
                 <TextField
                   defaultValue={userInfo.first_name}
                   type="text"
-                  //required
-                  //inputRef={updateInfo}
                   name="firstName"
                   id="firstName"
                   className={styles.TextField}
@@ -342,8 +298,6 @@ const Settings = () => {
                 />
                 <TextField
                   type="text"
-                  //required
-                  //inputRef={updateInfo}
                   defaultValue={userInfo.last_name}
                   name="lastName"
                   id="lastName"
@@ -356,8 +310,6 @@ const Settings = () => {
 
                 <TextField
                   type="email"
-                  //required
-                  //inputRef={updateInfo}
                   defaultValue={userInfo.email}
                   name="email"
                   id="email"
@@ -386,7 +338,6 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  //inputRef={updateInfo}
                   name="password"
                   id="password"
                   className={styles.TextField}
@@ -398,7 +349,6 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  //inputRef={updateInfo}
                   name="Npassword"
                   id="Npassword"
                   className={styles.TextField}
@@ -410,7 +360,6 @@ const Settings = () => {
                 <TextField
                   type="password"
                   required
-                  //inputRef={updateInfo}
                   name="Cpassword"
                   id="Cpassword"
                   className={styles.TextField}

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 import Header from "../SharedComponents/Header";
 import CreatePost from "../SharedComponents/CreatePost";
 import Paper from "@material-ui/core/Paper";
@@ -8,7 +7,6 @@ import UserInfo from "../SharedComponents/UserInfo";
 import PostList from "../SharedComponents/PostList";
 import Hidden from "@material-ui/core/Hidden";
 import { UserContext } from "../Context/AppContext";
-import { PostsContext } from "../Context/PostsContext";
 import { UserStatusContext } from "../Context/UserStatusContext";
 
 import {
@@ -19,10 +17,8 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 
-
 const HomePage = () => {
   //state
-  const { posts, setPosts } = useContext(PostsContext);
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const status = localStorage.getItem("userStatus");
@@ -45,7 +41,6 @@ const HomePage = () => {
       .then((response) => {
         setProfileImage(response.data);
         localStorage.setItem("profileImages", JSON.stringify(response.data));
-        
       })
       .catch((err) => {
         console.error(err);
@@ -81,7 +76,7 @@ const HomePage = () => {
   }, [UserProfileImage]);
 
   useEffect(() => {
-    (JSON.parse(localStorage.getItem("userList")) == null) &&
+    JSON.parse(localStorage.getItem("userList")) == null &&
       axios
         .get("userlistEndpoint", {
           headers: {
@@ -91,7 +86,7 @@ const HomePage = () => {
         })
         .then((response) => {
           localStorage.setItem("userList", JSON.stringify(response.data));
-         
+
           userList == null ? setUserList(response.data) : "";
         })
         .catch((err) => {

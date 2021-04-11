@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import "../../../static/css/post.css";
 import Grid from "@material-ui/core/Grid";
 import Collapsible from "./Collapsible";
 import CreateComment from "./CreateComment";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CommentIcon from "@material-ui/icons/Comment";
 import ShareIcon from "@material-ui/icons/Share";
-import { Link } from "@material-ui/core";
 import "../../../static/css/collapsible.css";
+import "../../../static/css/post.css";
 
 const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
   //state
@@ -27,9 +26,8 @@ const Posts = ({ author, avatar, postImage, postCaption, key, pid }) => {
     window.location = "/profile";
   };
   return (
-    
     <Grid item xs={12}>
-    {console.log("inside posts")}
+      {console.log("inside posts")}
       <article className="Post">
         <header>
           <div className="Post-user">
