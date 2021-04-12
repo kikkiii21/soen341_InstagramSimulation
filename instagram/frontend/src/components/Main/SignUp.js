@@ -90,6 +90,7 @@ const SignUp = () => {
   const [email, setEmail] = useState(1);
   const [isValidEmail, setIsValidEmail] = useState();
   const [isExistingUser, setIsExistingUser] = useState(false);
+  const [isValidPassword,setIsValidPassword] =useState();
 
   //event handlers
   const emailChangeHandler = (e) => {
@@ -105,6 +106,7 @@ const SignUp = () => {
       setIsValidEmail(!false);
     }
   };
+
 
   //Submit to api endpoint
   const submitHandler = (dataObject) => {
@@ -123,6 +125,7 @@ const SignUp = () => {
         },
         (error) => {
           console.log(error.response.status);
+          console.log(error.response.data);
           setIsExistingUser(true);
         }
       );

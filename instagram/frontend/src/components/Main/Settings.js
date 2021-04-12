@@ -8,6 +8,7 @@ import "../../../static/css/settings.css";
 import axios from "axios";
 import FormData from "form-data";
 import { UserContext } from "../Context/AppContext";
+import UserInfo from "../SharedComponents/UserInfo";
 
 const settingsStyles = makeStyles(() => ({
   card: {
@@ -95,6 +96,15 @@ const settingsStyles = makeStyles(() => ({
     flexDirection: "column",
     margin: "10px",
   },
+  textConfirmation: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#008000",
+    flexDirection: "column",
+    margin: "10px",
+  },
   contents: {
     width: "100%",
     display: "flex",
@@ -139,6 +149,9 @@ const Settings = () => {
   const [newFirstName, setNewFirstName] = useState(userInfo.first_name);
   const [newLastName, setNewLastName] = useState(userInfo.last_name);
   const [newEmail, setNewEmail] = useState(userInfo.email);
+  const [updateValidation, setUpdateValidation] = useState(false);
+  const [updateValidationImage, setUpdateValidationImage] = useState(false);
+  const [updateValidationPassword, setUpdateValidationPassword] = useState(false);
 
   //Event Handlers
   const profileImageHandler = (e) => {
@@ -167,7 +180,9 @@ const Settings = () => {
         console.log(">>>>>>>>>>>>>>>>>>>", newInfoImage);
         localStorage.setItem("userInfo", JSON.stringify(newInfoImage));
         setLoggedInUserInfo(newInfoImage);
-      })
+      },
+          ()=>{
+           setUpdateValidationImage(true);})
       .catch((err) => console.log(err));
   };
 
@@ -214,8 +229,14 @@ const Settings = () => {
           Authorization: `token ${userInfo.token}`,
         },
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+        .then(
+            ()=>{
+          setUpdateValidation(true);
+        },
+        (res) =>{console.log(res)}
+        )
+        //.then((res) => console.log(res))
+        .catch((err) => console.log(err));
   };
 
   const updatePasswordHandler = (e) => {
@@ -232,7 +253,10 @@ const Settings = () => {
           Authorization: `token ${userInfo.token}`,
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => {console.log(res)},
+          ()=>{
+           setUpdateValidationPassword(true);}
+          )
       .catch((err) => console.log(err));
   };
 
@@ -277,13 +301,26 @@ const Settings = () => {
                 <button className={styles.submit} onClick={updateImageHandler}>
                   Update
                 </button>
+                {updateValidationImage && (
+
+                    <div className={styles.textConfirmation}>
+                        You have updated your profile picture successfully!
+                    </div>
+                )}
               </div>
             </form>
 
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={updateProfileHandler}>
+
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Full Name</div>
+                                                {updateValidation && (
+
+                    <div className={styles.textConfirmation}>
+                        You have updated your information successfully!
+                    </div>
+                )}
                 </div>
                 <TextField
                   defaultValue={userInfo.first_name}
@@ -320,12 +357,7 @@ const Settings = () => {
                   onChange={newEmailHandler}
                 />
 
-                <button
-                  className={styles.submit}
-                  onClick={updateProfileHandler}
-                >
-                  Update
-                </button>
+                <button className={styles.submit}>Update</button>
               </div>
             </form>
           </div>
@@ -334,6 +366,11 @@ const Settings = () => {
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Email/Password</div>
+                               {updateValidationPassword && (
+                    <div className={styles.textConfirmation}>
+                        You have updated your password successfully!
+                    </div>
+                )}
                 </div>
                 <TextField
                   type="password"

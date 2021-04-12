@@ -5,6 +5,7 @@ from knox.models import AuthToken
 from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, \
     ChangePasswordSerializer, UserProfileSerializer, ProfileSerializer, UserPhotoSerializer
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import password_validators_help_texts
 from .models import Profile, Follow
 from posts.serializers import PostSerializer
 from posts.models import Post
@@ -22,7 +23,8 @@ class RegisterAPI(generics.GenericAPIView):
             # saves user and its data
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             # creates token for that particular user
-            "token": AuthToken.objects.create(user)[1]
+            "token": AuthToken.objects.create(user)[1],
+            "passwordValidators": password_validators_help_texts(password_validators=None)
         })
 
 
