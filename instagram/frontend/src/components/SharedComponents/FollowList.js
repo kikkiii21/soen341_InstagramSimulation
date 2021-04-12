@@ -68,7 +68,7 @@ const FollowList = () => {
           <Posts
             uid={item.id}
             author={item.author}
-            avatar={LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar}
+            avatar={item.avatar}
             postImage={item.photo}
             postCaption={item.caption}
             key={item.id}
