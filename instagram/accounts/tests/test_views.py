@@ -26,3 +26,35 @@ class GetAllUsersTest(TestCase):
 		serializer = ProfileSerializer(users, many=True)
 		self.assertEqual(response.data, serializer.data)
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+class TestSettingsPage(TestCase):
+
+	def setUp(self):
+		User.objects.create(first_name='Casper', last_name='Patel', username='BullDog', email='casper@gmail.com', password='123')
+
+	def can_update_first_name(self):
+		data = {
+			"first_name": "Karen"
+		}
+		response = self.client.post("updateProfileEndpoint/", data=data)
+		test_first_name = Profile.objects.get(user=User.objects.get(username='BullDog'))
+		self.assertEqual(email_casper.first_name(), "Karen")
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+	def can_update_last_name(self):
+		data = {
+			"first_name": "Li"
+		}
+		response = self.client.post("updateProfileEndpoint/", data=data)
+		test_first_name = Profile.objects.get(user=User.objects.get(username='BullDog'))
+		self.assertEqual(email_casper.last_name(), "Li")
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+	def can_update_email(self):
+		data = {
+			"first_name": "Li"
+		}
+		response = self.client.post("updateProfileEndpoint/", data=data)
+		test_first_name = Profile.objects.get(user=User.objects.get(username='BullDog'))
+		self.assertEqual(email_casper.last_name(), "Li")
+		self.assertEqual(response.status_code, status.HTTP_200_OK)

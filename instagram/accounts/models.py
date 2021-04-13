@@ -12,8 +12,13 @@ class Profile(models.Model):
         return str(self.user)
 
     def get_email(self):
-        return self.user.email + ' is ' + self.user.first_name + "'s email address."
+        return self.user.email
 
+    def get_first_name(self):
+        return self.user.first_name
+
+    def get_last_name(self):
+        return self.user.lasst_name
 
 # creates a profile for each user registered
 @receiver(post_save, sender=User)
