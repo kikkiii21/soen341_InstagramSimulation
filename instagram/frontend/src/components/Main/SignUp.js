@@ -90,6 +90,7 @@ const SignUp = () => {
   const [email, setEmail] = useState(1);
   const [isValidEmail, setIsValidEmail] = useState();
   const [isExistingUser, setIsExistingUser] = useState(false);
+  const [isValidPassword,setIsValidPassword] =useState();
 
   //event handlers
   const emailChangeHandler = (e) => {
@@ -106,13 +107,14 @@ const SignUp = () => {
     }
   };
 
+
   //Submit to api endpoint
   const submitHandler = (dataObject) => {
     const requestOptions = {
       body: JSON.stringify(dataObject),
     };
     axios
-      .post("/registerEndpoint", requestOptions.body, {
+      .post("/registerEndpoint/", requestOptions.body, {
         headers: { "Content-Type": "application/json" },
       })
       .then(
@@ -123,6 +125,7 @@ const SignUp = () => {
         },
         (error) => {
           console.log(error.response.status);
+          console.log(error.response.data);
           setIsExistingUser(true);
         }
       );

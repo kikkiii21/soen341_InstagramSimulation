@@ -2,10 +2,13 @@ import React, { useContext, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Header from "../SharedComponents/Header";
 import { makeStyles } from "@material-ui/core/styles";
-import { useForm } from "react-hook-form";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import TextField from "@material-ui/core/TextField";
 import "../../../static/css/settings.css";
+import axios from "axios";
+import FormData from "form-data";
+import { UserContext } from "../Context/AppContext";
+import UserInfo from "../SharedComponents/UserInfo";
 
 const settingsStyles = makeStyles(() => ({
   card: {
@@ -93,6 +96,15 @@ const settingsStyles = makeStyles(() => ({
     flexDirection: "column",
     margin: "10px",
   },
+  textConfirmation: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#008000",
+    flexDirection: "column",
+    margin: "10px",
+  },
   contents: {
     width: "100%",
     display: "flex",
@@ -126,16 +138,126 @@ const settingsStyles = makeStyles(() => ({
 const Settings = () => {
   //State
   const styles = settingsStyles();
-  const { updateInfo, handleSubmit } = useForm();
+  const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
   );
-  const [newImage, setNewImage] = useState(userInfo.avatar);
-  console.log(userInfo);
+  const [newImage, setNewImage] = useState({ url: userInfo.avatar, raw: null });
+  const [currentPassword, setCurrentPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+  const [confirmNewPassword, setConfirmNewPassword] = useState();
+  const [newFirstName, setNewFirstName] = useState(userInfo.first_name);
+  const [newLastName, setNewLastName] = useState(userInfo.last_name);
+  const [newEmail, setNewEmail] = useState(userInfo.email);
+  const [updateValidation, setUpdateValidation] = useState(false);
+  const [updateValidationImage, setUpdateValidationImage] = useState(false);
+  const [updateValidationPassword, setUpdateValidationPassword] = useState(false);
 
   //Event Handlers
   const profileImageHandler = (e) => {
-    setNewImage(URL.createObjectURL(e.target.files[0]));
+    setNewImage({
+      url: URL.createObjectURL(e.target.files[0]),
+      raw: e.target.files[0],
+    });
+  };
+
+  const updateImageHandler = (e) => {
+    e.preventDefault();
+    let form_data = new FormData();
+    form_data.append("photo", newImage.raw);
+
+    axios
+      .put(`updatePhoto/`, form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+      .then((res) => {
+        const newInfoImage = { ...userInfo };
+
+        newInfoImage.avatar = res.data.photo;
+        console.log(">>>>>>>>>>>>>>>>>>>", newInfoImage);
+        localStorage.setItem("userInfo", JSON.stringify(newInfoImage));
+        setLoggedInUserInfo(newInfoImage);
+      },
+          ()=>{
+           setUpdateValidationImage(true);})
+      .catch((err) => console.log(err));
+  };
+
+  const currentPasswordHandler = (e) => {
+    setCurrentPassword(e.target.value);
+  };
+  const newPasswordHandler = (e) => {
+    setNewPassword(e.target.value);
+  };
+  const confirmNewPasswordHandler = (e) => {
+    setConfirmNewPassword(e.target.value);
+  };
+  const newFirstNameHandler = (e) => {
+    setNewFirstName(e.target.value);
+  };
+  const newLastNameHandler = (e) => {
+    setNewLastName(e.target.value);
+  };
+  const newEmailHandler = (e) => {
+    setNewEmail(e.target.value);
+  };
+
+  const updateProfileHandler = (e) => {
+    e.preventDefault();
+    const profileObject = {
+      user: {
+        first_name: newFirstName,
+        last_name: newLastName,
+        email: newEmail,
+      },
+    };
+    const updateUserState = { ...userInfo };
+    updateUserState.first_name = newFirstName;
+    updateUserState.last_name = newLastName;
+    updateUserState.email = newEmail;
+    setUserInfo(updateUserState);
+    localStorage.removeItem("userInfo");
+    localStorage.setItem("userInfo", JSON.stringify(updateUserState));
+    console.log("here here here", userInfo);
+    axios
+      .patch(`updateProfile/`, profileObject, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+        .then(
+            ()=>{
+          setUpdateValidation(true);
+        },
+        (res) =>{console.log(res)}
+        )
+        //.then((res) => console.log(res))
+        .catch((err) => console.log(err));
+  };
+
+  const updatePasswordHandler = (e) => {
+    e.preventDefault();
+    const passwordObject = {
+      old_password: currentPassword,
+      password: newPassword,
+      password2: confirmNewPassword,
+    };
+    axios
+      .put(`changePassword/${userInfo.id}/`, passwordObject, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `token ${userInfo.token}`,
+        },
+      })
+      .then((res) => {console.log(res)},
+          ()=>{
+           setUpdateValidationPassword(true);}
+          )
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -148,95 +270,143 @@ const Settings = () => {
       </Grid>
       <Grid item xs={8}>
         <div className={styles.card}>
-          <form className={styles.form}>
-            <div className={styles.contents}>
-              <div className={styles.hrWrapper}>
-                <div className="separator">Update Profile Picture</div>
-              </div>
-              <div className={styles.photoSection}>
-                <div className={styles.PostUserAvatar}>
-                  <img className={styles.image} src={newImage} alt="Username" />
+          <div className={styles.contents}>
+            <form className={styles.form}>
+              <div className={styles.textInfoSection}>
+                <div className={styles.hrWrapper}>
+                  <div className="separator">Update Profile Picture</div>
                 </div>
-                <label for="profilePhoto">
-                  <AddAPhotoIcon className={styles.imgBtn} fontSize="default" />
-                </label>
+                <div className={styles.photoSection}>
+                  <div className={styles.PostUserAvatar}>
+                    <img
+                      className={styles.image}
+                      src={newImage.url}
+                      alt="ProfilePic"
+                    />
+                  </div>
+                  <label htmlFor="profilePhoto">
+                    <AddAPhotoIcon
+                      className={styles.imgBtn}
+                      fontSize="default"
+                    />
+                  </label>
+                </div>
                 <input
-                  required
-                  value={null}
-                  // onChange={imageSelectedHandler}
-                  ref={updateInfo}
                   name="avatar"
                   id="profilePhoto"
                   className={styles.hideImageInput}
                   type="file"
                   onChange={profileImageHandler}
                 />
+                <button className={styles.submit} onClick={updateImageHandler}>
+                  Update
+                </button>
+                {updateValidationImage && (
+
+                    <div className={styles.textConfirmation}>
+                        You have updated your profile picture successfully!
+                    </div>
+                )}
               </div>
+            </form>
+
+            <form className={styles.form} onSubmit={updateProfileHandler}>
+
               <div className={styles.textInfoSection}>
                 <div className={styles.hrWrapper}>
                   <div className="separator">Update Full Name</div>
+                                                {updateValidation && (
+
+                    <div className={styles.textConfirmation}>
+                        You have updated your information successfully!
+                    </div>
+                )}
                 </div>
                 <TextField
-                  defaultValue={userInfo.author}
+                  defaultValue={userInfo.first_name}
                   type="text"
-                  required
-                  inputRef={updateInfo}
                   name="firstName"
                   id="firstName"
                   className={styles.TextField}
                   label="First Name"
                   variant="outlined"
                   fullWidth
+                  onChange={newFirstNameHandler}
                 />
                 <TextField
                   type="text"
-                  required
-                  inputRef={updateInfo}
+                  defaultValue={userInfo.last_name}
                   name="lastName"
                   id="lastName"
                   className={styles.TextField}
                   label="Last Name"
                   variant="outlined"
                   fullWidth
+                  onChange={newLastNameHandler}
                 />
-                <div className={styles.hrWrapper}>
-                  <div className="separator">Update Email/Password</div>
-                </div>
+
                 <TextField
                   type="email"
-                  required
-                  inputRef={updateInfo}
+                  defaultValue={userInfo.email}
                   name="email"
                   id="email"
                   className={styles.TextField}
                   label="Email Address"
                   variant="outlined"
                   fullWidth
+                  onChange={newEmailHandler}
                 />
+
+                <button className={styles.submit}>Update</button>
+              </div>
+            </form>
+          </div>
+          <form onSubmit={updatePasswordHandler}>
+            <div className={styles.contents}>
+              <div className={styles.textInfoSection}>
+                <div className={styles.hrWrapper}>
+                  <div className="separator">Update Email/Password</div>
+                               {updateValidationPassword && (
+                    <div className={styles.textConfirmation}>
+                        You have updated your password successfully!
+                    </div>
+                )}
+                </div>
                 <TextField
                   type="password"
                   required
-                  inputRef={updateInfo}
                   name="password"
                   id="password"
                   className={styles.TextField}
                   label="Current Password"
                   variant="outlined"
                   fullWidth
+                  onChange={currentPasswordHandler}
                 />
                 <TextField
                   type="password"
                   required
-                  inputRef={updateInfo}
                   name="Npassword"
                   id="Npassword"
                   className={styles.TextField}
                   label="New Password"
                   variant="outlined"
                   fullWidth
+                  onChange={newPasswordHandler}
                 />
+                <TextField
+                  type="password"
+                  required
+                  name="Cpassword"
+                  id="Cpassword"
+                  className={styles.TextField}
+                  label="Confirm New Password"
+                  variant="outlined"
+                  fullWidth
+                  onChange={confirmNewPasswordHandler}
+                />
+                <button className={styles.submit}>Submit</button>
               </div>
-              <button className={styles.submit}>Submit</button>
             </div>
           </form>
         </div>

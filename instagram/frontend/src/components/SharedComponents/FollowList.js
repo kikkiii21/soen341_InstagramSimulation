@@ -10,11 +10,17 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 const FollowList = () => {
-  const { posts, setPosts } = useContext(PostsContext);
+  const [followedPosts, setFollowedPosts] = useState([]);
   const { LoggedInUserInfo, setLoggedInUserInfo } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
   const [loading, setLoading] = useState(true);
   const localPosts = localStorage.getItem("userInfo");
+  const [profiles, setProfiles] = useState(
+    JSON.parse(localStorage.getItem("profileImages"))
+  );
+  const [userList, setUserList] = useState(
+    JSON.parse(localStorage.getItem("userList"))
+  );
 
   let config = {
     headers: {
@@ -25,33 +31,44 @@ const FollowList = () => {
     },
   };
 
+  const profileImageParser = (dataArray) => {
+    dataArray.map((obj) => {
+      const userMatchId = userList.filter(
+        (user) => user.username == obj.author
+      )[0].id;
+      obj.avatar = profiles.filter((img) => img.id == userMatchId)[0].photo;
+    });
+  };
+
   useEffect(() => {
     axios
       .get("../followingEndpoint/", config)
       .then((response) => {
-        setPosts(response.data);
+        const data = response.data;
+        profileImageParser(data);
+        setFollowedPosts(data);
         // console.log(response.data)
       })
       .catch((err) => {
         console.error(err);
       });
-    setLoading(false);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("posts", JSON.stringify(posts));
-  }, [posts]);
+    localStorage.setItem("followedPosts", JSON.stringify(followedPosts));
+    setLoading(false);
+  }, [followedPosts]);
 
   return (
     <>
       {loading ? (
         <div>Loading ...</div>
       ) : (
-        posts.map((item) => (
+        followedPosts.map((item) => (
           <Posts
             uid={item.id}
             author={item.author}
-            avatar={LoggedInUserInfo.avatar || JSON.parse(localPosts).avatar}
+            avatar={item.avatar}
             postImage={item.photo}
             postCaption={item.caption}
             key={item.id}

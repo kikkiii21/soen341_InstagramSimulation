@@ -48,7 +48,6 @@ const CreatePostStyles = makeStyles((theme) => ({
     backgroundColor: "#0095F6",
     fontSize: "15px",
     padding: "5px 10px",
-    margin: "5px 0px",
     transitionDuration: "0.4s",
     border: "none",
     borderRadius: "5px",
@@ -68,7 +67,6 @@ const CreatePostStyles = makeStyles((theme) => ({
     backgroundColor: "#0095F6",
     fontSize: "25px",
     padding: "5px 8px",
-    margin: "5px 0px",
     transitionDuration: "0.4s",
     border: "none",
     borderRadius: "5px",
@@ -161,7 +159,6 @@ const CreatePost = () => {
       avatar: LoggedInUserInfo.avatar,
       photo: selectedImage.url,
       caption: caption,
-      id: uid(),
     };
     setPosts([newPost, ...posts]);
 
@@ -180,9 +177,6 @@ const CreatePost = () => {
           }`,
         },
       })
-      .then((res) => {
-        // console.log(res.data);
-      })
       .catch((err) => console.log(err));
 
     setCaption("");
@@ -196,8 +190,8 @@ const CreatePost = () => {
             <div className={style.PostUserAvatar}>
               <img
                 className={style.image}
-                src={LoggedInUserInfo.avatar || JSON.parse(local).avatar}
-                alt="Username"
+                src={JSON.parse(local).avatar || ""}
+                alt="ProfilePic"
               />
             </div>
           </div>

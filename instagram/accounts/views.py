@@ -1,11 +1,15 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from knox.models import AuthToken
-from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, ProfileSerializer
+from .serializers import RegisterSerializer, LoginSerializer, FollowSerializer, UserSerializer, \
+    ChangePasswordSerializer, UserProfileSerializer, ProfileSerializer, UserPhotoSerializer
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import password_validators_help_texts
 from .models import Profile, Follow
 from posts.serializers import PostSerializer
 from posts.models import Post
+
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -19,7 +23,8 @@ class RegisterAPI(generics.GenericAPIView):
             # saves user and its data
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             # creates token for that particular user
-            "token": AuthToken.objects.create(user)[1]
+            "token": AuthToken.objects.create(user)[1],
+            "passwordValidators": password_validators_help_texts(password_validators=None)
         })
 
 
@@ -46,6 +51,63 @@ class UserAPI(generics.RetrieveAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
 
+
+# class ProfileView(generics.UpdateAPIView):
+#     permission_classes = permissions.IsAuthenticated
+#     serializer_class = ProfileSerializer
+#     queryset = Profile.objects.all()
+
+
+class ProfileUpdateView(generics.UpdateAPIView):
+    # authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserProfileSerializer
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+
+class ProfilePictureListAPI(generics.ListAPIView):
+    serializer_class = UserPhotoSerializer
+    queryset = Profile.objects.all()
+
+
+class PhotoUpdateView(generics.RetrieveUpdateAPIView):
+    # authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserPhotoSerializer
+    parser_classes = [MultiPartParser, FormParser]
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+# class ProfilePictureUpdateView(generics.UpdateAPIView):
+#     #authentication_classes = (authentication.TokenAuthentication,)
+#     permission_classes = (permissions.IsAuthenticated,)
+#     serializer_class = ProfileSerializer
+#
+#     def get_object(self):
+#         return Profile.objects.get(user=self.request.user)
+
+    # def get_object(self):
+    #     return Profile.objects.get(user=self.request.photo)
+
+
+# class ProfileUpdateView(generics.UpdateAPIView):
+#     queryset = Profile.objects.all()
+#     permission_classes = (permissions.IsAuthenticated,)
+#     serializer_class = ProfileUpdateSerializer
+#     #
+#     # def get_object(self):
+#     #     return Profile.objects.get(user=self.request.user)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
+
+
 class FollowAPI(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
@@ -58,8 +120,9 @@ class FollowAPI(generics.ListCreateAPIView):
 # Get User List API
 class UserListAPI(generics.ListAPIView):
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
+
 
 # Get Profile List API
 class ProfileListAPI(generics.ListAPIView):

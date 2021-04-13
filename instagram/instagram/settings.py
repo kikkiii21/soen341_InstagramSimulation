@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -31,7 +30,6 @@ ALLOWED_HOSTS = [
     'www.007guard.com',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +42,6 @@ INSTALLED_APPS = [
     'comments',
     'corsheaders',
 
-
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,15 +50,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-    
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'knox.auth.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        )
+    )
 }
-
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -73,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -104,7 +99,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'instagram.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -114,7 +108,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -134,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -148,7 +140,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -156,8 +147,8 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/posts/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'instagram')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'instagram')
 
-MEDIA_URL ='/media/'
+MEDIA_URL = '/media/'
 
 LOGIN_URL = 'login'

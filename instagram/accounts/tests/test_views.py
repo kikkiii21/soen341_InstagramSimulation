@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 # initialize the APIClient app
 client = Client()
 
+
 # test to see if app can return all registered users
 class GetAllUsersTest(TestCase):
 

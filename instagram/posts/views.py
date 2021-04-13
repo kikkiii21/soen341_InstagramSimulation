@@ -8,6 +8,7 @@ from .models import Post
 from comments.models import Comment
 from .permissions import IsOwnerOrReadOnly
 
+
 # PostViewAPI
 class PostAPI(generics.ListCreateAPIView):
 	queryset = Post.objects.all()
@@ -17,10 +18,12 @@ class PostAPI(generics.ListCreateAPIView):
 	def perform_create(self, serializer):
 		serializer.save(author=self.request.user)
 
+
 class PostDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
 
 class PostCommentsAPI(generics.ListAPIView):
 	serializer_class = CommentSerializer
