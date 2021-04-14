@@ -18,7 +18,10 @@ class Profile(models.Model):
         return self.user.first_name
 
     def get_last_name(self):
-        return self.user.lasst_name
+        return self.user.last_name
+
+    def get_password(self):
+        return self.user.password
 
 # creates a profile for each user registered
 @receiver(post_save, sender=User)

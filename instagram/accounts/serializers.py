@@ -19,38 +19,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 # Profile Serializer
 class ProfileSerializer(serializers.ModelSerializer):
-    # username = serializers.CharField(source='user.username', read_only=True)
-    # first_name = serializers.CharField(source='user.first_name', read_only=True)
-    # last_name = serializers.CharField(source='user.last_name', read_only=True)
-    # email = serializers.CharField(source='user.email', read_only=True)
-    # posts = serializers.CharField(source='user.posts', read_only=True)
-    # comments = serializers.CharField(source='user.comments', read_only=True)
-    # follows = serializers.CharField(source='user.follows', read_only=True)
 
     class Meta:
         model = Profile
         fields = ('id', 'user')
 
-
-# class UserProfileSerializer(serializers.ModelSerializer):
-#     # user = UserSerializer(required=True, many=False)
-#
-#     class Meta:
-#         model = User
-#         fields = ('id', 'first_name', 'last_name', 'email')
-#
-#     # def update(self, instance, validated_data):
-#     #     user_data = validated_data.pop('user')
-#     #     username = self.data['user']['username']
-#     #     user = User.objects.get(username=username)
-#     #
-#     #     user_serializer = UserSerializer(data=user_data)
-#     #
-#     #     if user_serializer.is_valid():
-#     #         user_serializer.update(user, user_data,)
-#     #
-#     #     instance.save()
-#     #     return instance
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True, many=False)
@@ -72,33 +45,6 @@ class UserPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('id', 'photo')
-
-
-# class ProfileUpdateSerializer(serializers.ModelSerializer):
-#     #user = UserSerializer(required=True, many=False)
-#
-#     class Meta:
-#         model = Profile
-#         fields = ('id', 'user', 'photo')
-#         extra_kwarg = {
-#             'first_name': {'required': True},
-#             'last_name': {'required': True},
-#
-#         }
-#
-#     def update(self, instance, validated_data):
-#         user = self.context['request'].user
-#
-#         if user.pk != instance.pk:
-#             raise serializers.ValidationError({"authorize":"You dont have permission"})
-#
-#         instance.first_name = validated_data['first_name']
-#         instance.last_name = validated_data['last_name']
-#         instance.email = validated_data['email']
-#
-#         instance.save()
-#
-#         return instance
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
@@ -142,7 +88,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], first_name=validated_data['first_name'], \
+        user = User.objects.create_user(validated_data['username'], first_name=validated_data['first_name'],
          last_name=validated_data['last_name'], email=validated_data['email'], password=validated_data['password'])
         return user
 
@@ -180,13 +126,3 @@ def get_follows_requesting_user(self, obj):
     following = obj.user
     connected = Follow.objects.filter(creator=following, following=creator)
     return len(connected)
-
-# class UpdateProfileSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = UserProfile
-# 		fields = ('email')
-
-# class UserProfileSerializer(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = UserProfile
-# 		fields = ('name', 'email')

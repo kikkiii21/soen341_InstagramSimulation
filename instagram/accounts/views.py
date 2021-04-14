@@ -48,18 +48,10 @@ class LoginAPI(generics.GenericAPIView):
 # Get User API
 class UserAPI(generics.RetrieveAPIView):
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
 
 
-# class ProfileView(generics.UpdateAPIView):
-#     permission_classes = permissions.IsAuthenticated
-#     serializer_class = ProfileSerializer
-#     queryset = Profile.objects.all()
-
-
 class ProfileUpdateView(generics.UpdateAPIView):
-    # authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserProfileSerializer
 
@@ -73,33 +65,12 @@ class ProfilePictureListAPI(generics.ListAPIView):
 
 
 class PhotoUpdateView(generics.RetrieveUpdateAPIView):
-    # authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserPhotoSerializer
     parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
-
-# class ProfilePictureUpdateView(generics.UpdateAPIView):
-#     #authentication_classes = (authentication.TokenAuthentication,)
-#     permission_classes = (permissions.IsAuthenticated,)
-#     serializer_class = ProfileSerializer
-#
-#     def get_object(self):
-#         return Profile.objects.get(user=self.request.user)
-
-    # def get_object(self):
-    #     return Profile.objects.get(user=self.request.photo)
-
-
-# class ProfileUpdateView(generics.UpdateAPIView):
-#     queryset = Profile.objects.all()
-#     permission_classes = (permissions.IsAuthenticated,)
-#     serializer_class = ProfileUpdateSerializer
-#     #
-#     # def get_object(self):
-#     #     return Profile.objects.get(user=self.request.user)
 
 
 class ChangePasswordView(generics.UpdateAPIView):

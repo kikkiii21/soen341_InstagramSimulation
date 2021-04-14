@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from posts.models import Post
-from accounts.models import Follow
 # Create your views here.
 
 
