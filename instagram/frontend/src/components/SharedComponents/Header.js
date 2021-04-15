@@ -12,6 +12,8 @@ import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 
 const useStyles = makeStyles(() => ({
   navIcons: {
+    width:30,
+    height:30,
     color: "#383838",
     fontSize: "30px",
     margin: "0px 10px",
@@ -24,6 +26,8 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-around",
   },
   navLogoutIcons: {
+    width:30,
+    height:30,
     color: "#383838",
     fontSize: "30px",
     "&:hover": {
@@ -92,32 +96,39 @@ const Header = () => {
   return (
     <nav className="Nav">
       <div className="Nav-menus">
+        <div className="logo">
+          <img
+            src="../../../static/images/logocat.png"
+            className="Nav-brand-logo"
+          />
+        </div>
         <div className="Nav-brand">
-          <a className="Nav-brand-logo" href="/">
-            Instagram
-          </a>
+          <img
+            src="../../../static/images/catstagram.png"
+            className="Nav-brand-logo"
+          />
         </div>
         <div className="spacer"></div>
         <div className="nav-actions">
           <div className={classes.navPages}>
             <a href="settings">
-              <TuneIcon className={classes.navIcons} />
+              <img src="../../static/images/gear.png" className={classes.navIcons} />
             </a>
             <a href="homepage">
-              <WebIcon className={classes.navIcons} />
+              <img src="../../static/images/home.png" className={classes.navIcons} />
             </a>
             <a
               href="profile"
               className="link-styling"
               onClick={profileLinkHandler}
             >
-              <PersonOutlineIcon className={classes.navIcons} />
+              <img src="../../static/images/catprofile.png" className={classes.navIcons} />
             </a>
             <a href="following" className="link-styling">
-              <PeopleAltOutlinedIcon className={classes.navIcons} />
+              <img src="../../static/images/cats.png" className={classes.navIcons} />
             </a>
             <a className={classes.logoutBtn} onClick={Logout}>
-              <ExitToAppOutlinedIcon className={classes.navLogoutIcons} />
+              <img src="../../static/images/logout.png"className={classes.navLogoutIcons} />
             </a>
           </div>
         </div>

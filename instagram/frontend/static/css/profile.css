@@ -56,9 +56,9 @@
 }
 
 .profile-wrap {
-  width: 200px;
-  height: 200px;
-  position: relative;
+  width: 100px;
+  height: 100px;
+  position: center;
   overflow: hidden;
   border-radius: 50%;
 }
