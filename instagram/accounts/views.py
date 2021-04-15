@@ -66,6 +66,7 @@ class ProfilePictureListAPI(generics.ListAPIView):
 
 
 class PhotoUpdateView(generics.RetrieveUpdateAPIView):
+    authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserPhotoSerializer
     parser_classes = [MultiPartParser, FormParser]
@@ -75,6 +76,7 @@ class PhotoUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class ChangePasswordView(generics.UpdateAPIView):
+    authentication_classes = (authentication.SessionAuthentication,)
     queryset = User.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ChangePasswordSerializer

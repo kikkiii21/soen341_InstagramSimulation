@@ -1,4 +1,6 @@
 import json
+import pdb
+from django.conf.urls import include
 from django.contrib.auth.password_validation import password_changed
 from django.http import response
 
@@ -147,6 +149,36 @@ class ProfileUpdateViewTestCase(APITestCase):
         test_last_name = Profile.objects.get(user=self.user)
         self.assertEqual(test_last_name.get_email(), "email@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_change_password(self):
+        previous_password = self.user.password
+        data = {
+            "old_password": "123",
+            "password": "giborish123",
+            "password2": "giborish123"
+        }
+        response = self.client.put(
+            reverse('auth-change-password', kwargs={"pk": 1}), 
+            data=data, 
+            format='json',
+        )
+
+        # Assert if password change went through successfully
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Can't access password directly
+        # Loggin back in with new password to test if password was changed successfully
+        response = self.client.post(
+            reverse('login-user'), # name of login url
+            data={
+                "username": self.user.username,
+                "password": "giborish123"
+            },
+            format='json',
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # pdb.set_trace()
+        
 
 # class BaseAPITestCase(APITestCase):
 #     def get_token(self, email=None, password=None, access=True):
