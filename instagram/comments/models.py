@@ -20,4 +20,4 @@ class Comment(models.Model):
         return self.comment + ' is written by ' + self.author.username + "."
 
     def get_comment(self):
-        return self.user.comment
+        return self.comment

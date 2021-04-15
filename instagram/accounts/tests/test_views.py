@@ -1,52 +1,15 @@
-import json
-import pdb
-from django.conf.urls import include
-from django.contrib.auth.password_validation import password_changed
-from django.http import response
-
-from django.test import TestCase, Client
 from ..models import Profile, Follow
-from ..serializers import ProfileSerializer
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
-from rest_framework import HTTP_HEADER_ENCODING, status
+from rest_framework import status
 from rest_framework.authtoken.models import Token
-from knox.models import AuthToken
-from knox.auth import TokenAuthentication
-from rest_framework.authentication import BasicAuthentication
-from rest_framework.test import APITestCase, APIClient, APIRequestFactory
-from PIL import Image
+from rest_framework.test import APITestCase, APIClient
+from django.core.files.uploadedfile import SimpleUploadedFile
 import tempfile
 
-
-# initialize the APIClient app
-
-
-
-# test to see if app can return all registered users
-# class GetAllUsersTest(TestCase):
-
-#     def setUp(self):
-#         User.objects.create(first_name='Casper', last_name='Patel', username='BullDog', email='casper@gmail.com', password='123')
-#         User.objects.create(first_name='Muffin', last_name='Smith', username='Gradane', email='muffin@gmail.com', password='123')
-#         User.objects.create(first_name='Kilo', last_name='Connor', username='Fatty', email='fatty@gmail.com', password='123')
-#         User.objects.create(first_name='Tila', last_name='James', username='Skinny', email='skinny@gmail.com', password='123')
-
-#     def test_get_all_profiles(self):
-#         response = client.get(reverse('list-all-profiles'))
-#         users = Profile.objects.all()
-#         serializer = ProfileSerializer(users, many=True)
-#         self.assertEqual(response.data, serializer.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-class RegisterTestCase(APITestCase):
-    def test_registration(self):
-        data = {
-            'first_name': 'Casper', 'last_name': 'Patel', 'username': 'BullDog', 'email': 'casper@gmail.com', 'password': '123'
-        }
-        response = self.client.post("/registerEndpoint/", data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
+# Profile Tests
 class ProfileUpdateViewTestCase(APITestCase):
 
     update_profile_url = reverse('auth-update-profile')
@@ -61,6 +24,7 @@ class ProfileUpdateViewTestCase(APITestCase):
             email='casper@gmail.com', 
             password='123'
         )
+        settings.MEDIA_ROOT = tempfile.mkdtemp()
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
@@ -137,7 +101,6 @@ class ProfileUpdateViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_can_change_password(self):
-        previous_password = self.user.password
         data = {
             "old_password": "123",
             "password": "giborish123",
@@ -158,33 +121,35 @@ class ProfileUpdateViewTestCase(APITestCase):
             reverse('login-user'), # name of login url
             data={
                 "username": self.user.username,
-                "password": "giborish123"
+                "password": "giborish123" # New password
             },
             format='json',
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_ckecks_for_correct_password(self):
+        data = {
+            "old_password": "123abc", # the worng password
+            "password": "giborish123",
+            "password2": "giborish123"
+        }
+        response = self.client.put(
+            reverse('auth-change-password', kwargs={"pk": 1}), 
+            data=data, 
+            format='json',
+        )
+
+        # Assert if password didn't go through successfully
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_can_change_profile_picture(self):
-        # Create image
-        # image = Image.new('RGB', (100, 100))
-        # tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
-        # image.save(tmp_file)
-        # # img = Image.open('instagram/profile_pics/default_profile.jpg')
-        # print(image)
-        # # data = {
-        # #     "id": 1,
-        # #     "photo": image
-        # # }
-        # with open(tmp_file.name, 'rb') as data:
-        #     response = self.client.put(
-        #         self.update_photo_url, 
-        #         data={"id": 1, "photo": data}, 
-        #         format='multipart',
-        #     )
-        img = Image.open('instagram/profile_pics/default_profile.jpg')
+        # Upload Image
+        image = SimpleUploadedFile(name='test.jpg', # Name it any file name and it will get saved in database
+                                   content=open('instagram/profile_pics/default_profile.jpg', 'rb').read(),
+                                   content_type='image/jpeg')
         data = {
             "id": 1,
-            "photo": img
+            "photo": image
         }
         response = self.client.put(
             self.update_photo_url,
@@ -192,13 +157,10 @@ class ProfileUpdateViewTestCase(APITestCase):
             format='multipart'
         )
         test_photo = Profile.objects.get(user=self.user)
-        print(test_photo.get_photo())
-        print(img)
-        self.assertEqual(test_photo.get_photo(), img)
-        # pdb.set_trace()
+        self.assertEqual(test_photo.get_photo().name, 'profile_pics/' + image.name)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-
+# Follow Tests
 class FollowingUserTestCase(APITestCase):
 
     url_follow_button = reverse('follow-button')
@@ -237,7 +199,7 @@ class FollowingUserTestCase(APITestCase):
         )
         # pdb.set_trace()
         test_following = Follow.objects.get(user=self.user_casper)
-        self.assertEqual(test_following.get_following().pk, 2) #following user with pk (id) of 2
+        self.assertEqual(test_following.get_following().pk, 2)  # following user with pk (id) of 2
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
