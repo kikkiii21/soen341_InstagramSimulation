@@ -10,7 +10,14 @@ class Comment(models.Model):
     author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
 
-class Meta:
-    ordering = ['-created_at']
+    class Meta:
+        ordering = ['-created_at']
 
+    def __str__(self):
+        return str(self.comment)
 
+    def get_comment_author(self):
+        return self.comment + ' is written by ' + self.author.username + "."
+
+    def get_comment(self):
+        return self.comment

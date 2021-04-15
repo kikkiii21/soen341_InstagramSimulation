@@ -1,15 +1,8 @@
-from django.urls import path, re_path, include
+from django.urls import path
 from .views import PostAPI, PostDetailAPI, PostCommentsAPI
-from rest_framework import routers
-
-# router = routers.DefaultRouter()
-# router.register('posts', PostViewSet, 'posts')
 
 urlpatterns = [
-	# router.urls,
-	# path('', include(router.urls)),
-	path('postsEndpoint/', PostAPI.as_view()),
-	path('postsEndpoint/<int:pk>/', PostDetailAPI.as_view()),
-	path('postsEndpoint/<post_id>/comments', PostCommentsAPI.as_view()),
-	# path('posts/', PostAPI.as_view(), name= 'posts_list'),
+        path('postsEndpoint/', PostAPI.as_view(), name = 'post_list'),
+        path('postsEndpoint/<int:pk>/', PostDetailAPI.as_view()),
+        path('postsEndpoint/<post_id>/comments', PostCommentsAPI.as_view()),
 ]
