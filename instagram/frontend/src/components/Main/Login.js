@@ -154,7 +154,7 @@ const Login = () => {
       <div className={classes.paper}>
         <Grid container spacing={1}>
           <Grid container justify="space-around" item xs={12}>
-            <img className={classes.imag} src={logo}></img>
+            <img className={classes.imag} src="../../../static/images/catstagram.png"></img>
           </Grid>
         </Grid>
         <form
