@@ -50,6 +50,7 @@ class ProfileUpdateViewTestCase(APITestCase):
     update_profile_url = reverse('auth-update-profile')
 
     def setUp(self):
+        self.client = APIClient(enforce_csrf_checks=True)
         self.user = User.objects.create_superuser(
             first_name='Casper', 
             last_name='Patel', 
@@ -57,23 +58,21 @@ class ProfileUpdateViewTestCase(APITestCase):
             email='casper@gmail.com', 
             password='123'
         )
-        # data = {
-        #     'first_name': 'Casper', 'last_name': 'Patel', 'username': 'BullDog', 'email': 'casper@gmail.com', 'password': '123'
-        # }
-        # self.client.post("/registerEndpoint/", data)
-        # self.user = User.objects.get(username='Bulldog')
         self.token = Token.objects.create(user=self.user)
-        # self.client.login(username='BullDog', password='123')
-        # self.client.login(username=self.user.username, password=self.user.password)
         self.api_authentication()
 
     def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.user.auth_token.key)
+        # self.client.login(username=self.user.username, password=self.user.password)
+        # self.client.force_login(user=self.token.key)
+        # self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
+        self.client.force_authenticate(user=self.user)
 
-    def test_profile_list_authenticated(self):
-        # self.client.login(username='BullDog', password='123')
-        response = self.client.get(self.update_profile_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    # def test_profile_list_authenticated(self):
+    #     # self.client.login(username='BullDog', password='123')
+        
+    #     response = self.client.get(self.update_profile_url)
+        
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_profile_list_un_authenticated(self):
         self.client.force_authenticate(user=None)
@@ -82,17 +81,72 @@ class ProfileUpdateViewTestCase(APITestCase):
 
     def test_can_update_first_name(self):
         data = {
-            "first_name": "Karen"
+            "id": 1,
+            "user": {
+                "id": self.user.pk,
+                "username": self.user.username,
+                "first_name": "Karen",
+                "last_name": self.user.last_name,
+                "email": self.user.email,
+                "posts": [],
+                "comments": [],
+                "follows": []
+            }
         }
         response = self.client.put(
             self.update_profile_url, 
             data=data, 
-            content_type='application/json', 
-            # REMOTE_USER=self.user.username
+            format='json',
         )
         test_first_name = Profile.objects.get(user=self.user)
-        # self.assertEqual(test_first_name.get_first_name(), "Karen")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(test_first_name.get_first_name(), "Karen")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_update_last_name(self):
+        data = {
+            "id": 1,
+            "user": {
+                "id": self.user.pk,
+                "username": self.user.username,
+                "first_name": self.user.first_name,
+                "last_name": 'Lopez',
+                "email": self.user.email,
+                "posts": [],
+                "comments": [],
+                "follows": []
+            }
+        }
+        response = self.client.put(
+            self.update_profile_url, 
+            data=data, 
+            format='json',
+        )
+        test_last_name = Profile.objects.get(user=self.user)
+        self.assertEqual(test_last_name.get_last_name(), "Lopez")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_update_email(self):
+        data = {
+            "id": 1,
+            "user": {
+                "id": self.user.pk,
+                "username": self.user.username,
+                "first_name": self.user.first_name,
+                "last_name": self.user.last_name,
+                "email": 'email@gmail.com',
+                "posts": [],
+                "comments": [],
+                "follows": []
+            }
+        }
+        response = self.client.put(
+            self.update_profile_url, 
+            data=data, 
+            format='json',
+        )
+        test_last_name = Profile.objects.get(user=self.user)
+        self.assertEqual(test_last_name.get_email(), "email@gmail.com")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 # class BaseAPITestCase(APITestCase):
 #     def get_token(self, email=None, password=None, access=True):

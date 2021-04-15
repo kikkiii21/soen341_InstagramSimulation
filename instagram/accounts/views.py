@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, authentication
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from knox.models import AuthToken
@@ -52,6 +52,7 @@ class UserAPI(generics.RetrieveAPIView):
 
 
 class ProfileUpdateView(generics.UpdateAPIView):
+    authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserProfileSerializer
 
