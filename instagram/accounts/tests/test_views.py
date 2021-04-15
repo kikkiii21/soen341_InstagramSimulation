@@ -5,7 +5,7 @@ from django.contrib.auth.password_validation import password_changed
 from django.http import response
 
 from django.test import TestCase, Client
-from ..models import Profile
+from ..models import Profile, Follow
 from ..serializers import ProfileSerializer
 
 from django.contrib.auth.models import User
@@ -50,9 +50,10 @@ class RegisterTestCase(APITestCase):
 class ProfileUpdateViewTestCase(APITestCase):
 
     update_profile_url = reverse('auth-update-profile')
+    update_photo_url = reverse('auth-update-photo')
 
     def setUp(self):
-        self.client = APIClient(enforce_csrf_checks=True)
+        # self.client = APIClient(enforce_csrf_checks=True)
         self.user = User.objects.create_superuser(
             first_name='Casper', 
             last_name='Patel', 
@@ -64,22 +65,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         self.api_authentication()
 
     def api_authentication(self):
-        # self.client.login(username=self.user.username, password=self.user.password)
-        # self.client.force_login(user=self.token.key)
-        # self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         self.client.force_authenticate(user=self.user)
-
-    # def test_profile_list_authenticated(self):
-    #     # self.client.login(username='BullDog', password='123')
-        
-    #     response = self.client.get(self.update_profile_url)
-        
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_profile_list_un_authenticated(self):
-        self.client.force_authenticate(user=None)
-        response = self.client.get(self.update_profile_url)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_can_update_first_name(self):
         data = {
@@ -146,8 +132,8 @@ class ProfileUpdateViewTestCase(APITestCase):
             data=data, 
             format='json',
         )
-        test_last_name = Profile.objects.get(user=self.user)
-        self.assertEqual(test_last_name.get_email(), "email@gmail.com")
+        test_email = Profile.objects.get(user=self.user)
+        self.assertEqual(test_email.get_email(), "email@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_can_change_password(self):
@@ -166,7 +152,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         # Assert if password change went through successfully
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        # Can't access password directly
+        # Can't access password via get method since password is encrypted
         # Loggin back in with new password to test if password was changed successfully
         response = self.client.post(
             reverse('login-user'), # name of login url
@@ -177,132 +163,83 @@ class ProfileUpdateViewTestCase(APITestCase):
             format='json',
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_change_profile_picture(self):
+        # Create image
+        # image = Image.new('RGB', (100, 100))
+        # tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        # image.save(tmp_file)
+        # # img = Image.open('instagram/profile_pics/default_profile.jpg')
+        # print(image)
+        # # data = {
+        # #     "id": 1,
+        # #     "photo": image
+        # # }
+        # with open(tmp_file.name, 'rb') as data:
+        #     response = self.client.put(
+        #         self.update_photo_url, 
+        #         data={"id": 1, "photo": data}, 
+        #         format='multipart',
+        #     )
+        img = Image.open('instagram/profile_pics/default_profile.jpg')
+        data = {
+            "id": 1,
+            "photo": img
+        }
+        response = self.client.put(
+            self.update_photo_url,
+            data=data,
+            format='multipart'
+        )
+        test_photo = Profile.objects.get(user=self.user)
+        print(test_photo.get_photo())
+        print(img)
+        self.assertEqual(test_photo.get_photo(), img)
         # pdb.set_trace()
-        
-
-# class BaseAPITestCase(APITestCase):
-#     def get_token(self, email=None, password=None, access=True):
-#         email = self.email if (email is None) else email
-#         password = self.password if (password is None) else password
-
-#         url = reverse("token_create")  # path/url where of API where you get the access token
-#         resp = self.client.post(
-#             url, {"email": email, "password": password}, format="json"
-#         )
-#         self.assertEqual(resp.status_code, status.HTTP_200_OK)
-#         self.assertTrue("access" in resp.data)
-#         self.assertTrue("refresh" in resp.data)
-#         token = resp.data["access"] if access else resp.data["refresh"]
-#         return token
-
-#     def api_authentication(self, token=None):
-#         token = self.token if (token is None) else token
-#         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-# class RemoteAuthenticatedTest(APITestCase):
-#     client = APIClient()
+class FollowingUserTestCase(APITestCase):
 
-#     def setUp(self):
-#         self.username = 'BullDog'
-#         self.user = User.objects.create(
-#             first_name='Casper', 
-#             last_name='Patel', 
-#             username='BullDog', 
-#             email='casper@gmail.com', 
-#             password='123'
-#         )
-#         self.token = Token.objects.create(user=self.user)
-#         self.client = APIClient()
-#         self.client.login(username=self.user.username, password=self.user.password)
-#         self.client.credentials(HTTP_AUTHORIZATION=self.token.key)
-#         # Token.objects.create(user=self.user)
-#         # self.api_authentication()
-#         super(RemoteAuthenticatedTest, self).setUp()
+    url_follow_button = reverse('follow-button')
 
+    def setUp(self):
+        self.client = APIClient(enforce_csrf_checks=True)
+        self.user_casper = User.objects.create_superuser(
+            first_name='Casper', 
+            last_name='Patel', 
+            username='BullDog', 
+            email='casper@gmail.com', 
+            password='123'
+        )
+        self.user_muffin = User.objects.create(
+            first_name='Muffin', last_name='Smith', 
+            username='Gradane', 
+            email='muffin@gmail.com', 
+            password='123'
+        )
+        self.token_casper = Token.objects.create(user=self.user_casper)
+        self.token_muffin = Token.objects.create(user=self.user_muffin)
+        self.api_authentication()
 
-# class SettingsTestCase(RemoteAuthenticatedTest):
+    def api_authentication(self):
+        self.client.force_authenticate(user=self.user_casper)
 
-#     def test_can_update_first_name(self):
-#         data = {
-#             "first_name": "Karen"
-#         }
-#         # self.client.credentials(HTTP_AUTHORIZATION=BasicAuthentication.authenticate_credentials(self.user, self.user.username, self.user.password))
-#         # self.client.cookies.values()
+    def test_follow_button(self):
+        data = {
+            "following": self.user_muffin.pk
+        }
 
-#         # self.client.force_authenticate(user=self.user.username)
-#         # self.client.credentials()
-#         # self.client.credentials()
-#         response = self.client.patch(
-#             reverse('auth-update-profile'), 
-#             data=data, 
-#             format='json', 
-#             REMOTE_USER=self.username
-#         )
-#         test_first_name = Profile.objects.get(user=self.user)
-#         # self.assertEqual(test_first_name.get_first_name(), "Karen")
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    # def api_authentication(self):
-    #     self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
-
-    # def test_profile_list_authentication(self):
-    #     response = self.client.get(reverse('auth-update-profile'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_profile_list_un_authentication(self):
-    #     self.client.force_authenticate(user=None)
-    #     response = self.client.get(reverse('auth-update-profile'))
-    #     self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    # def test_profile_detail_retrieve(self):
-    #     response = self.client.get(reverse('auth-update-profile', kwargs={"pk": 1}))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(response.data["user"], "Bulldog")
-
-
-    # def test_can_update_first_name(self):
-    #     data = {
-    #         "first_name": "Karen"
-    #     }
-    #     response = self.client.patch(
-    #         self.update_profile_url, 
-    #         data=data, 
-    #         format='json', 
-    #         # REMOTE_USER=self.user.username
-    #     )
-    #     test_first_name = Profile.objects.get(user=self.user)
-    #     self.assertEqual(test_first_name.get_first_name(), "Karen")
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.post(
+            self.url_follow_button,
+            data=data,
+            format='multipart'
+        )
+        # pdb.set_trace()
+        test_following = Follow.objects.get(user=self.user_casper)
+        self.assertEqual(test_following.get_following().pk, 2) #following user with pk (id) of 2
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 
 
-
-    # def test_can_update_last_name(self):
-    #     data = {
-    #             "first_name": "Li"
-    #     }
-    #     response = self.client.post("updateProfileEndpoint/", data=data)
-    #     test_first_name = Profile.objects.get(user=User.objects.get(username='BullDog'))
-    #     self.assertEqual(email_casper.last_name(), "Li")
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_can_update_email(self):
-    #     data = {
-    #             "first_name": "Li"
-    #     }
-    #     response = self.client.post("updateProfileEndpoint/", data=data)
-    #     test_first_name = Profile.objects.get(user=User.objects.get(username='BullDog'))
-    #     self.assertEqual(email_casper.last_name(), "Li")
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_can_update_password(self):
-    #     data = {
-    #             'old_password': '123',
-    #             'password': '1234',
-    #             'password2': '1234',
-    #     }
-    #     response = self.client.post("updateProfileEndpoint/", data=data)
-    #     test_password = Profile.objects.get(user=User.objects.get(username='BullDog'))
-    #     self.assertEqual(User.objects.get(first_name='Casper').password(), "1234")
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)

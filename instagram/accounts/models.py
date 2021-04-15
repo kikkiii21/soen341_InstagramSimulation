@@ -23,6 +23,9 @@ class Profile(models.Model):
     def get_password(self):
         return self.user.password
 
+    def get_photo(self):
+        return self.photo
+
 # creates a profile for each user registered
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
@@ -40,6 +43,9 @@ class Follow(models.Model):
     user = models.ForeignKey(User, related_name='follows', on_delete=models.CASCADE)
     # the user you follow
     following = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_following(self):
+        return self.following
 
 
 # get all of followees

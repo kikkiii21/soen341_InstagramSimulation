@@ -11,7 +11,7 @@ urlpatterns = [
         path('userEndpoint/<int:pk>/', UserAPI.as_view()),
         path('profilelistEndpoint/', ProfileListAPI.as_view(), name='list-all-profiles'),
         path('profilePictureList/', ProfilePictureListAPI.as_view(), name='list-all-profiles-pictures'),
-        path('followEndpoint/', FollowAPI.as_view()),
+        path('followEndpoint/', FollowAPI.as_view(), name='follow-button'),
         path('followingEndpoint/', FollowedPostsAPI.as_view()),
         path('logoutEndpoint', knox_views.LogoutView.as_view(), name='logout-user'),
         path('changePassword/<int:pk>/', ChangePasswordView.as_view(), name='auth-change-password'),
