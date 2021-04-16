@@ -137,7 +137,7 @@ const SignUp = () => {
       <div className={classes.paper}>
         <Grid container spacing={1}>
           <Grid container justify="space-around" item xs={12}>
-            <img className={classes.imag} src={logo}></img>
+            <img className={classes.imag} src="../../../static/images/catstagram.png"></img>
           </Grid>
         </Grid>
         <form
@@ -229,7 +229,7 @@ const SignUp = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="signin" variant="body2" color="textPrimary">
+              <Link href="login" variant="body2" color="textPrimary">
                 Already have an account? Sign in
               </Link>
             </Grid>
