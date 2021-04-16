@@ -31,6 +31,7 @@ class ProfileUpdateViewTestCase(APITestCase):
     def api_authentication(self):
         self.client.force_authenticate(user=self.user)
 
+    # test on first name input
     def test_can_update_first_name(self):
         data = {
             "id": 1,
@@ -53,7 +54,8 @@ class ProfileUpdateViewTestCase(APITestCase):
         test_first_name = Profile.objects.get(user=self.user)
         self.assertEqual(test_first_name.get_first_name(), "Karen")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
+    
+    # test on last name input
     def test_can_update_last_name(self):
         data = {
             "id": 1,
@@ -77,6 +79,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         self.assertEqual(test_last_name.get_last_name(), "Lopez")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    # test on email input
     def test_can_update_email(self):
         data = {
             "id": 1,
@@ -100,6 +103,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         self.assertEqual(test_email.get_email(), "email@gmail.com")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    # test on new password and old password inputs
     def test_can_change_password(self):
         data = {
             "old_password": "123",
@@ -127,6 +131,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    # test on old password input
     def test_ckecks_for_correct_password(self):
         data = {
             "old_password": "123abc", # the worng password
@@ -142,6 +147,7 @@ class ProfileUpdateViewTestCase(APITestCase):
         # Assert if password didn't go through successfully
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    # test on new profile picture input
     def test_can_change_profile_picture(self):
         # Upload Image
         image = SimpleUploadedFile(name='test.jpg', # Name it any file name and it will get saved in database
@@ -187,6 +193,7 @@ class FollowingUserTestCase(APITestCase):
     def api_authentication(self):
         self.client.force_authenticate(user=self.user_casper)
 
+    # test on follow someone input
     def test_follow_button(self):
         data = {
             "following": self.user_muffin.pk

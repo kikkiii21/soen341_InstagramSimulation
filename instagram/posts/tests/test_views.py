@@ -33,6 +33,7 @@ class CaptionViewTestCase(APITestCase):
     def api_authentication(self):
         self.client.force_authenticate(user=self.user)
 
+    # test on post caption input
     def test_can_get_caption_on_post(self):
         response = self.client.get(self.url_comment)
         test_caption = Post.objects.get(author=self.user)
@@ -60,6 +61,7 @@ class PostingPictureViewTestCase(APITestCase):
     def api_authentication(self):
         self.client.force_authenticate(user=self.user)
 
+    # test on post picture input
     def test_can_post_picture(self):
         # Upload Image
         image = SimpleUploadedFile(name='test2.jpg', # Name it any file
