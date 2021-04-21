@@ -1,4 +1,4 @@
-# soen341_InstagramSimulation [![Build Status](https://travis-ci.com/kikkiii21/soen341_InstagramSimulation.svg?token=pt6PQXoyXhRXSsbbzoLs&branch=main)](https://travis-ci.com/kikkiii21/soen341_InstagramSimulation)
+# soen341_InstagramSimulation [![Build Status](https://travis-ci.com/kikkiii21/soen341_InstagramSimulation.svg?token=pt6PQXoyXhRXSsbbzoLs&branch=main)](https://travis-ci.com/kikkiii21/soen341_InstagramSimulation)[![DeepSource](https://deepsource.io/gh/kikkiii21/soen341_InstagramSimulation.svg/?label=active+issues&show_trend=true&token=KpKPqXadmaCr1Tt1czH1vYct)](https://deepsource.io/gh/kikkiii21/soen341_InstagramSimulation/?ref=repository-badge)
 
 ## Project Objective
 The goal of this project is to simulate a software development process through the creation of a simplified version of Instagram. The project will be completed in 4 sprints each lasting about 2-3 weeks.
